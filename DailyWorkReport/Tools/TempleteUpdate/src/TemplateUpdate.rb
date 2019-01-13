@@ -135,7 +135,7 @@ class TemplateUpdate
 		monthly_days = 0
 		template_param_list.each { |param|
 
-			str_calendar	= getSplitCalendar("#{param[:joining_time]}")
+			str_calendar	= splitYearMonth("#{param[:joining_time]}")
 			year				= str_calendar[0].to_i
 			mouth			= str_calendar[1].to_i
 

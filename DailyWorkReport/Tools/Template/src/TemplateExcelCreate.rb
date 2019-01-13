@@ -54,7 +54,7 @@ class TemplateExcelCreate
 		manual_count = wb.worksheets.count() -1
 
 		# 2013xx => [2013][xx]に分割
-		str_calendar	= getSplitCalendar("#{param_hash[:joining_time]}")
+		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
 		year			= str_calendar[0].to_i
 		mouth			= str_calendar[1].to_i
 

@@ -59,7 +59,7 @@ class TemplateExcelCreate
 		ws_staff.Cells.Item(2, 10+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:name]}"	# 氏名
 		
 		# 2013xx => [2013][xx]に分割
-		str_calendar = getSplitCalendar("#{param_hash[:create_calendar]}")
+		str_calendar = splitYearMonth("#{param_hash[:create_calendar]}")
 
 		# 平成年 / 月 を算出
 #		year_number = getYearNumber( str_calendar[0] )

@@ -46,7 +46,7 @@ class TemplateExcelCreate
 	def convertCreateDate( create_calendar )
 	
 		# 2013xx => [2013][xx]に分割
-		str_calendar = getSplitCalendar( create_calendar )
+		str_calendar = splitYearMonth( create_calendar )
 
 		# 年 / 月 を算出
 		year	 			= str_calendar[0].to_i
