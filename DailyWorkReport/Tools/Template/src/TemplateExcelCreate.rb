@@ -81,9 +81,8 @@ class TemplateExcelCreate
 			Excel.setSheetColorWithWeekend(ws, w_day)
 
 			# 平日なら祝日チェック
-			if isWeekday(w_day)
-                holiday_list.each { |holiday|
-
+			if isWeekday( year, month, day )
+				holiday_list.each { |holiday|
                     if( "#{year}/#{month}/#{day}" == "#{holiday[:holiday]}" )
                         wb.worksheets( new_sheet_index ).Tab.ColorIndex = 3
                         break
