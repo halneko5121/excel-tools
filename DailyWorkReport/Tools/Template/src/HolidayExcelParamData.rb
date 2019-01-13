@@ -9,7 +9,7 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # src
 # ==========================="
 class HolidayExcelParamData
-	SRC_ROOT 					= File.dirname(__FILE__) + "/.."
+	SRC_ROOT 			= File.dirname(__FILE__) + "/.."
 	PARAMETER_FILE_NAME	= "#{SRC_ROOT}/TemplateParam.xls"
 
 	public
