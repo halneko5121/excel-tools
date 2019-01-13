@@ -14,6 +14,7 @@ require File.expand_path( File.dirname(__FILE__) + '/TemplateExcelCreate.rb' )
 # ==========================="
 TITLE	= "DailyWorkTemplete"
 VER		= "1.1.0"
+PARAMETER_FILE_NAME	= File.dirname(__FILE__) + "/../TemplateParam.xls"
 
 # ==========================="
 # src
@@ -23,7 +24,7 @@ if ( __FILE__ == $0 )
 	AppModule.main( TITLE,  VER ) {
 
         # パラメータを取得する(祝日)
-		holiday_param		= HolidayExcelParamData.new
+		holiday_param		= HolidayExcelParamData.new(PARAMETER_FILE_NAME, "祝日設定", "祝日")
 		param_list			= holiday_param.getParamList()
 
 		# パラメータを取得する(社員ごと)

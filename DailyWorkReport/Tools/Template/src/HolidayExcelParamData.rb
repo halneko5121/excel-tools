@@ -9,15 +9,15 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # src
 # ==========================="
 class HolidayExcelParamData
-	SRC_ROOT 			= File.dirname(__FILE__) + "/.."
-	PARAMETER_FILE_NAME	= "#{SRC_ROOT}/TemplateParam.xls"
-
 	public
-	def initialize()
+	def initialize(wb_path, ws_name, param_name)
+		@wb_path = wb_path
+		@ws_name = ws_name
+		@param_name = param_name
 		@param_list = Array.new
 		@param_list.clear
-		assertLogPrintNotFoundFile( PARAMETER_FILE_NAME )
 
+		assertLogPrintNotFoundFile( @wb_path )
 		setData()
 	end
 
@@ -25,16 +25,15 @@ class HolidayExcelParamData
 		return @param_list
 	end
 
+	private
 	def setData()
 
 		Excel.runDuring(false, false) do |excel|
 
 			# パラメータ用 excel を開く
-			wb_param = Excel.openWb( excel, PARAMETER_FILE_NAME )
-			ws_param = wb_param.worksheets( "祝日設定" )
-
-			# 列番号の設定
-			@column_holiday	= Excel.getColumn(ws, "祝日")
+			wb_param 		= Excel.openWb( excel, @wb_path )
+			ws_param		= wb_param.worksheets( @ws_name )
+			param_column	= Excel.getColumn(ws_param, @param_name)
 
 			# レコードの数だけ
 			for recode in ws_param.UsedRange.Rows do
@@ -43,11 +42,11 @@ class HolidayExcelParamData
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
 				# パラメータを取得してpush
-                holiday               = Excel.getCellValue(ws_param, recode.row, "#{@column_holiday}".to_i )
-				next if ( holiday == "" or holiday == nil )
+                cell_param = Excel.getCellValue(ws_param, recode.row, "#{param_column}".to_i )
+				next if ( cell_param == "" or cell_param == nil )
 
                 param = Hash.new
-                param[:holiday] = holiday
+                param[:holiday] = cell_param
 				@param_list.push( param )
 			end
 			wb_param.close(0)
@@ -56,7 +55,6 @@ class HolidayExcelParamData
 		errorCheck()
 	end
 
-	private
 	def errorCheck()
 
         if( @param_list.count <= 0 )
