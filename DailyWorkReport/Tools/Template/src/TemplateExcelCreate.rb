@@ -25,15 +25,15 @@ class TemplateExcelCreate
 	# @parm		abbrev_name	社員略称
 	#----------------------------------------------
 	def getOutputPath( number, abbrev_name )
-	
+
 		# 数値を3桁に変換
 		staff_num	= "%03d" % number
-        abbrev_name= abbrev_name.encode( Encoding::UTF_8 ) 
+        abbrev_name= abbrev_name.encode( Encoding::UTF_8 )
 		file_name    = "#{staff_num}_#{abbrev_name}_1-UP作業日報.#{EXT_NAME}".encode(Encoding::Windows_31J)
 		out_path	    = "#{OUT_ROOT}/#{file_name}"
 		out_path	    =  File.expand_path( out_path )
 		out_path     = out_path.gsub( "\\", "/" )
-		
+
 		return out_path;
 	end
 
@@ -49,10 +49,10 @@ class TemplateExcelCreate
 			assertLogPrintFalse( "「日報」シートが存在しません。日報用のシート名を「日報」にして下さい" )
 			return
 		end
-		
+
 		# 「日報」 シート以外のシートの数
 		manual_count = wb.worksheets.count() -1
-		
+
 		# 2013xx => [2013][xx]に分割
 		str_calendar	= getSplitCalendar("#{param_hash[:joining_time]}")
 		year				= str_calendar[0].to_i
@@ -60,7 +60,7 @@ class TemplateExcelCreate
 
 		# 指定月の日数を設定
 		monthly_days = getMonthlyDayCount( mouth )
-		
+
 		# 閏年かどうか
 		if( mouth == 2 && Date.new( year ).leap? )
 			@is_leap_year = true
@@ -75,9 +75,9 @@ class TemplateExcelCreate
 
 			if( day != 1 )
 				copy_sheet_index = new_sheet_index - 1
-				Excel.sheetCopyNumber( wb, manual_count + 1, wb, copy_sheet_index )	
+				Excel.sheetCopyNumber( wb, manual_count + 1, wb, copy_sheet_index )
 			end
-			
+
 			# シート名設定
 			sheet_name = "#{mouth}月#{day}日(#{w_day})"
 			wb.worksheets( new_sheet_index ).name = sheet_name
@@ -98,34 +98,34 @@ class TemplateExcelCreate
                         break
                     end
                 }
-            end            
+            end
 		}
 
 		# 最初のシートをアクティブに
 		wb.worksheets( 1 ).Activate
 	end
-	
+
 	public
 	def initialize()
-		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )	
+		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
 		@is_leap_year = false
 	end
 
 	def createExcel( staff_list, holiday_list )
-	
+
 		# ファイルが存在していた場合はファイルを削除
 		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
 			File.delete "#{file_path}"
 		end
 
-		puts "excel count = #{staff_list.size()}"	
-		
+		puts "excel count = #{staff_list.size()}"
+
 		fso = WIN32OLE.new('Scripting.FileSystemObject')
 		Excel.runDuring(false, false) do |excel|
-		
+
 			# 社員数だけ
 			staff_list.each_with_index{ |data, index|
-			
+
 				# 出力先のパスを取得
 				out_path = getOutputPath( index+1, "#{data[:abbrev_name]}" )
 
@@ -141,7 +141,7 @@ class TemplateExcelCreate
 				# パスワードが設定されていたら設定する
 				if( ( "#{data[:pass]}" == nil or "#{data[:pass]}" == "" ) == false )
 					wb.password = "#{data[:pass]}"
-				end				
+				end
 				wb.save()
 				wb.close()
 
@@ -149,7 +149,7 @@ class TemplateExcelCreate
 				puts "create excel => #{File::basename( out_path )}"
 			}
 		end
-		
+
 		if( @is_leap_year )
 			puts ""
 			puts "閏年の2月です。閏年設定がされました"
