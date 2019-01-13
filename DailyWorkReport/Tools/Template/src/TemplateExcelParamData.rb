@@ -8,7 +8,7 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # ==========================="
 # src
 # ==========================="
-class TemplateExcelParamData
+class ExcelParamData
 	public
 	def initialize(wb_path, ws_name, param_name_hash)
 		@wb_path = wb_path

@@ -29,7 +29,7 @@ if ( __FILE__ == $0 )
 
 		# パラメータを取得する(社員ごと)
 		param_hash = { name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
-		template_param		= TemplateExcelParamData.new(PARAMETER_FILE_NAME, "社員ごとの設定", param_hash)
+		template_param		= ExcelParamData.new(PARAMETER_FILE_NAME, "社員ごとの設定", param_hash)
 		staff_data_list		= template_param.getParamList()
 
 		# テンプレートのデータを元に excel の生成
