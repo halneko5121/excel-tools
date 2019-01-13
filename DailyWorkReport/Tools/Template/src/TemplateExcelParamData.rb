@@ -11,13 +11,13 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 class TemplateExcelParamData
 	SRC_ROOT 					= File.dirname(__FILE__) + "/.."
 	PARAMETER_FILE_NAME	= "#{SRC_ROOT}/TemplateParam.xls"
-	
+
 	public
 	def initialize()
 		@staff_list = Array.new
 		@staff_list.clear
 		assertLogPrintNotFoundFile( PARAMETER_FILE_NAME )
-		
+
 		setData()
 	end
 
@@ -26,37 +26,37 @@ class TemplateExcelParamData
 	end
 
 	def setData()
-		
+
 		Excel.runDuring(false, false) do |excel|
 
 			# パラメータ用 excel を開く
 			wb_param = Excel.openWb( excel, PARAMETER_FILE_NAME )
 			ws_param = wb_param.worksheets( "社員ごとの設定" )
-	
+
 			# 列番号の設定
 			setClumn( ws_param )
 
 			# レコードの数だけ
-			for recode in ws_param.UsedRange.Rows do 
-			
+			for recode in ws_param.UsedRange.Rows do
+
 				# 1行目はパラメータ名なのでスキップ or 空白行 or nil が入ってきた場合はスキップ
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
 				name = Excel.getCellValue(ws_param, recode.row, "#{@clumn_name}".to_i)
-				
+
 				next if (name == "" or name == nil)
-				
+
 				# パラメータを取得してpush
 				staff = Hash.new
 				staff[:name]			= "#{name}"
-				staff[:abbrev_name]	= Excel.getCellValue(ws_param, recode.row, "#{@clumn_abbrev_name}".to_i)
-				staff[:pass]				= Excel.getCellValue(ws_param, recode.row, "#{@clumn_pass}".to_i )
+				staff[:abbrev_name]		= Excel.getCellValue(ws_param, recode.row, "#{@clumn_abbrev_name}".to_i)
+				staff[:pass]			= Excel.getCellValue(ws_param, recode.row, "#{@clumn_pass}".to_i )
 				staff[:joining_time]	= Excel.getCellValue(ws_param, recode.row, "#{@clumn_joining_time}".to_i)
 				@staff_list.push( staff )
 			end
 			wb_param.close(0)
 		end
-		
+
 		errorCheck()
 	end
 
@@ -69,7 +69,7 @@ class TemplateExcelParamData
 	end
 
 	def errorCheck()
-	
+
 		@staff_list.each { |staff|
 
 			if( staff[:abbrev_name] == "" or staff[:abbrev_name] == nil )
@@ -83,5 +83,5 @@ class TemplateExcelParamData
 			end
 		}
 	end
-	
+
 end
