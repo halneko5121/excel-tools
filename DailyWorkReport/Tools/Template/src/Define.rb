@@ -6,10 +6,10 @@
 SHEET_NAME_WARNING			= "注意"
 SHEET_NAME_TEMPLATE_DATA	= "開始データ"
 SHEET_NAME_CHECK			= "届書チェックシート"
-SHEET_NAME_CHECK_DESCRIPT	= "届書チェックの使い方"	
+SHEET_NAME_CHECK_DESCRIPT	= "届書チェックの使い方"
 SHEET_NAME_PRORATED_TABLE	= "区分別按分表"
 SHEET_NAME_WORKS			= "業務別月報"
-SHEET_NAME_ANOTHER			= "未定"	
+SHEET_NAME_ANOTHER			= "未定"
 
 # excel のテンプレートフォーマット(スタッフシート)
 FORMAT_STAFF_SHEET_CALENDAR	= "E2:G2"	#　「年/月/期間」のセル範囲
@@ -26,13 +26,3 @@ FORMAT_WORKS_SHEET_CHECK_SUM	= "C37:L37"	# 各種プロジェクトごとの作�
 
 # excel のテンプレートフォーマット(届書チェックシート)
 RANGE_CHECK_VALUE				= "B3:X33"
-
-IS_CHECK_SHEET_MIX			= false	# 届書チェックシートを1シートにまとめる形。
-
-if( IS_CHECK_SHEET_MIX == true )
-	ADD_CULMNS_CHECK_SHEET	= 26
-	EXT_NAME				= "xlsm"
-else
-	ADD_CULMNS_CHECK_SHEET	= 0
-	EXT_NAME				= "xlsx"
-end

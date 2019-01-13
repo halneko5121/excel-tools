@@ -14,7 +14,7 @@ require File.dirname(__FILE__) + "/Define.rb"
 class TemplateExcelCreate
 	private
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../Template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../Template.xlsx"
 	WDAYS				= ["日", "月", "火", "水", "木", "金", "土"]
 
 	private
@@ -29,7 +29,7 @@ class TemplateExcelCreate
 		# 数値を3桁に変換
 		staff_num	= "%03d" % number
         abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
-		file_name   = "#{staff_num}_#{abbrev_name}_1-UP作業日報.#{EXT_NAME}".encode(Encoding::Windows_31J)
+		file_name   = "#{staff_num}_#{abbrev_name}_1-UP作業日報.xlsx".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
 		out_path	=  File.expand_path( out_path )
 		out_path	= out_path.gsub( "\\", "/" )
