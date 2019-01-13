@@ -55,13 +55,13 @@ class TemplateExcelCreate
 		# 2013xx => [2013][xx]に分割
 		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
 		year			= str_calendar[0].to_i
-		mouth			= str_calendar[1].to_i
+		month			= str_calendar[1].to_i
 
 		# 指定月の日数を設定
-		monthly_days = getMonthlyDayCount( year, mouth )
+		monthly_days = getMonthlyDayCount( year, month )
 
 		# 閏年かどうか
-		if( isLeapYear( year, mouth ) )
+		if( isLeapYear( year, month ) )
 			@is_leap_year = true
 		end
 
@@ -69,7 +69,7 @@ class TemplateExcelCreate
 		( 1.. monthly_days ).each { |day|
 
 			new_sheet_index = manual_count + day
-			time			= Time.mktime( year, mouth, day )
+			time			= Time.mktime( year, month, day )
 			w_day			= WDAYS[ time.wday ]
 
 			if( day != 1 )
@@ -78,7 +78,7 @@ class TemplateExcelCreate
 			end
 
 			# シート名設定
-			sheet_name = "#{mouth}月#{day}日(#{w_day})"
+			sheet_name = "#{month}月#{day}日(#{w_day})"
 			wb.worksheets( new_sheet_index ).name = sheet_name
 
 			# シート色設定
@@ -92,7 +92,7 @@ class TemplateExcelCreate
                 # 祝日
                 holiday_list.each { |holiday|
 
-                    if( "#{year}/#{mouth}/#{day}" == "#{holiday[:holiday]}" )
+                    if( "#{year}/#{month}/#{day}" == "#{holiday[:holiday]}" )
                         wb.worksheets( new_sheet_index ).Tab.ColorIndex = 3
                         break
                     end
