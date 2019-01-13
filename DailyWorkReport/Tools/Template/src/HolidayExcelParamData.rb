@@ -34,7 +34,7 @@ class HolidayExcelParamData
 			ws_param = wb_param.worksheets( "祝日設定" )
 
 			# 列番号の設定
-			setClumn( ws_param )
+			@column_holiday	= Excel.getColumn(ws, "祝日")
 
 			# レコードの数だけ
 			for recode in ws_param.UsedRange.Rows do
@@ -57,10 +57,6 @@ class HolidayExcelParamData
 	end
 
 	private
-	def setClumn( ws )
-		@column_holiday	= Excel.getColumn(ws, "祝日")
-	end
-
 	def errorCheck()
 
         if( @param_list.count <= 0 )
