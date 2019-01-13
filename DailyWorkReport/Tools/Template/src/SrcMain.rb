@@ -24,8 +24,9 @@ if ( __FILE__ == $0 )
 	AppModule.main( TITLE,  VER ) {
 
         # パラメータを取得する(祝日)
-		holiday_param		= HolidayExcelParamData.new(PARAMETER_FILE_NAME, "祝日設定", "祝日")
-		param_list			= holiday_param.getParamList()
+		holiday_param_hash = { holiday: "祝日" }
+		holiday_param		= ExcelParamData.new(PARAMETER_FILE_NAME, "祝日設定", holiday_param_hash)
+		holiday_data_list	= holiday_param.getParamList()
 
 		# パラメータを取得する(社員ごと)
 		param_hash = { name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
@@ -34,6 +35,6 @@ if ( __FILE__ == $0 )
 
 		# テンプレートのデータを元に excel の生成
 		create_excel = TemplateExcelCreate.new
-		create_excel.createExcel( staff_data_list, param_list )
+		create_excel.createExcel( staff_data_list, holiday_data_list )
 	}
 end
