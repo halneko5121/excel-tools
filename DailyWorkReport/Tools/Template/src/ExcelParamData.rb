@@ -41,11 +41,19 @@ class ExcelParamData
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
 				# パラメータを取得してpush
+				is_next = false
 				param = Hash.new
 				@param_name_hash.each  { |key, value|
 					column_index = Excel.getColumn(ws_param, "#{value}")
-					param[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_index}".to_i)
+					cell_value = Excel.getCellValue(ws_param, recode.row, "#{column_index}".to_i)
+					# 空白行はスキップ
+					if (cell_value == "" or cell_value == nil)
+						is_next = true
+						break
+					end
+					param[ :"#{key}" ] = cell_value
 				}
+				next if (is_next == true)
 				@param_list.push( param )
 			end
 			wb_param.close(0)
