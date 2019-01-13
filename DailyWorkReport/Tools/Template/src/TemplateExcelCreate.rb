@@ -49,9 +49,6 @@ class TemplateExcelCreate
 			return
 		end
 
-		# 「日報」 シート以外のシートの数
-		manual_count = wb.worksheets.count() -1
-
 		# 2013xx => [2013][xx]に分割
 		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
 		year			= str_calendar[0].to_i
@@ -65,13 +62,16 @@ class TemplateExcelCreate
 			@is_leap_year = true
 		end
 
+		# 「日報」 シート以外のシートの数
+		manual_count = wb.worksheets.count() -1
+
 		# その月の日付分シートを作成
 		( 1.. monthly_days ).each { |day|
 
-			new_sheet_index = manual_count + day
 			time			= Time.mktime( year, month, day )
 			w_day			= WDAYS[ time.wday ]
 
+			new_sheet_index = manual_count + day
 			if( day != 1 )
 				copy_sheet_index = new_sheet_index - 1
 				Excel.sheetCopyNumber( wb, manual_count + 1, wb, copy_sheet_index )
