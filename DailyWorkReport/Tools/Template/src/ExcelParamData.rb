@@ -13,19 +13,20 @@ class ExcelParamData
 	def initialize(wb_path, ws_name, param_name_hash)
 		@wb_path = wb_path
 		@ws_name = ws_name
+		@param_name_hash = param_name_hash
 		@param_list = Array.new
 		@param_list.clear
 
-		# パラメータ名を保持
-		@param_name_hash = param_name_hash
 		assertLogPrintNotFoundFile( @wb_path )
 		setData()
 	end
 
+	# パラメータのリストを取得
 	def getParamList()
 		return @param_list
 	end
 
+	private
 	def setData()
 
 		Excel.runDuring(false, false) do |excel|
@@ -61,7 +62,6 @@ class ExcelParamData
 		errorCheck()
 	end
 
-	private
 	def errorCheck()
 		@param_list.each { |param|
 			@param_name_hash.each  { |key, value|
