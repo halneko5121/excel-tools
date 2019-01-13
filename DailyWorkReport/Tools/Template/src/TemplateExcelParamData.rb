@@ -9,15 +9,13 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # src
 # ==========================="
 class TemplateExcelParamData
-	SRC_ROOT 					= File.dirname(__FILE__) + "/.."
-	PARAMETER_FILE_NAME	= "#{SRC_ROOT}/TemplateParam.xls"
-
 	public
-	def initialize()
+	def initialize(wb_path)
+		@wb_path = wb_path
 		@staff_list = Array.new
 		@staff_list.clear
-		assertLogPrintNotFoundFile( PARAMETER_FILE_NAME )
 
+		assertLogPrintNotFoundFile( @wb_path )
 		setData()
 	end
 
@@ -30,7 +28,7 @@ class TemplateExcelParamData
 		Excel.runDuring(false, false) do |excel|
 
 			# パラメータ用 excel を開く
-			wb_param = Excel.openWb( excel, PARAMETER_FILE_NAME )
+			wb_param = Excel.openWb( excel, @wb_path )
 			ws_param = wb_param.worksheets( "社員ごとの設定" )
 
 			# 列番号の設定
