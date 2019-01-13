@@ -6,7 +6,6 @@
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/AppModule.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/ExcelParamData.rb' )
-require File.expand_path( File.dirname(__FILE__) + '/HolidayExcelParamData.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/TemplateExcelCreate.rb' )
 
 # ==========================="
