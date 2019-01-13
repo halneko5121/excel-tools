@@ -13,8 +13,8 @@ class TemplateExcelParamData
 	def initialize(wb_path, ws_name, param_name_hash)
 		@wb_path = wb_path
 		@ws_name = ws_name
-		@staff_list = Array.new
-		@staff_list.clear
+		@param_list = Array.new
+		@param_list.clear
 
 		# パラメータ名を保持
 		@param_name_hash = param_name_hash
@@ -22,8 +22,8 @@ class TemplateExcelParamData
 		setData()
 	end
 
-	def getStaffList()
-		return @staff_list
+	def getParamList()
+		return @param_list
 	end
 
 	def setData()
@@ -41,12 +41,12 @@ class TemplateExcelParamData
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
 				# パラメータを取得してpush
-				staff = Hash.new
+				param = Hash.new
 				@param_name_hash.each  { |key, value|
 					column_name = Excel.getColumn(ws_param, "#{value}")
-					staff[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_name}".to_i)
+					param[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_name}".to_i)
 				}
-				@staff_list.push( staff )
+				@param_list.push( param )
 			end
 			wb_param.close(0)
 		end
@@ -55,9 +55,9 @@ class TemplateExcelParamData
 
 	private
 	def errorCheck()
-		@staff_list.each { |staff|
+		@param_list.each { |param|
 			@param_name_hash.each  { |key, value|
-				data = staff[ :"#{key}" ]
+				data = param[ :"#{key}" ]
 				if( data == "" or data == nil )
 					error_str = "Parameter Error!!"
 					error_str = error_str + "「#{value}」が未入力です。"
