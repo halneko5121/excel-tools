@@ -53,9 +53,6 @@ class TemplateExcelCreate
 		year			= str_calendar[0].to_i
 		month			= str_calendar[1].to_i
 
-		# 指定月の日数を設定
-		monthly_days = getMonthlyDayCount( year, month )
-
 		# 閏年かどうか
 		if( isLeapYear( year, month ) )
 			@is_leap_year = true
@@ -64,7 +61,8 @@ class TemplateExcelCreate
 		# 「日報」 シート以外のシートの数
 		manual_count = wb.worksheets.count() -1
 
-		# その月の日付分シートを作成
+		# 指定月の日付分シートを作成
+		monthly_days = getMonthlyDayCount( year, month )
 		( 1.. monthly_days ).each { |day|
 
 			new_sheet_index = manual_count + day
