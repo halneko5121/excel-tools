@@ -24,9 +24,9 @@ class CommonParam
 			# 1行目はパラメータ名なのでスキップ or 空白行 or nil が入ってきた場合はスキップ
 			next if (recode.row == 1 or recode == "" or recode == nil)
 
-			@paramHash[ "分割パターン" ] = Excel.getParamValue(ws_param, recode.row, "分割パターン")
-			@paramHash[ "シートの保護" ] = Excel.getParamValue(ws_param, recode.row, "シートの保護")
-			@paramHash[ "保護パスワード" ] = Excel.getParamValue(ws_param, recode.row, "保護パスワード")
+			@paramHash[ "分割パターン" ] = Excel.getCellValueWithColumnName(ws_param, recode.row, "分割パターン")
+			@paramHash[ "シートの保護" ] = Excel.getCellValueWithColumnName(ws_param, recode.row, "シートの保護")
+			@paramHash[ "保護パスワード" ] = Excel.getCellValueWithColumnName(ws_param, recode.row, "保護パスワード")
 		end
 
 		wb_param.close(0)
