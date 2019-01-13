@@ -43,8 +43,8 @@ class ExcelParamData
 				# パラメータを取得してpush
 				param = Hash.new
 				@param_name_hash.each  { |key, value|
-					column_name = Excel.getColumn(ws_param, "#{value}")
-					param[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_name}".to_i)
+					column_index = Excel.getColumn(ws_param, "#{value}")
+					param[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_index}".to_i)
 				}
 				@param_list.push( param )
 			end
