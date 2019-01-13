@@ -22,7 +22,7 @@ class TemplateExcelCreate
 	# @biref	出力先のパスを取得
 	# @parm		fso				ファイルシステムオブジェクト
 	# @parm		number			データ番号
-	# @parm		abbrev_name	社員略称
+	# @parm		abbrev_name		社員略称
 	#----------------------------------------------
 	def getOutputPath( number, abbrev_name )
 
