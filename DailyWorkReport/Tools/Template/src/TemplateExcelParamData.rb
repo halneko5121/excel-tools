@@ -10,8 +10,9 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # ==========================="
 class TemplateExcelParamData
 	public
-	def initialize(wb_path)
+	def initialize(wb_path, ws_name)
 		@wb_path = wb_path
+		@ws_name = ws_name
 		@staff_list = Array.new
 		@staff_list.clear
 
@@ -29,7 +30,7 @@ class TemplateExcelParamData
 
 			# パラメータ用 excel を開く
 			wb_param = Excel.openWb( excel, @wb_path )
-			ws_param = wb_param.worksheets( "社員ごとの設定" )
+			ws_param = wb_param.worksheets( @ws_name )
 
 			# 列番号の設定
 			setClumn( ws_param )
