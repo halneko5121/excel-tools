@@ -43,7 +43,7 @@ class HolidayExcelParamData
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
 				# パラメータを取得してpush
-                holiday               = Excel.getCellValue(ws_param, recode.row, "#{@clumn_holiday}".to_i )
+                holiday               = Excel.getCellValue(ws_param, recode.row, "#{@column_holiday}".to_i )
 				next if ( holiday == "" or holiday == nil )
 
                 param = Hash.new
@@ -58,7 +58,7 @@ class HolidayExcelParamData
 
 	private
 	def setClumn( ws )
-		@clumn_holiday	= Excel.getColumn(ws, "祝日")
+		@column_holiday	= Excel.getColumn(ws, "祝日")
 	end
 
 	def errorCheck()
