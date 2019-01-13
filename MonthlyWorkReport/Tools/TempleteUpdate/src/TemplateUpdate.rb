@@ -22,21 +22,21 @@ class TemplateUpdate
 	def excelFormatUpdate( src_ws, dst_ws )
 
 		dst_ws.UnProtect
-		
+
 		# 「年/月/期間/氏名」のセル範囲を一時保存
 		temp_year		= Excel.getCellValue( dst_ws, 2, 5 )
 		temp_month		= Excel.getCellValue( dst_ws, 2, 6 )
 		temp_period		= Excel.getCellValue( dst_ws, 2, 7 )
 		temp_staff_name	= Excel.getCellValue( dst_ws, 2, 10 )
-		
+
 		# 各種フォーマット更新
 		Excel.rangeCopyFast( src_ws, FORMAT_STAFF_SHEET_ALL, dst_ws, FORMAT_STAFF_SHEET_ALL )
 
 		# 「年/月/期間/氏名」のセル範囲を設定
-		setCalendarData( dst_ws, temp_year, temp_month,temp_period, temp_staff_name )	
-		
+		setCalendarData( dst_ws, temp_year, temp_month,temp_period, temp_staff_name )
+
 		# 行数を算出
-		work_rows = Excel.getRow( src_ws, 1, "計" )
+		work_rows = Excel.getRow( src_ws, "計", 1)
 
 		# 各種「日付」
 		date_range = Excel.calcRangeStr( STAFF_SHEET_DATA.DateStartColumn, STAFF_SHEET_START_ROW, work_rows )
@@ -49,7 +49,7 @@ class TemplateUpdate
 		# 各種「総勤務時間」
 		work_time_range = Excel.calcRangeStr( STAFF_SHEET_DATA.WorkTimeColumn, STAFF_SHEET_START_ROW, work_rows )
 		Excel.rangeCopyFast( src_ws, work_time_range, dst_ws, work_time_range )
-		
+
 		# セルをロック（編集不可）にしてシートを保護
 		dst_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Locked = true
 		dst_ws.Protect
@@ -63,9 +63,9 @@ class TemplateUpdate
 		dst_ws.Cells.Item( 2, 5 ).Value = year
 		dst_ws.Cells.Item( 2, 6 ).Value = month
 		dst_ws.Cells.Item( 2, 7 ).Value = period
-		dst_ws.Cells.Item( 2, 10 ).Value = staff_name	
-	end	
-	
+		dst_ws.Cells.Item( 2, 10 ).Value = staff_name
+	end
+
 	#----------------------------------------------
 	# @biref	ファイルのパスから、社員名を取得
 	#----------------------------------------------
@@ -86,38 +86,38 @@ class TemplateUpdate
 		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.#{EXT_NAME}" ) do |file_path|
 			@file_list.push( file_path )
 		end
-		
+
 		if( @file_list.size() == 0 )
 			assertLogPrintFalse( "in フォルダにファイルがありません" )
 		end
 	end
 
 	def update()
-	
+
 		Excel.runDuring(false, false) do |excel|
 
 			# コピーしたブックを開く
 			fso = WIN32OLE.new('Scripting.FileSystemObject')
 			wb_templete = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( TEMPLATE_FILE_NAME ), 'updatelinks'=> 0})
 			ws_templete = wb_templete.worksheets( SHEET_NAME_TEMPLATE_DATA )
-			
+
 			# ファイルの数だけ
 			@file_list.each { |file_path|
 				wb_staff = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( file_path ), 'updatelinks'=> 0})
 				ws_staff = wb_staff.worksheets( "#{getStaffName(file_path)}" )
-				
+
 				# フォーマットを更新
 				excelFormatUpdate( ws_templete, ws_staff )
-				
+
 				# 更新したものをoutフォルダにセーブして閉じる
 				out_path = file_path.gsub( "in", "out" )
 				wb_staff.saveAs( fso.GetAbsolutePathName("#{out_path}") )
 				wb_staff.close()
-				
+
 				# ログ用
 				puts "update excel => #{File.basename( out_path )}"
 			}
-			wb_templete.close()			
+			wb_templete.close()
 		end
 	end
 end
