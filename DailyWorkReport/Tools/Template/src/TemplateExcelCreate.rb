@@ -61,7 +61,7 @@ class TemplateExcelCreate
 		monthly_days = getMonthlyDayCount( year, mouth )
 
 		# 閏年かどうか
-		if( mouth == 2 && Date.new( year ).leap? )
+		if( isLeapYear( year, mouth ) )
 			@is_leap_year = true
 		end
 
