@@ -46,7 +46,7 @@ class HolidayExcelParamData
 				next if ( cell_param == "" or cell_param == nil )
 
                 param = Hash.new
-                param[:holiday] = cell_param
+                param[@param_name] = cell_param
 				@param_list.push( param )
 			end
 			wb_param.close(0)

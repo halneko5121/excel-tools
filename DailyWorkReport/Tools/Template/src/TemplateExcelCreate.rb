@@ -93,7 +93,7 @@ class TemplateExcelCreate
                 # 祝日
                 holiday_list.each { |holiday|
 
-                    if( "#{year}/#{mouth}/#{day}" == "#{holiday[:holiday]}" )
+                    if( "#{year}/#{mouth}/#{day}" == "#{holiday["祝日"]}" )
                         wb.worksheets( new_sheet_index ).Tab.ColorIndex = 3
                         break
                     end
