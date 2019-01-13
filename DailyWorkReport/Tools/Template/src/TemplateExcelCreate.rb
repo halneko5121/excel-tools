@@ -14,7 +14,6 @@ class TemplateExcelCreate
 	private
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../Template.xlsx"
-	WDAYS				= ["日", "月", "火", "水", "木", "金", "土"]
 
 	private
 	#----------------------------------------------
@@ -68,9 +67,6 @@ class TemplateExcelCreate
 		# その月の日付分シートを作成
 		( 1.. monthly_days ).each { |day|
 
-			time			= Time.mktime( year, month, day )
-			w_day			= WDAYS[ time.wday ]
-
 			new_sheet_index = manual_count + day
 			if( day != 1 )
 				copy_sheet_index = new_sheet_index - 1
@@ -78,18 +74,16 @@ class TemplateExcelCreate
 			end
 
 			# シート名設定
-			sheet_name = "#{month}月#{day}日(#{w_day})"
-			wb.worksheets( new_sheet_index ).name = sheet_name
+			w_day		= calcWeekDay( year, month, day )
+			sheet_name	= "#{month}月#{day}日(#{w_day})"
+			ws = wb.worksheets( new_sheet_index )
+			ws.name = sheet_name
 
 			# シート色設定
-			if( w_day == "日" )      # 日曜
-				wb.worksheets( new_sheet_index ).Tab.ColorIndex = 3
-			elsif( w_day == "土" )   # 土曜
-				wb.worksheets( new_sheet_index ).Tab.ColorIndex = 5
-            else
-				wb.worksheets( new_sheet_index ).Tab.ColorIndex = Excel::XlNone
+			Excel.setSheetColorWithWeekend(ws, w_day)
 
-                # 祝日
+			# 平日なら祝日チェック
+			if isWeekday(w_day)
                 holiday_list.each { |holiday|
 
                     if( "#{year}/#{month}/#{day}" == "#{holiday[:holiday]}" )
