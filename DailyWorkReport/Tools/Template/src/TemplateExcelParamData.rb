@@ -10,18 +10,14 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 # ==========================="
 class TemplateExcelParamData
 	public
-	def initialize(wb_path, ws_name, param_name_list)
+	def initialize(wb_path, ws_name, param_name_hash)
 		@wb_path = wb_path
 		@ws_name = ws_name
 		@staff_list = Array.new
 		@staff_list.clear
 
 		# パラメータ名を保持
-		@param_name_list = Array.new
-		@param_name_list.clear
-		param_name_list.each { |param_name|
-			@param_name_list.push( param_name )
-		}
+		@param_name_hash = param_name_hash
 		assertLogPrintNotFoundFile( @wb_path )
 		setData()
 	end
@@ -46,26 +42,25 @@ class TemplateExcelParamData
 
 				# パラメータを取得してpush
 				staff = Hash.new
-				@param_name_list.each { |param_name|
-					column_name = Excel.getColumn(ws_param, "#{param_name}")
-					staff["#{param_name}"] = Excel.getCellValue(ws_param, recode.row, "#{column_name}".to_i)
+				@param_name_hash.each  { |key, value|
+					column_name = Excel.getColumn(ws_param, "#{value}")
+					staff[ :"#{key}" ] = Excel.getCellValue(ws_param, recode.row, "#{column_name}".to_i)
 				}
 				@staff_list.push( staff )
 			end
 			wb_param.close(0)
 		end
-
 		errorCheck()
 	end
 
 	private
 	def errorCheck()
 		@staff_list.each { |staff|
-			@param_name_list.each { |param_name|
-				data = staff["#{param_name}"]
+			@param_name_hash.each  { |key, value|
+				data = staff[ :"#{key}" ]
 				if( data == "" or data == nil )
 					error_str = "Parameter Error!!"
-					error_str = error_str + "「#{param_name}」が未入力です。"
+					error_str = error_str + "「#{value}」が未入力です。"
 					assertLogPrintFalse( "#{error_str}" )
 				end
 			}
