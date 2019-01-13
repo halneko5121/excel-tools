@@ -13,9 +13,9 @@ require File.dirname(__FILE__) + "/Define.rb"
 # ==========================="
 class TemplateExcelCreate
 	private
-	OUT_ROOT 				= File.dirname(__FILE__) + "/../../../Users"
+	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../Template.#{EXT_NAME}"
-	WDAYS						= ["日", "月", "火", "水", "木", "金", "土"]
+	WDAYS				= ["日", "月", "火", "水", "木", "金", "土"]
 
 	private
 	#----------------------------------------------
@@ -28,11 +28,11 @@ class TemplateExcelCreate
 
 		# 数値を3桁に変換
 		staff_num	= "%03d" % number
-        abbrev_name= abbrev_name.encode( Encoding::UTF_8 )
-		file_name    = "#{staff_num}_#{abbrev_name}_1-UP作業日報.#{EXT_NAME}".encode(Encoding::Windows_31J)
-		out_path	    = "#{OUT_ROOT}/#{file_name}"
-		out_path	    =  File.expand_path( out_path )
-		out_path     = out_path.gsub( "\\", "/" )
+        abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
+		file_name   = "#{staff_num}_#{abbrev_name}_1-UP作業日報.#{EXT_NAME}".encode(Encoding::Windows_31J)
+		out_path	= "#{OUT_ROOT}/#{file_name}"
+		out_path	=  File.expand_path( out_path )
+		out_path	= out_path.gsub( "\\", "/" )
 
 		return out_path;
 	end
@@ -55,7 +55,7 @@ class TemplateExcelCreate
 
 		# 2013xx => [2013][xx]に分割
 		str_calendar	= getSplitCalendar("#{param_hash[:joining_time]}")
-		year				= str_calendar[0].to_i
+		year			= str_calendar[0].to_i
 		mouth			= str_calendar[1].to_i
 
 		# 指定月の日数を設定
@@ -70,8 +70,8 @@ class TemplateExcelCreate
 		( 1.. monthly_days ).each { |day|
 
 			new_sheet_index = manual_count + day
-			time					= Time.mktime( year, mouth, day )
-			w_day				= WDAYS[ time.wday ]
+			time			= Time.mktime( year, mouth, day )
+			w_day			= WDAYS[ time.wday ]
 
 			if( day != 1 )
 				copy_sheet_index = new_sheet_index - 1
