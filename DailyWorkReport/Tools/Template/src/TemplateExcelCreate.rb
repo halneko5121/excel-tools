@@ -59,7 +59,7 @@ class TemplateExcelCreate
 		mouth			= str_calendar[1].to_i
 
 		# 指定月の日数を設定
-		monthly_days = getMonthlyDayCount( mouth )
+		monthly_days = getMonthlyDayCount( year, mouth )
 
 		# 閏年かどうか
 		if( mouth == 2 && Date.new( year ).leap? )
