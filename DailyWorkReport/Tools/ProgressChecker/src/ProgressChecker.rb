@@ -126,10 +126,10 @@ class ProgressChecker
 		template_param_list.each { |param|
 
 			# テンプレートパラメータと一致する excel である
-			if( file_path.include?( "#{param[:abbrev_name]}" ) )
+			if( file_path.include?( "#{param["略名"]}" ) )
 
 				# パスワードが設定されている
-				pass = "#{param[:pass]}"
+				pass = "#{param["pass"]}"
 				if( ( pass == nil or pass == "" ) == false )
 					return pass
 				end
@@ -166,7 +166,7 @@ class ProgressChecker
 		holiday_param_list.each { |holiday_param|
 
 			# 「西暦」以外の部分を抜き出す
-			split_holiday	= holiday_param[:holiday].split( "/" )
+			split_holiday	= holiday_param["祝日"].split( "/" )
 			mouth_day		= "#{split_holiday[1]}月#{split_holiday[2]}日"
 
 			wb.worksheets.each { |ws|

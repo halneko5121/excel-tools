@@ -28,7 +28,8 @@ if ( __FILE__ == $0 )
 		param_list			= holiday_param.getParamList()
 
 		# パラメータを取得する(社員ごと)
-		template_param		= TemplateExcelParamData.new(PARAMETER_FILE_NAME, "社員ごとの設定")
+		param_list = ["社員名", "略名", "pass", "作成年月"]
+		template_param		= TemplateExcelParamData.new(PARAMETER_FILE_NAME, "社員ごとの設定", param_list)
 		staff_list			= template_param.getStaffList()
 
 		# テンプレートのデータを元に excel の生成

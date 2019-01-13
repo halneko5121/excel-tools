@@ -41,7 +41,7 @@ class TemplateExcelCreate
 	# @biref	パラメータの設定(各社員シート)
 	# @parm		wb				設定を行うワークブック
 	# @parm		param_hash      パラメータを格納したハッシュ
-	# @parm		holiday_list    	祝日リスト
+	# @parm		holiday_list    祝日リスト
 	#----------------------------------------------
 	def setWsParamStaffSheet( wb, param_hash, holiday_list )
 
@@ -54,7 +54,7 @@ class TemplateExcelCreate
 		manual_count = wb.worksheets.count() -1
 
 		# 2013xx => [2013][xx]に分割
-		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
+		str_calendar	= splitYearMonth("#{param_hash["作成年月"]}")
 		year			= str_calendar[0].to_i
 		mouth			= str_calendar[1].to_i
 
@@ -127,7 +127,7 @@ class TemplateExcelCreate
 			staff_list.each_with_index{ |data, index|
 
 				# 出力先のパスを取得
-				out_path = getOutputPath( index+1, "#{data[:abbrev_name]}" )
+				out_path = getOutputPath( index+1, "#{data["略名"]}" )
 
 				# テンプレートのブックをコピー
 				fso.CopyFile( TEMPLATE_FILE_NAME, out_path )
@@ -139,8 +139,9 @@ class TemplateExcelCreate
 				setWsParamStaffSheet( wb, data, holiday_list )
 
 				# パスワードが設定されていたら設定する
-				if( ( "#{data[:pass]}" == nil or "#{data[:pass]}" == "" ) == false )
-					wb.password = "#{data[:pass]}"
+				pass = "#{data["pass"]}"
+				if( ( pass == nil or pass == "" ) == false )
+					wb.password = pass
 				end
 				wb.save()
 				wb.close()
