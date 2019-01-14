@@ -46,6 +46,8 @@ class TemplateUpdate
 			@file_list.each { |file_path|
 
 				pass = searchPassword( file_path, template_param_list)
+				error_path = File.expand_path(file_path.encode( Encoding::UTF_8 ))
+				assertLogPrint(pass != nil, "#{error_path} の pass が不明です" )
 				src_wb_staff = Excel.openWb( excel, file_path, pass )
 
 				# 元のブックをコピー
