@@ -5,4 +5,3 @@
 # ==========================="
 SHEET_NAME_TEMPLATE_DATA	= "日報"
 ADD_CULMNS_CHECK_SHEET		= 0
-EXT_NAME					= "xlsx"
