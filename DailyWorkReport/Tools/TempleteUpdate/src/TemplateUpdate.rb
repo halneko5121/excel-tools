@@ -12,10 +12,11 @@ require File.dirname(__FILE__) + "/Define.rb"
 # ==========================="
 class TemplateUpdate
 	private
-	IN_ROOT 			= File.dirname(__FILE__) + "/../in"
-	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
-	TEMPLATE_FILE_PATH	= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
-	COPY_RANGE			= "A1:O50"
+	IN_ROOT 					= File.dirname(__FILE__) + "/../in"
+	OUT_ROOT 					= File.dirname(__FILE__) + "/../out"
+	TEMPLATE_FILE_PATH			= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
+	COPY_RANGE					= "A1:O50"
+	SHEET_NAME_TEMPLATE_DATA	= "日報"
 
 	public
 	def initialize()
