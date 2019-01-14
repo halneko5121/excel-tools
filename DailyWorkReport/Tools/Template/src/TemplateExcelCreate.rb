@@ -129,7 +129,7 @@ class TemplateExcelCreate
 			ws.name = sheet_name
 
 			# シート色設定
-			Excel.setSheetColorWithWeekend(ws, w_day)
+			Excel.setSheetColorWithWeekend( ws, year, month, day )
 
 			# 平日なら祝日チェック
 			if isWeekday( year, month, day )
