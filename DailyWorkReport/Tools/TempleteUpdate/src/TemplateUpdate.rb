@@ -12,10 +12,10 @@ require File.dirname(__FILE__) + "/Define.rb"
 # ==========================="
 class TemplateUpdate
 	private
-	IN_ROOT 						= File.dirname(__FILE__) + "/../in"
-	OUT_ROOT 					= File.dirname(__FILE__) + "/../out"
+	IN_ROOT 			= File.dirname(__FILE__) + "/../in"
+	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
 	TEMPLATE_FILE_PATH	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
-	COPY_RANGE				= "A1:O50"
+	COPY_RANGE			= "A1:O50"
 
 	public
 	def initialize()
@@ -79,7 +79,7 @@ class TemplateUpdate
 	#----------------------------------------------
 	def excelFormatUpdate( ws_templete, src_wb_staff, dst_wb_staff, param_list, monthly_days )
 
-		ws_count				= src_wb_staff.worksheets.count
+		ws_count		= src_wb_staff.worksheets.count
 		ws_manual_count	= ws_count - monthly_days
 
 		# シートの数だけ
@@ -136,7 +136,7 @@ class TemplateUpdate
 		template_param_list.each { |param|
 
 			str_calendar	= splitYearMonth("#{param[:joining_time]}")
-			year				= str_calendar[0].to_i
+			year			= str_calendar[0].to_i
 			mouth			= str_calendar[1].to_i
 
 			# 指定月の日数を設定
