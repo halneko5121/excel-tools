@@ -15,6 +15,58 @@ class TemplateExcelCreate
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../Template.xlsx"
 
+	public
+	def initialize()
+		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
+		@is_leap_year = false
+	end
+
+	def createExcel( staff_list, holiday_list )
+
+		# ファイルが存在していた場合はファイルを削除
+		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
+			File.delete "#{file_path}"
+		end
+
+		puts "excel count = #{staff_list.size()}"
+
+		fso = WIN32OLE.new('Scripting.FileSystemObject')
+		Excel.runDuring(false, false) do |excel|
+
+			# 社員数だけ
+			staff_list.each_with_index{ |data, index|
+
+				# 出力先のパスを取得
+				out_path = getOutputPath( index+1, "#{data[:abbrev_name]}" )
+
+				# テンプレートのブックをコピー
+				fso.CopyFile( TEMPLATE_FILE_NAME, out_path )
+
+				# コピーしたブックを開く
+				wb = Excel.openWb( excel, out_path )
+
+				# パラメータの設定
+				setWsParamStaffSheet( wb, data, holiday_list )
+
+				# パスワードが設定されていたら設定する
+				pass = "#{data[:pass]}"
+				if( ( pass == nil or pass == "" ) == false )
+					wb.password = pass
+				end
+				wb.save()
+				wb.close()
+
+				# ログ用
+				puts "create excel => #{File::basename( out_path )}"
+			}
+		end
+
+		if( @is_leap_year )
+			puts ""
+			puts "閏年の2月です。閏年設定がされました"
+		end
+	end
+
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
@@ -93,57 +145,5 @@ class TemplateExcelCreate
 
 		# 最初のシートをアクティブに
 		wb.worksheets( 1 ).Activate
-	end
-
-	public
-	def initialize()
-		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
-		@is_leap_year = false
-	end
-
-	def createExcel( staff_list, holiday_list )
-
-		# ファイルが存在していた場合はファイルを削除
-		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
-			File.delete "#{file_path}"
-		end
-
-		puts "excel count = #{staff_list.size()}"
-
-		fso = WIN32OLE.new('Scripting.FileSystemObject')
-		Excel.runDuring(false, false) do |excel|
-
-			# 社員数だけ
-			staff_list.each_with_index{ |data, index|
-
-				# 出力先のパスを取得
-				out_path = getOutputPath( index+1, "#{data[:abbrev_name]}" )
-
-				# テンプレートのブックをコピー
-				fso.CopyFile( TEMPLATE_FILE_NAME, out_path )
-
-				# コピーしたブックを開く
-				wb = Excel.openWb( excel, out_path )
-
-				# パラメータの設定
-				setWsParamStaffSheet( wb, data, holiday_list )
-
-				# パスワードが設定されていたら設定する
-				pass = "#{data[:pass]}"
-				if( ( pass == nil or pass == "" ) == false )
-					wb.password = pass
-				end
-				wb.save()
-				wb.close()
-
-				# ログ用
-				puts "create excel => #{File::basename( out_path )}"
-			}
-		end
-
-		if( @is_leap_year )
-			puts ""
-			puts "閏年の2月です。閏年設定がされました"
-		end
 	end
 end
