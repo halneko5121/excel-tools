@@ -110,22 +110,24 @@ class TemplateExcelCreate
 		end
 
 		# 「日報」 シート以外のシートの数
-		manual_count = wb.worksheets.count() -1
+		daily_sheet_index = wb.worksheets.count()
+		manual_sheet_count = daily_sheet_index - 1
 
 		# 指定月の日付分シートを作成
 		monthly_days = getMonthlyDayCount( year, month )
 		( 1.. monthly_days ).each { |day|
 
-			new_sheet_index = manual_count + day
+			# 最初に用意されている日報シートをコピー
+			new_sheet_index = manual_sheet_count + day
 			if( day != 1 )
 				copy_sheet_index = new_sheet_index - 1
-				Excel.sheetCopyNumber( wb, manual_count + 1, wb, copy_sheet_index )
+				Excel.sheetCopyNumber( wb, daily_sheet_index, wb, copy_sheet_index )
 			end
+			ws = wb.worksheets( new_sheet_index )
 
 			# シート名設定
 			w_day		= calcWeekDay( year, month, day )
 			sheet_name	= "#{month}月#{day}日(#{w_day})"
-			ws = wb.worksheets( new_sheet_index )
 			ws.name = sheet_name
 
 			# シート色設定
