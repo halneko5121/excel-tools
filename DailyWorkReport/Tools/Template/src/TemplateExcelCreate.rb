@@ -23,12 +23,11 @@ class TemplateExcelCreate
 
 	def createExcel( staff_list, holiday_list )
 
-		# ファイルが存在していた場合はファイルを削除
-		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
-			File.delete "#{file_path}"
-		end
-
 		puts "excel count = #{staff_list.size()}"
+
+		# ファイルが存在していた場合はファイルを削除
+		pattern = [ "*.xlsx" ]
+		allClearFile("#{OUT_ROOT}", pattern)
 
 		fso = WIN32OLE.new('Scripting.FileSystemObject')
 		Excel.runDuring(false, false) do |excel|
