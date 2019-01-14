@@ -99,7 +99,7 @@ class TemplateExcelCreate
 			return
 		end
 
-		# 2013xx => [2013][xx]に分割
+		# 201801 => [2018][01]に分割
 		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
 		year			= str_calendar[0].to_i
 		month			= str_calendar[1].to_i
