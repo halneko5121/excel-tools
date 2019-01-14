@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + "/TemplateUpdate.rb"
 # Const
 # ==========================="
 TITLE	= "TempleteUpdate"
-VER		= "1.1.0"
+VER		= "1.0.5"
 TAMPLATE_PARAM_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/TemplateParam.xls"
 PARAMETER_FILE_NAME			= File.dirname(__FILE__) + "/../TemplateUpdateParam.xls"
 
