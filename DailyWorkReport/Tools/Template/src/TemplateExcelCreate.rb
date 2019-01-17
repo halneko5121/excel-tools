@@ -124,7 +124,7 @@ class TemplateExcelCreate
 			# シート名設定
 			w_day		= calcWeekDay( year, month, day )
 			sheet_name	= "#{month}月#{day}日(#{w_day})"
-			ws.name = sheet_name
+			ws.name		= sheet_name
 
 			# シート色設定
 			Excel.setSheetColorWithWeekend( ws, year, month, day )
