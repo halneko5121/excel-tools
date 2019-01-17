@@ -23,7 +23,7 @@ if ( __FILE__ == $0 )
 	AppModule.main( TITLE,  VER ) {
 
 		# パラメータの設定(テンプレート)
-		param_hash = { name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
+		param_hash = { id: "社員番号", name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
 		template_param	= ExcelParamData.new(TAMPLATE_PARAM_FILE_NAME, "社員ごとの設定", param_hash)
 
 		# パラメータの設定
