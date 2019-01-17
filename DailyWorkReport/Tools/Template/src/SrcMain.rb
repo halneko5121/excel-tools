@@ -28,7 +28,7 @@ if ( __FILE__ == $0 )
 		holiday_data_list	= holiday_param.getParamList()
 
 		# パラメータを取得する(社員ごと)
-		param_hash = { name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
+		param_hash = { id: "社員番号", name: "社員名", abbrev_name: "略名", pass: "pass", joining_time: "作成年月" }
 		template_param		= ExcelParamData.new(PARAMETER_FILE_NAME, "社員ごとの設定", param_hash)
 		staff_data_list		= template_param.getParamList()
 

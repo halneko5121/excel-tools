@@ -36,7 +36,7 @@ class TemplateExcelCreate
 			staff_list.each_with_index{ |data, index|
 
 				# 出力先のパスを取得
-				out_path = getOutputPath( index+1, "#{data[:abbrev_name]}" )
+				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}" )
 
 				# テンプレートのブックをコピー
 				fso.CopyFile( TEMPLATE_FILE_NAME, out_path )
@@ -69,16 +69,15 @@ class TemplateExcelCreate
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
-	# @parm		fso				ファイルシステムオブジェクト
-	# @parm		number			データ番号
-	# @parm		abbrev_name		社員略称
+	# @parm		id			社員番号
+	# @parm		abbrev_name	社員略称
 	#----------------------------------------------
-	def getOutputPath( number, abbrev_name )
+	def getOutputPath( id, abbrev_name )
 
 		# 数値を3桁に変換
-		staff_num	= "%03d" % number
+		staff_id	= "%03d" % id.to_i
         abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
-		file_name   = "#{staff_num}_#{abbrev_name}_1-UP作業日報.xlsx".encode(Encoding::Windows_31J)
+		file_name   = "#{staff_id}_#{abbrev_name}_1-UP作業日報.xlsx".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
 		out_path	=  File.expand_path( out_path )
 		out_path	= out_path.gsub( "\\", "/" )
