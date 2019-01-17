@@ -93,10 +93,7 @@ class TemplateExcelCreate
 	#----------------------------------------------
 	def setWsParamStaffSheet( wb, param_hash, holiday_list )
 
-		if( Excel.existSheet( wb, "日報" ) == false )
-			assertLogPrintFalse( "「日報」シートが存在しません。日報用のシート名を「日報」にして下さい" )
-			return
-		end
+		return if( Excel.existSheet( wb, "日報" ) == false )
 
 		# 201801 => [2018][01]に分割
 		str_calendar	= splitYearMonth("#{param_hash[:joining_time]}")
