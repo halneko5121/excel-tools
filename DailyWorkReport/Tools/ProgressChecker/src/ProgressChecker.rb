@@ -16,7 +16,6 @@ class ProgressChecker
 
 	public
 	def initialize()
-
 		assertLogPrintNotFoundFile( TEMPLATE_FILE_PATH )
 
 		# [in] にある excel のファイルリストを作成
