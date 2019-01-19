@@ -110,16 +110,15 @@ class TemplateExcelCreate
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 
 		ws_staff.UnProtect
-			ws_staff.Cells.Item(6, 3).Value = "%03d" % "#{param_hash[:id]}".to_i # 数値を3桁に変換
-			ws_staff.Cells.Item(7, 3).Value = "#{param_hash[:name]}"
-			ws_staff.Cells.Item(8, 3).Value = "#{param_hash[:job_type]}"
+			Excel.setCellValue(ws_staff, 6, 3, "%03d" % "#{param_hash[:id]}".to_i ) # 数値を3桁に変換
+			Excel.setCellValue(ws_staff, 7, 3, "#{param_hash[:name]}" )
+			Excel.setCellValue(ws_staff, 8, 3, "#{param_hash[:job_type]}" )
+			Excel.setCellValue(ws_staff, 6, 7, "#{param_hash[:gender]}" )
+			Excel.setCellValue(ws_staff, 7, 7, "#{param_hash[:age]}" )
+			Excel.setCellValue(ws_staff, 8, 7, "#{param_hash[:joining_time]}" )
 
-			ws_staff.Cells.Item(6, 7).Value = "#{param_hash[:gender]}"
-			ws_staff.Cells.Item(7, 7).Value = "#{param_hash[:age]}"
-			ws_staff.Cells.Item(8, 7).Value = "#{param_hash[:joining_time]}"
-
-			ws_staff.Cells.Item(7, 10).Value = "#{param_hash[:last_month_over_time]}"
-			ws_staff.Cells.Item(8, 10).Value = "#{param_hash[:last_month_over_time2]}"
+			Excel.setCellValue(ws_staff, 7, 10, "#{param_hash[:last_month_over_time]}" )
+			Excel.setCellValue(ws_staff, 8, 10, "#{param_hash[:last_month_over_time2]}" )
 			ws_staff.Cells.Item(73, 1).Value = calcDeadLineString( ws_staff.Cells.Item(73, 1).Value, "#{param_hash[:report_dead_line]}" )
 
 			dead_line_str = ws_staff.Cells.Item(73, 1).Value
