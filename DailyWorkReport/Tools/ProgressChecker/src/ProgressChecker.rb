@@ -128,18 +128,4 @@ class ProgressChecker
 
 		return ""
 	end
-
-	#----------------------------------------------
-	# 祝日か
-	#----------------------------------------------
-	def isPublicHoiyday( ws_name, holidays )
-
-		holidays.each { |holiday|
-
-			if( ws_name.include?( holiday ) )
-				return true
-			end
-		}
-		return false
-	end
 end
