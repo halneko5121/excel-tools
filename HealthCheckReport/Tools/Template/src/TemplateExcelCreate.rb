@@ -52,7 +52,7 @@ class TemplateExcelCreate
 
 				# コピーしたブックを開いて、パラメータの設定
 				wb = excel.workbooks.open({'filename'=> out_path, 'updatelinks'=> 0})
-				setWsParamStaffSheet( wb, data )
+				setWsParamSheet( wb, data )
 
 				# 左上をアクティブにしてスクロールしておく
 				excel.ActiveWindow.ScrollRow = 1
@@ -98,11 +98,13 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	パラメータの設定(各社員シート)
+	# @biref	パラメータの設定
 	# @parm		wb			設定を行うワークブック
 	# @parm		param_hash	パラメータを格納したハッシュ
 	#----------------------------------------------
-	def setWsParamStaffSheet( wb, param_hash )
+	def setWsParamSheet( wb, param_hash )
+
+		return if( Excel.existSheet( wb, SHEET_NAME_TEMPLATE_DATA) == false )
 
 		# 社員名（フルネーム）
 		ws_staff	  = wb.worksheets(SHEET_NAME_TEMPLATE_DATA)
