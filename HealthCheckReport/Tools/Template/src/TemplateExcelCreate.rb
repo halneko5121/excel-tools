@@ -13,7 +13,7 @@ class TemplateExcelCreate
 	private
 	OUT_ROOT 				= File.dirname(__FILE__) + "/../../../Users"
 	FILE_PREFIX				= "【1-UP】健康チェックリスト"
-	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/#{FILE_PREFIX}_templete.xlsx"
+	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
 	DEAD_LINE_STR_PREFIX	= "XXXX"
 
 	private
