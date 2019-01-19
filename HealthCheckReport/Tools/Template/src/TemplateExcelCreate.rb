@@ -16,6 +16,66 @@ class TemplateExcelCreate
 	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
 	DEAD_LINE_STR_PREFIX	= "XXXX"
 
+	public
+	def initialize()
+		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
+	end
+
+	def createExcel( staff_list )
+
+		# ファイルが存在していた場合はファイルを削除
+		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
+			File.delete "#{file_path}"
+		end
+
+		# 出力OKのものだけ出力する
+		result_staff_list = Array.new
+		staff_list.each{|data|
+			utf_8_is_output = data[:is_output].encode( Encoding::UTF_8 )
+			if ( utf_8_is_output.index( "◯" ) != nil)
+				result_staff_list.push(data)
+			end
+		}
+
+		puts "excel count = #{result_staff_list.size()}"
+
+		Excel.runDuring(false, false) do |excel|
+
+			fso = WIN32OLE.new('Scripting.FileSystemObject')
+
+			# 社員数だけ
+			staff_number = 1
+			result_staff_list.each{|data|
+
+				# 出力先のパスを取得
+				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
+
+				# テンプレートのブックをコピー
+				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
+
+				# コピーしたブックを開く
+				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
+				excel.displayAlerts = false
+				excel.visible		= false
+
+				# パラメータの設定
+				# 左上をアクティブにしてスクロールしておく
+				setWsParamStaffSheet( wb, data )
+				excel.ActiveWindow.ScrollRow = 1
+				excel.ActiveWindow.ScrollColumn = 1
+
+				# セーブして閉じる
+				wb.save()
+				wb.close(0)
+
+				staff_number += 1
+
+				# ログ用
+				puts "create excel => #{File::basename( out_path )}"
+			}
+		end
+	end
+
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
@@ -140,65 +200,5 @@ class TemplateExcelCreate
 #		ws_staff.Protect( {'Contents' => true} )
 #		ws_staff.Protect( {'UserInterfaceOnly' => true} )
 #		ws_staff.Protect( {'allowformattingcells' => true} )
-	end
-
-	public
-	def initialize()
-		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
-	end
-
-	def createExcel( staff_list )
-
-		# ファイルが存在していた場合はファイルを削除
-		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
-			File.delete "#{file_path}"
-		end
-
-		# 出力OKのものだけ出力する
-		result_staff_list = Array.new
-		staff_list.each{|data|
-			utf_8_is_output = data[:is_output].encode( Encoding::UTF_8 )
-			if ( utf_8_is_output.index( "◯" ) != nil)
-				result_staff_list.push(data)
-			end
-		}
-
-		puts "excel count = #{result_staff_list.size()}"
-
-		Excel.runDuring(false, false) do |excel|
-
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
-
-			# 社員数だけ
-			staff_number = 1
-			result_staff_list.each{|data|
-
-				# 出力先のパスを取得
-				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
-
-				# テンプレートのブックをコピー
-				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
-
-				# コピーしたブックを開く
-				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
-				excel.displayAlerts = false
-				excel.visible		= false
-
-				# パラメータの設定
-				# 左上をアクティブにしてスクロールしておく
-				setWsParamStaffSheet( wb, data )
-				excel.ActiveWindow.ScrollRow = 1
-				excel.ActiveWindow.ScrollColumn = 1
-
-				# セーブして閉じる
-				wb.save()
-				wb.close(0)
-
-				staff_number += 1
-
-				# ログ用
-				puts "create excel => #{File::basename( out_path )}"
-			}
-		end
 	end
 end
