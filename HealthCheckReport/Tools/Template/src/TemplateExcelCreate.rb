@@ -8,7 +8,6 @@ require "find"
 require "date"
 require File.dirname(__FILE__) + "/../../lib/excel.rb"
 require File.dirname(__FILE__) + "/../../lib/util.rb"
-require File.dirname(__FILE__) + "/Define.rb"
 
 # ==========================="
 # src
