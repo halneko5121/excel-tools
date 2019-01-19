@@ -20,7 +20,7 @@ class ProgressChecker
 
 		# [in] にある excel のファイルリストを作成
 		pattern_array =[ "*.xlsx" ]
-		@file_list = getSearchFile("#{IN_ROOT}", pattern_array)
+		@file_list = getSearchFileList("#{IN_ROOT}", pattern_array)
 		if( @file_list.size() == 0 )
 			assertLogPrintFalse( "in フォルダにファイルがありません" )
 		end

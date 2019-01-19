@@ -43,17 +43,17 @@ class SplitExcel
 
 			# ファイル名の拡張子を取得
 			ext_name = File.extname( file_path )
-			
+
 			# ファイル名のフォルダを作成
-			dir_name = File.basename( file_path, "#{ext_name}" )			
+			dir_name = File.basename( file_path, "#{ext_name}" )
 			out_dir	 = "#{@out_root}/#{dir_name}"
 			FileUtils.mkdir_p( "#{out_dir}" )
-			
+
 			# エラーチェック
 			splitErrorCheck( @split_pattern )
 
 			puts "========== split : #{dir_name} =========="
-			
+
 			# 分割したいブックを開いて分割
 			src_wb = @excel.workbooks.open({'filename'=> @fso.GetAbsolutePathName( file_path ), 'updatelinks'=> 0})
 			split( src_wb, out_dir, ext_name )
@@ -69,7 +69,7 @@ class SplitExcel
 
 		case split_pattern
 		when 1
-			file_list = getSearchFile( "#{@in_root}", SPLIT_WORKS_WB_NAME )
+			file_list = getSearchFileList( "#{@in_root}", SPLIT_WORKS_WB_NAME )
 			if( file_list.size() == 0 )
 				error_str = "[有給管理表分割]の際は\n"
 				error_str += "ファイル名に[振休][管理表]が入ったexcelが必要です"
@@ -85,14 +85,14 @@ class SplitExcel
 
 		is_ws_protect	= @common_param.getParam( "シートの保護" )
 		protect_pass	= @common_param.getParam( "保護パスワード" )
-		
+
 		# パラメータ用 excel を開く
 		wb_param = @excel.workbooks.open({'filename'=> @fso.GetAbsolutePathName( PARAMETER_FILE_NAME ), 'updatelinks'=> 0})
 
 		# パターンごとに分割
 		case @split_pattern
 		when 0
-			split_default = SplitDefault.new()			
+			split_default = SplitDefault.new()
 			split_default.split( @excel, @fso, src_wb, out_dir, ext_name, is_ws_protect )
 		when 1
 			SPLIT_WORKS_WB_NAME.each{ |pattern|
@@ -101,7 +101,7 @@ class SplitExcel
 					split_work = SplitWork.new()
 					split_work.split( @excel, src_wb, out_dir, ext_name, wb_param.worksheets("分割パターン1"), is_ws_protect, protect_pass )
 					break
-				end			
+				end
 			}
 		else
 			error_str = "サポートされていない分割パターンです！ => #{@split_pattern}(0~1)"
@@ -117,7 +117,7 @@ class SplitExcel
 		if( count == 0 )
 			FileUtils.rm_r( Dir.glob( "#{out_dir}" ) )
 		end
-			
+
 		wb_param.close(0)
 	end
 end
