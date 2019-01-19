@@ -112,26 +112,6 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	勤続年数を算出
-	# @parm		joining_time	入社日
-	# @parm		create_calendar	生成年月
-	#----------------------------------------------
-	def calcWorkTime( joining_time, create_calendar )
-
-		# 年 / 月 を算出
-        time_now			= convertCreateDate( create_calendar )
-        date_time_joining	= DateTime.parse( joining_time )
-        time_joining		= Date.new( date_time_joining.year, date_time_joining.mon, date_time_joining.day )
-
-		work_time		= time_now - time_joining
-		result_year		= work_time.to_f / 365
-		result_mouth	= (result_year - result_year.floor) * 12
-		result_work_time = "#{result_year.floor}年 #{result_mouth.ceil}ヶ月"
-
-		return result_work_time;
-	end
-
-	#----------------------------------------------
 	# @biref	「報告締切日」を算出
 	# @parm		defult_str		デフォルトの文言
 	# @parm		dead_line_str	置換する文言
@@ -161,7 +141,7 @@ class TemplateExcelCreate
 
 			ws_staff.Cells.Item(6, 7).Value = "#{param_hash[:gender]}"
 			ws_staff.Cells.Item(7, 7).Value = "#{param_hash[:age]}"
-			ws_staff.Cells.Item(8, 7).Value = "#{param_hash[:joining_time]}"#calcWorkTime( "#{param_hash[:joining_time]}", "#{param_hash[:create_calendar]}" )
+			ws_staff.Cells.Item(8, 7).Value = "#{param_hash[:joining_time]}"
 
 			ws_staff.Cells.Item(7, 10).Value = "#{param_hash[:last_month_over_time]}"
 			ws_staff.Cells.Item(8, 10).Value = "#{param_hash[:last_month_over_time2]}"
