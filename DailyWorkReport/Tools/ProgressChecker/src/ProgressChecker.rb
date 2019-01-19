@@ -19,12 +19,9 @@ class ProgressChecker
 
 		assertLogPrintNotFoundFile( TEMPLATE_FILE_PATH )
 
-		@file_list = Array.new()
 		# [in] にある excel のファイルリストを作成
-		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.xlsx" ) do |file_path|
-			@file_list.push( file_path )
-		end
-
+		pattern_array =[ "*.xlsx" ]
+		@file_list = getSearchFile("#{IN_ROOT}", pattern_array)
 		if( @file_list.size() == 0 )
 			assertLogPrintFalse( "in フォルダにファイルがありません" )
 		end
