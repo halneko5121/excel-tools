@@ -95,23 +95,6 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	生成年月をDate変換
-	# @parm		create_calendar	生成年月
-	#----------------------------------------------
-	def convertCreateDate( create_calendar )
-
-		# 2013xx => [2013][xx]に分割
-		str_calendar = splitYearMonth( create_calendar )
-
-		# 年 / 月 を算出
-		year	 			= str_calendar[0].to_i
-		month				= str_calendar[1].to_i
-        create_time			= Date.new( year, month )
-
-		return create_time
-	end
-
-	#----------------------------------------------
 	# @biref	「報告締切日」を算出
 	# @parm		defult_str		デフォルトの文言
 	# @parm		dead_line_str	置換する文言
