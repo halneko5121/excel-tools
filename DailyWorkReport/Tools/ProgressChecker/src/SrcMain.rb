@@ -3,7 +3,7 @@
 # ==========================="
 # require
 # ==========================="
-require File.dirname(__FILE__) + "/../../Template/src/ExcelParamData.rb"
+require File.dirname(__FILE__) + "/../../lib/ExcelParamData.rb"
 require File.dirname(__FILE__) + "/../../lib/AppModule.rb"
 require File.dirname(__FILE__) + "/ProgressChecker.rb"
 
