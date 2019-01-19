@@ -138,7 +138,7 @@ class TemplateExcelCreate
 		# 最初のセルをアクティブ
 		ws_staff.Range("A1").Activate
 
-		#　シート保護をしない or マクロ有りブックにする
+		# シート保護をしない or マクロ有りブックにする
 #		ws_staff.EnableOutlining = true
 #		ws_staff.Protect( {'Contents' => true} )
 #		ws_staff.Protect( {'UserInterfaceOnly' => true} )
