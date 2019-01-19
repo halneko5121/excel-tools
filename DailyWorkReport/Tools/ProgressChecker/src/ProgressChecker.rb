@@ -30,7 +30,7 @@ class ProgressChecker
 		end
 	end
 
-	def execute( template_param_list, custodian, holiday_param_list )
+	def execute( template_param_list, custodian )
 
 		Excel.runDuring(false, false) do |excel|
 
@@ -41,16 +41,13 @@ class ProgressChecker
 				pass = searchPassword( file_path, template_param_list )
 				wb_staff = Excel.openWb( excel, file_path, pass )
 
-				# このブックに含まれてる祝日を抜き出す
-				holidays = getIncludeHolyday( wb_staff, holiday_param_list )
-
 				# ログ用
 				releasePuts( "check excel => #{File.basename( file_path )}", log_text )
 				releasePuts( "----------------------------", log_text )
 
 				# 各シートをチェック
 				wb_staff.worksheets.each { |ws|
-					checkProgress( ws, custodian, holidays, log_text )
+					checkProgress( ws, custodian, log_text )
 				}
 				wb_staff.close()
 				releasePuts( "", log_text )
@@ -66,7 +63,7 @@ class ProgressChecker
 	#----------------------------------------------
 	# 進捗をチェックする
 	#----------------------------------------------
-	def checkProgress( ws, custodian, holidays, log_text )
+	def checkProgress( ws, custodian, log_text )
 
 		# 「xx月XX日」の形式になってるシートだけチェック
 		utf_8_ws_name = ws.name.encode( "UTF-8" )
@@ -74,12 +71,10 @@ class ProgressChecker
 
 		# 祝日
 		holidays_str = ""
-		if( holidays != nil )
-			if( isPublicHoiyday( utf_8_ws_name, holidays ) )
-				holidays_str = "(祝日)"
-			elsif( utf_8_ws_name.include?( "(土)" ) || utf_8_ws_name.include?( "(日)" ) )
-				holidays_str = "(休日)"
-			end
+		if( utf_8_ws_name.include?( "(土)" ) || utf_8_ws_name.include?( "(日)" ) )
+			holidays_str = "(休日)"
+		elsif( Excel.isWsColorRed( ws ) )
+			holidays_str = "(祝日)"
 		end
 
 		is_checked = isCheckedProgress( ws, custodian )
@@ -147,32 +142,4 @@ class ProgressChecker
 		}
 		return false
 	end
-
-	#----------------------------------------------
-	# 指定ブックに含まれる祝日を返す
-	#----------------------------------------------
-	def getIncludeHolyday( wb, holiday_param_list )
-
-		if( holiday_param_list == nil )
-			return nil
-		end
-
-		holidays = Array.new()
-		holiday_param_list.each { |holiday_param|
-
-			# 「西暦」以外の部分を抜き出す
-			split_holiday	= holiday_param[:holiday].split( "/" )
-			month_day		= "#{split_holiday[1]}月#{split_holiday[2]}日"
-
-			wb.worksheets.each { |ws|
-				utf_8_ws_name = ws.name.encode( "UTF-8" )
-				if( utf_8_ws_name.include?( month_day ) )
-					holidays.push( month_day )
-					break
-				end
-			}
-		}
-		return holidays
-	end
-
 end
