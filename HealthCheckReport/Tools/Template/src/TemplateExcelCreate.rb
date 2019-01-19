@@ -17,7 +17,7 @@ class TemplateExcelCreate
 	private
 	OUT_ROOT 				= File.dirname(__FILE__) + "/../../../Users"
 	FILE_PREFIX				= "【1-UP】健康チェックリスト"
-	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/#{FILE_PREFIX}_templete.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/#{FILE_PREFIX}_templete.xlsx"
 	DEAD_LINE_STR_PREFIX	= "XXXX"
 
 	private
@@ -32,7 +32,7 @@ class TemplateExcelCreate
 		# 数値を3桁に変換
 		staff_id	= "%03d" % id.to_i
         abbrev_name = abbrev_name.encode( Encoding::UTF_8 )
-		file_name	= "#{FILE_PREFIX}_#{calendar.to_i.to_s}_#{staff_id}_#{abbrev_name}.#{EXT_NAME}".encode(Encoding::Windows_31J)
+		file_name	= "#{FILE_PREFIX}_#{calendar.to_i.to_s}_#{staff_id}_#{abbrev_name}.xlsx".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
 
 		return out_path;
