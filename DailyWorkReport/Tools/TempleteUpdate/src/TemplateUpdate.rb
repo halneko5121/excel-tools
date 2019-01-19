@@ -38,7 +38,6 @@ class TemplateUpdate
 		Excel.runDuring(false, false) do |excel|
 
 			# テンプレートブックを開く
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
 			wb_templete	= Excel.openWb( excel, TEMPLATE_FILE_PATH )
 			ws_templete	= wb_templete.worksheets( SHEET_NAME_TEMPLATE_DATA )
 
@@ -52,7 +51,7 @@ class TemplateUpdate
 
 				# 元のブックをコピー
 				out_path = getOutputPath( file_path )
-				fso.CopyFile( file_path, out_path )
+				fsoCopyFile( file_path, out_path )
 				dst_wb_staff = Excel.openWb( excel, out_path, pass )
 
 				# フォーマットを更新
