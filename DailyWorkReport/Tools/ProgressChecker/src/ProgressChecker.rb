@@ -5,7 +5,6 @@
 # ==========================="
 require File.dirname(__FILE__) + "/../../lib/excel.rb"
 require File.dirname(__FILE__) + "/../../lib/util.rb"
-require File.dirname(__FILE__) + "/Define.rb"
 
 # ==========================="
 # src
@@ -13,7 +12,7 @@ require File.dirname(__FILE__) + "/Define.rb"
 class ProgressChecker
 	private
 	IN_ROOT 			= File.dirname(__FILE__) + "/../in"
-	TEMPLATE_FILE_PATH	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
+	TEMPLATE_FILE_PATH	= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
 
 	public
 	def initialize()
@@ -22,7 +21,7 @@ class ProgressChecker
 
 		@file_list = Array.new()
 		# [in] にある excel のファイルリストを作成
-		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.#{EXT_NAME}" ) do |file_path|
+		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.xlsx" ) do |file_path|
 			@file_list.push( file_path )
 		end
 
