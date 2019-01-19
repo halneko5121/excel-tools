@@ -50,10 +50,10 @@ class TemplateExcelCreate
 				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
 
 				# テンプレートのブックをコピー
-				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
+				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", out_path)
 
 				# コピーしたブックを開いて、パラメータの設定
-				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
+				wb = excel.workbooks.open({'filename'=> out_path, 'updatelinks'=> 0})
 				setWsParamStaffSheet( wb, data )
 
 				# 左上をアクティブにしてスクロールしておく
@@ -83,7 +83,7 @@ class TemplateExcelCreate
 		staff_id	= "%03d" % id.to_i
         abbrev_name = abbrev_name.encode( Encoding::UTF_8 )
 		file_name	= "#{FILE_PREFIX}_#{calendar.to_i.to_s}_#{staff_id}_#{abbrev_name}.xlsx".encode(Encoding::Windows_31J)
-		out_path	= "#{OUT_ROOT}/#{file_name}"
+		out_path	= File.expand_path( "#{OUT_ROOT}/#{file_name}" )
 
 		return out_path;
 	end
