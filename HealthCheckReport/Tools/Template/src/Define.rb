@@ -3,14 +3,6 @@
 # ==========================="
 # const
 # ==========================="
-SHEET_NAME_WARNING			= "注意"
-SHEET_NAME_TEMPLATE_DATA	= "開始データ"
-SHEET_NAME_CHECK			= "届書チェックシート"
-SHEET_NAME_CHECK_DESCRIPT	= "届書チェックの使い方"
-SHEET_NAME_PRORATED_TABLE	= "区分別按分表"
-SHEET_NAME_WORKS			= "業務別月報"
-SHEET_NAME_ANOTHER			= "未定"
-
 # excel のテンプレートフォーマット(スタッフシート)
 FORMAT_STAFF_SHEET_CALENDAR	= "E2:G2"	#　「年/月/期間」のセル範囲
 FORMAT_STAFF_SHEET_DAY_WEEK = "B5:B35"	# 「曜日」のセル範囲
@@ -23,6 +15,3 @@ ROW_START_PROJECT_SUM			= 35		# 各種プロジェクトごとの作業時間の
 CELL_START_PROJECT_SUM			= "D5"		# 各種プロジェクトごとの作業時間の開始セル
 FORMAT_WORKS_SHEET_PROJECT_SUM	= "D5:L35"	# 各種プロジェクトごとの作業時間　のセル範囲
 FORMAT_WORKS_SHEET_CHECK_SUM	= "C37:L37"	# 各種プロジェクトごとの作業時間判定　のセル範囲
-
-# excel のテンプレートフォーマット(届書チェックシート)
-RANGE_CHECK_VALUE				= "B3:X33"
