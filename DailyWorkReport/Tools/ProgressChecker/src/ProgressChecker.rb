@@ -62,7 +62,7 @@ class ProgressChecker
 	def checkProgress( ws, custodian, log_text )
 
 		# 「xx月XX日」の形式になってるシートだけチェック
-		utf_8_ws_name = ws.name.encode( "UTF-8" )
+		utf_8_ws_name = ws.name.encode( Encoding::UTF_8 )
 		return if( utf_8_ws_name.match( /(\d+月\d+日)/ ) == nil )
 
 		# 祝日
