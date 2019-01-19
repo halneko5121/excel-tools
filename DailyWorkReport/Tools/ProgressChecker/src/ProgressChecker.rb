@@ -162,12 +162,12 @@ class ProgressChecker
 
 			# 「西暦」以外の部分を抜き出す
 			split_holiday	= holiday_param[:holiday].split( "/" )
-			mouth_day		= "#{split_holiday[1]}月#{split_holiday[2]}日"
+			month_day		= "#{split_holiday[1]}月#{split_holiday[2]}日"
 
 			wb.worksheets.each { |ws|
 				utf_8_ws_name = ws.name.encode( "UTF-8" )
-				if( utf_8_ws_name.include?( mouth_day ) )
-					holidays.push( mouth_day )
+				if( utf_8_ws_name.include?( month_day ) )
+					holidays.push( month_day )
 					break
 				end
 			}
