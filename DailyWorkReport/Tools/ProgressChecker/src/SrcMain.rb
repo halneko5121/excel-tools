@@ -13,7 +13,7 @@ require File.expand_path( File.dirname(__FILE__) + '/ProgressChecker.rb' )
 TITLE	= "ProgressChecker"
 VER		= "1.0.5"
 TAMPLATE_PARAM_FILE_NAME = File.dirname(__FILE__) + "/../../Template/TemplateParam.xls"
-PARAM_FILE_NAME			 = File.dirname(__FILE__) + "/../Param.xls"
+PARAM_FILE_NAME			 = File.dirname(__FILE__) + "/../ProgressCheckerParam.xls"
 
 # ==========================="
 # src
