@@ -55,8 +55,6 @@ class TemplateExcelCreate
 
 				# コピーしたブックを開く
 				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
-				excel.displayAlerts = false
-				excel.visible		= false
 
 				# パラメータの設定
 				# 左上をアクティブにしてスクロールしておく
