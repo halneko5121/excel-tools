@@ -109,7 +109,7 @@ class TemplateExcelCreate
 		ws_staff	  = wb.worksheets(SHEET_NAME_TEMPLATE_DATA)
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 
-		ws_staff.UnProtect
+		Excel.setProtectSheet(ws_staff, false)
 			Excel.setCellValue( ws_staff, 6, 3, "%03d" % "#{param_hash[:id]}".to_i ) # 数値を3桁に変換
 			Excel.setCellValue( ws_staff, 7, 3, "#{param_hash[:name]}" )
 			Excel.setCellValue( ws_staff, 8, 3, "#{param_hash[:job_type]}" )
@@ -121,7 +121,7 @@ class TemplateExcelCreate
 			dead_line_string = calcDeadLineString( Excel.getCellValue(ws_staff, 73, 1), "#{param_hash[:report_dead_line]}" )
 			Excel.setCellValue( ws_staff, 73, 1, dead_line_string )
 			Excel.setStringColor( ws_staff, 73, 1, dead_line_string, "#{param_hash[:report_dead_line]}" )
-		ws_staff.Protect
+		Excel.setProtectSheet(ws_staff, true)
 
 		# 最初のセルをアクティブ
 		ws_staff.Range("A1").Activate
