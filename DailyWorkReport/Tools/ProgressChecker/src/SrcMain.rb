@@ -39,9 +39,9 @@ if ( __FILE__ == $0 )
 		if( is_holiday_check )
 			holiday_param_hash = { holiday: "祝日" }
 			holiday_param		= ExcelParamData.new(TAMPLATE_PARAM_FILE_NAME, "祝日設定", holiday_param_hash)
-			checker.exe( template_param.getParamList(), custodian, holiday_param.getParamList() )
+			checker.execute( template_param.getParamList(), custodian, holiday_param.getParamList() )
 		else
-			checker.exe( template_param.getParamList(), custodian, nil )
+			checker.execute( template_param.getParamList(), custodian, nil )
 		end
 	}
 

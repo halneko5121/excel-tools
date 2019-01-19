@@ -30,7 +30,7 @@ class ProgressChecker
 		end
 	end
 
-	def exe( template_param_list, custodian, holiday_param_list )
+	def execute( template_param_list, custodian, holiday_param_list )
 
 		Excel.runDuring(false, false) do |excel|
 
