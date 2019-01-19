@@ -132,7 +132,6 @@ class TemplateExcelCreate
 
 			dead_line_str = ws_staff.Cells.Item(73, 1).Value
 			Excel.setStringColor( ws_staff, 73, 1, dead_line_str, "#{param_hash[:report_dead_line]}" )
-
 		ws_staff.Protect
 
 		# 最初のセルをアクティブ
