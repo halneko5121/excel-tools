@@ -112,26 +112,6 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	生年月日から年齢を算出
-	# @parm		birth_day		生年月日
-	# @parm		create_calendar	生成年月
-	#----------------------------------------------
-	def calcStaffAge( birth_day, create_calendar )
-
-		# 年 / 月 を算出
-        time_now			= convertCreateDate( create_calendar )
-        date_time_birth		= DateTime.parse( birth_day )
-        time_birth			= Date.new( date_time_birth.year, date_time_birth.mon, date_time_birth.day )
-
-		diff			= time_now - time_birth
-		result_year		= diff.to_f / 365
-		result_mouth	= (result_year - result_year.floor) * 12
-		result_age		= "#{result_year.floor}歳 #{result_mouth.ceil}ヶ月"
-
-		return result_age;
-	end
-
-	#----------------------------------------------
 	# @biref	勤続年数を算出
 	# @parm		joining_time	入社日
 	# @parm		create_calendar	生成年月
@@ -180,7 +160,7 @@ class TemplateExcelCreate
 			ws_staff.Cells.Item(8, 3).Value = "#{param_hash[:job_type]}"
 
 			ws_staff.Cells.Item(6, 7).Value = "#{param_hash[:gender]}"
-			ws_staff.Cells.Item(7, 7).Value = "#{param_hash[:age]}"#calcStaffAge( "#{param_hash[:birth_day]}", "#{param_hash[:create_calendar]}" )
+			ws_staff.Cells.Item(7, 7).Value = "#{param_hash[:age]}"
 			ws_staff.Cells.Item(8, 7).Value = "#{param_hash[:joining_time]}"#calcWorkTime( "#{param_hash[:joining_time]}", "#{param_hash[:create_calendar]}" )
 
 			ws_staff.Cells.Item(7, 10).Value = "#{param_hash[:last_month_over_time]}"
