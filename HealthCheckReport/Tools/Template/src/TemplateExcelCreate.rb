@@ -11,10 +11,11 @@ require File.expand_path( File.dirname(__FILE__) + "/../../lib/util.rb" )
 # ==========================="
 class TemplateExcelCreate
 	private
-	OUT_ROOT 				= File.dirname(__FILE__) + "/../../../Users"
-	FILE_PREFIX				= "【1-UP】健康チェックリスト"
-	TEMPLATE_FILE_NAME		= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
-	DEAD_LINE_STR_PREFIX	= "XXXX"
+	OUT_ROOT 					= File.dirname(__FILE__) + "/../../../Users"
+	FILE_PREFIX					= "【1-UP】健康チェックリスト"
+	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
+	SHEET_NAME_TEMPLATE_DATA	= "テンプレート"
+	DEAD_LINE_STR_PREFIX		= "XXXX"
 
 	public
 	def initialize()
@@ -105,12 +106,11 @@ class TemplateExcelCreate
 	def setWsParamStaffSheet( wb, param_hash )
 
 		# 社員名（フルネーム）
-		ws_staff	  = wb.worksheets("テンプレート")
+		ws_staff	  = wb.worksheets(SHEET_NAME_TEMPLATE_DATA)
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 
 		ws_staff.UnProtect
-			# 数値を3桁に変換
-			ws_staff.Cells.Item(6, 3).Value = "%03d" % "#{param_hash[:id]}".to_i
+			ws_staff.Cells.Item(6, 3).Value = "%03d" % "#{param_hash[:id]}".to_i # 数値を3桁に変換
 			ws_staff.Cells.Item(7, 3).Value = "#{param_hash[:name]}"
 			ws_staff.Cells.Item(8, 3).Value = "#{param_hash[:job_type]}"
 
