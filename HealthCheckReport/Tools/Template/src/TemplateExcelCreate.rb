@@ -53,12 +53,11 @@ class TemplateExcelCreate
 				# テンプレートのブックをコピー
 				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
 
-				# コピーしたブックを開く
+				# コピーしたブックを開いて、パラメータの設定
 				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
-
-				# パラメータの設定
-				# 左上をアクティブにしてスクロールしておく
 				setWsParamStaffSheet( wb, data )
+
+				# 左上をアクティブにしてスクロールしておく
 				excel.ActiveWindow.ScrollRow = 1
 				excel.ActiveWindow.ScrollColumn = 1
 
