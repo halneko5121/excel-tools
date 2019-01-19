@@ -110,19 +110,17 @@ class TemplateExcelCreate
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 
 		ws_staff.UnProtect
-			Excel.setCellValue(ws_staff, 6, 3, "%03d" % "#{param_hash[:id]}".to_i ) # 数値を3桁に変換
-			Excel.setCellValue(ws_staff, 7, 3, "#{param_hash[:name]}" )
-			Excel.setCellValue(ws_staff, 8, 3, "#{param_hash[:job_type]}" )
-			Excel.setCellValue(ws_staff, 6, 7, "#{param_hash[:gender]}" )
-			Excel.setCellValue(ws_staff, 7, 7, "#{param_hash[:age]}" )
-			Excel.setCellValue(ws_staff, 8, 7, "#{param_hash[:joining_time]}" )
-
-			Excel.setCellValue(ws_staff, 7, 10, "#{param_hash[:last_month_over_time]}" )
-			Excel.setCellValue(ws_staff, 8, 10, "#{param_hash[:last_month_over_time2]}" )
-			ws_staff.Cells.Item(73, 1).Value = calcDeadLineString( ws_staff.Cells.Item(73, 1).Value, "#{param_hash[:report_dead_line]}" )
-
-			dead_line_str = ws_staff.Cells.Item(73, 1).Value
-			Excel.setStringColor( ws_staff, 73, 1, dead_line_str, "#{param_hash[:report_dead_line]}" )
+			Excel.setCellValue( ws_staff, 6, 3, "%03d" % "#{param_hash[:id]}".to_i ) # 数値を3桁に変換
+			Excel.setCellValue( ws_staff, 7, 3, "#{param_hash[:name]}" )
+			Excel.setCellValue( ws_staff, 8, 3, "#{param_hash[:job_type]}" )
+			Excel.setCellValue( ws_staff, 6, 7, "#{param_hash[:gender]}" )
+			Excel.setCellValue( ws_staff, 7, 7, "#{param_hash[:age]}" )
+			Excel.setCellValue( ws_staff, 8, 7, "#{param_hash[:joining_time]}" )
+			Excel.setCellValue( ws_staff, 7, 10, "#{param_hash[:last_month_over_time]}" )
+			Excel.setCellValue( ws_staff, 8, 10, "#{param_hash[:last_month_over_time2]}" )
+			dead_line_string = calcDeadLineString( Excel.getCellValue(ws_staff, 73, 1), "#{param_hash[:report_dead_line]}" )
+			Excel.setCellValue( ws_staff, 73, 1, dead_line_string )
+			Excel.setStringColor( ws_staff, 73, 1, dead_line_string, "#{param_hash[:report_dead_line]}" )
 		ws_staff.Protect
 
 		# 最初のセルをアクティブ
