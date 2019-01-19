@@ -30,8 +30,8 @@ if ( __FILE__ == $0 )
 			gender: "性別",
 			joining_time: "勤続年数",
 			age: "年齢",
-			last_mouth_over_time: "先月度時間外労働",
-			last_mouth_over_time2: "先々月度時間外労働",
+			last_month_over_time: "先月度時間外労働",
+			last_month_over_time2: "先々月度時間外労働",
 			create_calendar: "作成年月",
 			report_dead_line: "報告締切日",
 			is_output: "出力するか"

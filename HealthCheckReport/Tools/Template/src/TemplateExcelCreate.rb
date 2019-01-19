@@ -127,8 +127,8 @@ class TemplateExcelCreate
 			ws_staff.Cells.Item(7, 7).Value = "#{param_hash[:age]}"#calcStaffAge( "#{param_hash[:birth_day]}", "#{param_hash[:create_calendar]}" )
 			ws_staff.Cells.Item(8, 7).Value = "#{param_hash[:joining_time]}"#calcWorkTime( "#{param_hash[:joining_time]}", "#{param_hash[:create_calendar]}" )
 
-			ws_staff.Cells.Item(7, 10).Value = "#{param_hash[:last_mouth_over_time]}"
-			ws_staff.Cells.Item(8, 10).Value = "#{param_hash[:last_mouth_over_time2]}"
+			ws_staff.Cells.Item(7, 10).Value = "#{param_hash[:last_month_over_time]}"
+			ws_staff.Cells.Item(8, 10).Value = "#{param_hash[:last_month_over_time2]}"
 			ws_staff.Cells.Item(73, 1).Value = calcDeadLineString( ws_staff.Cells.Item(73, 1).Value, "#{param_hash[:report_dead_line]}" )
 
 			dead_line_str = ws_staff.Cells.Item(73, 1).Value
