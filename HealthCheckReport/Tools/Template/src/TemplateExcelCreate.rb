@@ -102,7 +102,7 @@ class TemplateExcelCreate
 	def calcDeadLineString( defult_str, dead_line_str )
 
 		# デフォルトの文字列の 「XXXX」 をパラメータで置換する
-		return defult_str.gsub( "XXXX", dead_line_str )
+		return defult_str.gsub( DEAD_LINE_STR_PREFIX, dead_line_str )
 	end
 
 	#----------------------------------------------
