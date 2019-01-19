@@ -57,7 +57,7 @@ class ProgressChecker
 			}
 			log_text.close
 
-			releasePuts( "結果は [log.txt]　にも出力しています" )
+			releasePuts( "結果は [log.txt] にも出力しています" )
 			releasePuts( "検索に利用するなりうまくご利用頂ければ" )
 		end
 	end
