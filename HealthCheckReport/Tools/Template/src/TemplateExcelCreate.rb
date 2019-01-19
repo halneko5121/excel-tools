@@ -51,7 +51,7 @@ class TemplateExcelCreate
 				fsoCopyFile( "#{TEMPLATE_FILE_NAME}", out_path)
 
 				# コピーしたブックを開いて、パラメータの設定
-				wb = excel.workbooks.open({'filename'=> out_path, 'updatelinks'=> 0})
+				wb = Excel.openWb(excel, out_path)
 				setWsParamSheet( wb, data )
 
 				# 左上をアクティブにしてスクロールしておく
