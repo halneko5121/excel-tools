@@ -44,7 +44,6 @@ class TemplateExcelCreate
 			fso = WIN32OLE.new('Scripting.FileSystemObject')
 
 			# 社員数だけ
-			staff_number = 1
 			result_staff_list.each{|data|
 
 				# 出力先のパスを取得
@@ -64,8 +63,6 @@ class TemplateExcelCreate
 				# セーブして閉じる
 				wb.save()
 				wb.close(0)
-
-				staff_number += 1
 
 				# ログ用
 				puts "create excel => #{File::basename( out_path )}"
