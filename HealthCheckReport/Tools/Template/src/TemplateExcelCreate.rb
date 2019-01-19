@@ -105,8 +105,8 @@ class TemplateExcelCreate
 
 		# 年 / 月 を算出
 		year	 			= str_calendar[0].to_i
-		mouth				= str_calendar[1].to_i
-        create_time			= Date.new( year, mouth )
+		month				= str_calendar[1].to_i
+        create_time			= Date.new( year, month )
 
 		return create_time
 	end

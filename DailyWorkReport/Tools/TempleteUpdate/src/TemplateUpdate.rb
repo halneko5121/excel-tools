@@ -139,10 +139,10 @@ class TemplateUpdate
 
 			str_calendar	= splitYearMonth("#{param[:joining_time]}")
 			year			= str_calendar[0].to_i
-			mouth			= str_calendar[1].to_i
+			month			= str_calendar[1].to_i
 
 			# 指定月の日数を設定
-			monthly_days = getMonthlyDayCount( year, mouth )
+			monthly_days = getMonthlyDayCount( year, month )
 			break
 		}
 

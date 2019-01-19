@@ -65,10 +65,10 @@ class TemplateExcelCreate
 #		year_number = getYearNumberHeisei( str_calendar[0] )
 #		year_number = "#{str_calendar[0]}/#{str_calendar[1]}/1" => 平成歴の場合(セルの初期設定を"ggge"年にする）
 		year_number = str_calendar[0].to_i
-		mouth		= str_calendar[1].to_i
+		month		= str_calendar[1].to_i
 
 		ws_staff.Cells.Item(2, 5+ADD_CULMNS_CHECK_SHEET).Value = year_number
-		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Value = mouth
+		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Value = month
 		ws_staff.Cells.Item(2, 7+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:period]}"	# 期間
 
 		# セルをロック（編集不可）にしてシートを保護
