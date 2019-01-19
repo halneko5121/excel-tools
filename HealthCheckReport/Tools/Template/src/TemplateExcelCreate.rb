@@ -3,8 +3,8 @@
 # ==========================="
 # require
 # ==========================="
-require File.dirname(__FILE__) + "/../../lib/excel.rb"
-require File.dirname(__FILE__) + "/../../lib/util.rb"
+require File.expand_path( File.dirname(__FILE__) + "/../../lib/excel.rb" )
+require File.expand_path( File.dirname(__FILE__) + "/../../lib/util.rb" )
 
 # ==========================="
 # src

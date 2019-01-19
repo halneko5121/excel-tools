@@ -3,9 +3,9 @@
 # ==========================="
 # require
 # ==========================="
-require File.dirname(__FILE__) + "/../../lib/AppModule.rb"
-require File.dirname(__FILE__) + "/../../lib/ExcelParamData.rb"
-require File.dirname(__FILE__) + "/TemplateExcelCreate.rb"
+require File.expand_path( File.dirname(__FILE__) + "/../../lib/AppModule.rb" )
+require File.expand_path( File.dirname(__FILE__) + "/../../lib/ExcelParamData.rb" )
+require File.expand_path( File.dirname(__FILE__) + "/TemplateExcelCreate.rb" )
 
 # ==========================="
 # Const
