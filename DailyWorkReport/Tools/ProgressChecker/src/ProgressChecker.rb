@@ -100,19 +100,15 @@ class ProgressChecker
 	#----------------------------------------------
 	def isCheckedProgress( ws, custodian )
 
-		search_cells = Excel.searchValueCells( ws, "上司コメント" )
+		check_cell = Excel.getCellValue( ws, 19, 4)
 		is_checked = false
-		if( search_cells.empty? == false )
+		if( check_cell != nil )
 
 			# 「上司コメント」のひとつ下の行に指定した値があるか？
-			search_cells.each { |cell|
-
-				check_cell = cell.Offset(1, 0)
-				value = check_cell.value.to_s
-				if( value.include?( "#{custodian}" ) )
-					is_checked = true
-				end
-			}
+			value = check_cell.to_s
+			if( value.include?( "#{custodian}" ) )
+				is_checked = true
+			end
 		end
 
 		return is_checked
@@ -126,10 +122,10 @@ class ProgressChecker
 		template_param_list.each { |param|
 
 			# テンプレートパラメータと一致する excel である
-			if( file_path.include?( "#{param["略名"]}" ) )
+			if( file_path.include?( "#{param[:abbrev_name]}" ) )
 
 				# パスワードが設定されている
-				pass = "#{param["pass"]}"
+				pass = "#{param[:pass]}"
 				if( ( pass == nil or pass == "" ) == false )
 					return pass
 				end
@@ -166,7 +162,7 @@ class ProgressChecker
 		holiday_param_list.each { |holiday_param|
 
 			# 「西暦」以外の部分を抜き出す
-			split_holiday	= holiday_param["祝日"].split( "/" )
+			split_holiday	= holiday_param[:holiday].split( "/" )
 			mouth_day		= "#{split_holiday[1]}月#{split_holiday[2]}日"
 
 			wb.worksheets.each { |ws|
