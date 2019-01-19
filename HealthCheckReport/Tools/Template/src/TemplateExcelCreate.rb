@@ -11,9 +11,9 @@ require File.expand_path( File.dirname(__FILE__) + "/../../lib/util.rb" )
 # ==========================="
 class TemplateExcelCreate
 	private
-	OUT_ROOT 					= File.dirname(__FILE__) + "/../../../Users"
+	OUT_ROOT 					= File.expand_path( File.dirname(__FILE__) + "/../../../Users" )
 	FILE_PREFIX					= "【1-UP】健康チェックリスト"
-	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
+	TEMPLATE_FILE_NAME			= File.expand_path( File.dirname(__FILE__) + "/../../Template/Template.xlsx" )
 	SHEET_NAME_TEMPLATE_DATA	= "テンプレート"
 	DEAD_LINE_STR_PREFIX		= "XXXX"
 
@@ -59,8 +59,7 @@ class TemplateExcelCreate
 				excel.ActiveWindow.ScrollColumn = 1
 
 				# セーブして閉じる
-				wb.save()
-				wb.close(0)
+				Excel.saveAndClose( wb )
 
 				# ログ用
 				puts "create excel => #{File::basename( out_path )}"
