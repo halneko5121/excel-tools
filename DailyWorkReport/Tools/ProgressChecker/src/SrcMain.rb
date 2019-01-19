@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + "/ProgressChecker.rb"
 # Const
 # ==========================="
 TITLE	= "ProgressChecker"
-VER		= "1.0.0"
+VER		= "1.0.5"
 TAMPLATE_PARAM_FILE_NAME = File.dirname(__FILE__) + "/../../Template/TemplateParam.xls"
 PARAM_FILE_NAME			 = File.dirname(__FILE__) + "/../Param.xls"
 
