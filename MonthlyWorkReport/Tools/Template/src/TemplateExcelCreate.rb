@@ -139,7 +139,7 @@ class TemplateExcelCreate
 
 		# 入社時期
 		if( param_hash[:joining_time] != nil )
-			ws_propateed.Cells.Item(5, 1).AddComment("#{param_hash[:joining_time]}")
+			Excel.setAddCommentCell( ws_propateed, 5, 1, "#{param_hash[:joining_time]}" )
 		end
 	end
 end
