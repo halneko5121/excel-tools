@@ -3,9 +3,9 @@
 # ==========================="
 # require
 # ==========================="
-require File.dirname(__FILE__) + "/../../lib/AppModule.rb"
-require File.dirname(__FILE__) + "/MergeExcelParamData.rb"
-require File.dirname(__FILE__) + "/MergeExcel.rb"
+require File.expand_path( File.dirname(__FILE__) + "/../../lib/AppModule.rb" )
+require File.expand_path( File.dirname(__FILE__) + "/MergeExcelParamData.rb" )
+require File.expand_path( File.dirname(__FILE__) + "/MergeExcel.rb" )
 
 # ==========================="
 # Const
@@ -31,6 +31,5 @@ if ( __FILE__ == $0 )
 		merge_script = MergeExcel.new
 		merge_script.main( param )
 	}
-	
-end
 
+end
