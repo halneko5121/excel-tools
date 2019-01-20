@@ -96,13 +96,9 @@ class TemplateExcelCreate
 		ws_staff.Cells.Item(2, 10).Value = "#{param_hash[:name]}"	# 氏名
 
 		# 2013xx => [2013][xx]に分割
-		str_calendar = splitYearMonth("#{param_hash[:create_calendar]}")
-
-		# 平成年 / 月 を算出
-#		year_number = convertYearNumberHeisei( str_calendar[0] )
-#		year_number = "#{str_calendar[0]}/#{str_calendar[1]}/1" => 平成歴の場合(セルの初期設定を"ggge"年にする）
-		year_number = str_calendar[0].to_i
-		mouth		= str_calendar[1].to_i
+		str_calendar	= splitYearMonth("#{param_hash[:create_calendar]}")
+		year_number		= str_calendar[0].to_i
+		mouth			= str_calendar[1].to_i
 
 		ws_staff.Cells.Item(2, 5).Value = year_number
 		ws_staff.Cells.Item(2, 6).Value = mouth
