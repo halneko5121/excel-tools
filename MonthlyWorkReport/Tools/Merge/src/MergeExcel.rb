@@ -123,8 +123,8 @@ class MergeExcel
 
 		# 略称（ファイル名/シート名）
 		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
-		ws_propateed.Cells.Columns(22).Hidden = true
-		ws_propateed.Cells.Columns(23).Hidden = true
+		Excel.setVisibleColumns( ws_propateed, 22, false )
+		Excel.setVisibleColumns( ws_propateed, 23, false )
 	end
 
 	#----------------------------------------------
