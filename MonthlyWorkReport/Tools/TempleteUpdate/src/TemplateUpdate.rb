@@ -49,10 +49,8 @@ class TemplateUpdate
 				excelFormatUpdate( ws_templete, ws_staff )
 
 				# 更新したものをoutフォルダにセーブして閉じる
-				fso = WIN32OLE.new('Scripting.FileSystemObject')
 				out_path = file_path.gsub( "in", "out" )
-				wb_staff.saveAs( fso.GetAbsolutePathName("#{out_path}") )
-				wb_staff.close()
+				Excel.saveAndClose( wb_staff , out_path )
 
 				# ログ用
 				puts "update excel => #{File.basename( out_path )}"
