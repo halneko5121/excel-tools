@@ -67,7 +67,7 @@ class MergeExcel
 	# @parm		src_ws		コピー元のシート
 	#----------------------------------------------
 	def setWsParamSystemSheet( system_ws, src_ws )
-		system_ws.UnProtect
+		Excel.setProtectSheet( system_ws, false )
 
 		#　年/月/期間
 		system_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Value	= src_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Value
@@ -78,7 +78,7 @@ class MergeExcel
 		#　各種列名設定
 		system_ws.range( "#{FORMAT_STAFF_SHEET_PROJECT}" ).Value	= src_ws.range( "#{FORMAT_STAFF_SHEET_PROJECT}" ).Value
 
-		system_ws.Protect
+		Excel.setProtectSheet( system_ws, true )
 	end
 
 	#----------------------------------------------
@@ -87,7 +87,7 @@ class MergeExcel
 	#----------------------------------------------
 	def setWsParamWorksSheet( system_ws )
 
-		system_ws.UnProtect
+		Excel.setProtectSheet( system_ws, false )
 		system_ws.range( "#{CELL_START_PROJECT_SUM}:#{CELL_START_PROJECT_SUM}" ).Value = "=SUM(開始データ:未定!#{CELL_START_PROJECT_SUM}:#{CELL_START_PROJECT_SUM})"
 		system_ws.range( "#{CELL_START_PROJECT_SUM}:#{CELL_START_PROJECT_SUM}" ).copy
 		system_ws.range( "#{FORMAT_WORKS_SHEET_PROJECT_SUM}" ).pastespecial
@@ -101,7 +101,7 @@ class MergeExcel
 		# セルをロック（編集不可）にしてシートを保護
 		system_ws.range( "#{FORMAT_WORKS_SHEET_PROJECT_SUM}" ).Locked = true
 		system_ws.range( "#{FORMAT_WORKS_SHEET_CHECK_SUM}" ).Locked = true
-		system_ws.Protect
+		Excel.setProtectSheet( system_ws, true )
 	end
 
 	#----------------------------------------------
