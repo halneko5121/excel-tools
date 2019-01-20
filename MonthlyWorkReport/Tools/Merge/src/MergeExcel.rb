@@ -36,16 +36,16 @@ class MergeExcel
 
 		# ascii順に並び替え
 		list.sort!
-		
+
 		puts "excel count = #{list.size()}"
-		
+
 		if( list.size == 0 )
 			puts "=============== error ==============="
 			puts "not found merging files!!"
 			puts "Users フォルダにファイルがあるかお確かめ下さい"
 			puts "=============== error ==============="
 			exit()
-		end		
+		end
 	end
 
 	#----------------------------------------------
@@ -54,12 +54,12 @@ class MergeExcel
 	# @parm		calender	月報日時
 	#----------------------------------------------
 	def getOutputPath( file_path )
-	
+
 		file_name		= File.basename( file_path )
 		file_name_info	= file_name.split( "_" )
 		out_file_name	= file_name_info[2]
 		calender		= file_name_info[3]
-		output_path 	= "#{OUT_ROOT}/#{out_file_name}_#{calender}"	
+		output_path 	= "#{OUT_ROOT}/#{out_file_name}_#{calender}"
 		return ( output_path.gsub( ".xlsm", ".xlsx" ) )
 	end
 
@@ -99,7 +99,7 @@ class MergeExcel
 		system_ws.range( "#{range_check_project_sum}" ).Value = "=IF(#{range_check_project}=SUM(開始データ:未定!#{range_check_project}:#{range_check_project}),\"OK\",\"ちがう\")"
 		system_ws.range( "#{range_check_project_sum}" ).copy
 		system_ws.range( "#{FORMAT_WORKS_SHEET_CHECK_SUM}" ).pastespecial
-		
+
 		# セルをロック（編集不可）にしてシートを保護
 		system_ws.range( "#{FORMAT_WORKS_SHEET_PROJECT_SUM}" ).Locked = true
 		system_ws.range( "#{FORMAT_WORKS_SHEET_CHECK_SUM}" ).Locked = true
@@ -126,7 +126,7 @@ class MergeExcel
 	def setWsParamProratedTable( wb )
 
 		# 略称（ファイル名/シート名）
-		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")		
+		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 		ws_propateed.Cells.Columns(22).Hidden = true
 		ws_propateed.Cells.Columns(23).Hidden = true
 	end
@@ -137,13 +137,13 @@ class MergeExcel
 	# @parm		wb_merge	マージするワークブック
 	#----------------------------------------------
 	def mergeCheckSheet( wb_src, wb_dst, count )
-	
+
 		range_start		= START_ROW_CHECK_DATA		+ CHECK_DATA_RANGE * count
 		range_end		= (START_ROW_CHECK_DATA-1)	+ CHECK_DATA_RANGE * (count + 1)
 		ws_src_check	= wb_src.worksheets("#{SHEET_NAME_CHECK}")
 		ws_dst_check	= wb_dst.worksheets("#{SHEET_NAME_CHECK}")
 		ws_src_check.range( "#{RANGE_CHECK_VALUE}" ).copy
-		ws_dst_check.range( "B#{range_start}:X#{range_end}" ).pastespecial	
+		ws_dst_check.range( "B#{range_start}:X#{range_end}" ).pastespecial
 	end
 
 	#----------------------------------------------
@@ -155,7 +155,7 @@ class MergeExcel
 
 		# 「区分別按分表」シートを取得
 		ws_dst_department = wb_merge.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
-		
+
 		ws_start			= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
 		start_sheet_number	= ws_start.index
 
@@ -171,7 +171,7 @@ class MergeExcel
 			# 「各々の作業月報」シートをコピー
 			user_name = searchUserName( file_path )
 			Excel.sheetCopy( wb_staff, "#{user_name}", wb_merge, start_sheet_number+count)
-			
+
 			# 届け出チェックシートの列を削除
 			if( IS_CHECK_SHEET_MIX == true )
 				ws_staff = wb_merge.worksheets("#{user_name}")
@@ -192,7 +192,7 @@ class MergeExcel
 			end
 
 			wb_staff.Application.CutCopyMode = false
-			wb_staff.close(0)									
+			wb_staff.close(0)
 			count += 1
 		}
 
@@ -202,7 +202,7 @@ class MergeExcel
 		ws_dst_department.Activate
 		excel.range("C2").Select
 		excel.screenUpdating = false
-	end	
+	end
 
 	#----------------------------------------------
 	# @biref	マージexcel にパラメータの適応を行う
@@ -210,7 +210,7 @@ class MergeExcel
 	# @parm		excel		Excel クラス
 	#----------------------------------------------
 	def applyParamMergeWb( wb_merge, data )
-		
+
 		#パラメータの取得
 		is_protected		= "#{data[:is_protected]}"			#"シートを保護するか"
 		is_delete_ws_check	= "#{data[:is_delete_ws_check]}"	#"[届け出チェックシート]を削除するか"
@@ -230,7 +230,7 @@ class MergeExcel
 		if( is_delete_ws_check == "true" )
 			wb_merge.worksheets("#{SHEET_NAME_CHECK}").delete
 #			wb_merge.worksheets("#{SHEET_NAME_CHECK_DESCRIPT}").delete
-		end	
+		end
 	end
 
 	#----------------------------------------------
@@ -240,7 +240,9 @@ class MergeExcel
 	# @parm		tamplete_wb	テンプレートワークブック
 	#----------------------------------------------
 	def setDefaultSheetMergeExcel( excel, merge_wb, tamplete_wb )
-		
+
+		merge_wb_ws_count = merge_wb.worksheets.Count
+
 		sheet_number = 1
 
 		# 「注意」シートをコピー
@@ -266,30 +268,30 @@ class MergeExcel
 		# 「区分別按分表」シートをコピー
 		Excel.sheetCopy( tamplete_wb, "#{SHEET_NAME_PRORATED_TABLE}", merge_wb, sheet_number)
 		sheet_number += 1
-		
+
 		# 最初に生成されたシートを削除
 		excel.displayAlerts = false
-		merge_wb.worksheets("Sheet1").delete()
-		merge_wb.worksheets("Sheet2").delete()
-		merge_wb.worksheets("Sheet3").delete()
+		for index in 1..merge_wb_ws_count do
+			merge_wb.worksheets("Sheet#{index}").delete()
+		end
 	end
 
 	public
 	def initialize()
 		@file_path_list = Array.new
 	end
-	
+
 	def main( param_hash )
-		
+
 		# ファイルパスをリストに設定
 		setFileList( @file_path_list )
-		
+
 		# excelの処理
 		Excel.runDuring(false, false) do |excel|
 
 			# マージ用 excel を開く
 			wb = excel.workbooks.open({'filename'=> "#{TEMPLATE_FILE_NAME}", 'updatelinks'=> 0})
-			
+
 			# 新規ワークブックを作成・必要なシートをコピー
 			wb_merge = excel.workbooks.add()
 			setDefaultSheetMergeExcel( excel, wb_merge, wb )
@@ -307,18 +309,18 @@ class MergeExcel
 					ws_start.unprotect
 					ws_start.range("A:Z").delete
 					ws_start.protect
-				end			
+				end
 
 				# 「開始データ」「未定」「業務別月報」に値をコピー(年月/期間)
 				ws_staff	= wb_merge.worksheets("門井")
 				ws_start	= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
 				ws_no_fixed = wb_merge.worksheets("#{SHEET_NAME_ANOTHER}")
-				ws_monthly	= wb_merge.worksheets("#{SHEET_NAME_WORKS}")			
+				ws_monthly	= wb_merge.worksheets("#{SHEET_NAME_WORKS}")
 
 				setWsParamSystemSheet(ws_no_fixed, ws_staff)
 				setWsParamSystemSheet(ws_monthly, ws_staff)
 				setWsParamSystemSheet(ws_start, ws_staff)
-				
+
 				# 「業務別月報」の設定
 				setWsParamWorksSheet(ws_monthly)
 
@@ -327,10 +329,10 @@ class MergeExcel
 
 				# 「区分別按分表シート」の設定
 				setWsParamProratedTable( wb_merge )
-				
+
 				# パラメータの適応
 				applyParamMergeWb( wb_merge, data )
-				
+
 				# ファイル名から一部を拝借して設定
 				out_path = getOutputPath( @file_path_list[0] )
 
@@ -340,9 +342,9 @@ class MergeExcel
 				# 保存して閉じる
 				fso	= WIN32OLE.new('Scripting.FileSystemObject')
 				wb_merge.saveAs( fso.GetAbsolutePathName("#{out_path}") )
-				wb_merge.close(0)				
+				wb_merge.close(0)
 
-				puts "output merge excel = #{out_path}"	
+				puts "output merge excel = #{out_path}"
 			}
 		end
 	end

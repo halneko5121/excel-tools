@@ -49,14 +49,25 @@ class MergeExcelParamData
 				# 1行目はパラメータ名なのでスキップ or 空白行 or nil が入ってきた場合はスキップ
 				next if (recode.row == 1 or recode == "" or recode == nil)
 
-				# パラメータを取得して push
+				# パラメータを取得
+				is_protected			= Excel.getCellValue(ws_param, recode.row, "#{@clumn_is_protected}".to_i)
+				is_delete_ws_check	= Excel.getCellValue(ws_param, recode.row, "#{@clumn_is_delete_ws_check}".to_i)
+				next if ( is_protected == "" or recode == nil )
+				next if ( is_delete_ws_check == "" or is_delete_ws_check == nil )
+
 				param = Hash.new
-				param[:is_protected]		= Excel.getCellValue(ws_param, recode.row, "#{@clumn_is_protected}".to_i)
-				param[:is_delete_ws_check]	= Excel.getCellValue(ws_param, recode.row, "#{@clumn_is_delete_ws_check}".to_i)
+				param[:is_protected]			= is_protected
+				param[:is_delete_ws_check]	= is_delete_ws_check
 				@param_list.push( param )
 			end
-			
 			wb_param.close(0)
+			
+			if ( @param_list.size() == 0 )
+				error_str = "[ MergeParam.xls ] のパラメータは設定されていますか?\n"
+				error_str += "パラメータが見当たりませんでした"
+				assertLogPrintFalse( error_str )
+			end
+
 		end
 	end
 	

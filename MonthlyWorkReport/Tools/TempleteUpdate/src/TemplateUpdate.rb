@@ -50,6 +50,10 @@ class TemplateUpdate
 		work_time_range = Excel.calcRangeStr( STAFF_SHEET_DATA.WorkTimeColumn, STAFF_SHEET_START_ROW, work_rows )
 		Excel.rangeCopyFast( src_ws, work_time_range, dst_ws, work_time_range )
 
+		# 各種「合計」行
+		total_time_range = "A#{work_rows}:L#{work_rows}"
+		Excel.rangeCopyFast( src_ws, total_time_range, dst_ws, total_time_range )
+		
 		# セルをロック（編集不可）にしてシートを保護
 		dst_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Locked = true
 		dst_ws.Protect
