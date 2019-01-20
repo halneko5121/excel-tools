@@ -175,8 +175,9 @@ class MergeExcel
 
 	#----------------------------------------------
 	# @biref	届書チェックシートのマージ
-	# @parm		excel		Excel クラス
-	# @parm		wb_merge	マージするワークブック
+	# @parm		wb_src		コピー元ワークブック
+	# @parm		wb_dst		コピー先ワークブック
+	# @parm		count
 	#----------------------------------------------
 	def mergeCheckSheet( wb_src, wb_dst, count )
 
