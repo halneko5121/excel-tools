@@ -106,7 +106,7 @@ class TemplateExcelCreate
 		str_calendar = splitYearMonth("#{param_hash[:create_calendar]}")
 
 		# 平成年 / 月 を算出
-#		year_number = getYearNumber( str_calendar[0] )
+#		year_number = convertYearNumberHeisei( str_calendar[0] )
 #		year_number = "#{str_calendar[0]}/#{str_calendar[1]}/1" => 平成歴の場合(セルの初期設定を"ggge"年にする）
 		year_number = str_calendar[0].to_i
 		mouth		= str_calendar[1].to_i
