@@ -170,24 +170,14 @@ class MergeExcel
 			user_name = searchUserName( file_path )
 			Excel.sheetCopy( wb_staff, "#{user_name}", wb_merge, start_sheet_number+count)
 
-			# 届け出チェックシートの列を削除
-			if( IS_CHECK_SHEET_MIX == true )
-				ws_staff = wb_merge.worksheets("#{user_name}")
-				ws_staff.unprotect
-				ws_staff.range("A:Z").delete
-				ws_staff.protect
-			end
-
 			# 「区分別按分表」シートに行を挿入してコピー・ペースト
 			ws_src_department	= wb_staff.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 			paste_row			= (START_ROW_PRORATED+1) + count # 開始データの分を残しておく
 			Excel.rowCopyAndInsert( ws_src_department, START_ROW_PRORATED, ws_dst_department, paste_row )
 			ws_dst_department.Cells.Item(paste_row, 23).Value = 0# チェックシーシート分の列指定を0に
 
-			if( IS_CHECK_SHEET_MIX == false )
-				# 「届書チェック」シートの値をマージ
-				mergeCheckSheet( wb_staff, wb_merge, count )
-			end
+			# 「届書チェック」シートの値をマージ
+			mergeCheckSheet( wb_staff, wb_merge, count )
 
 			wb_staff.Application.CutCopyMode = false
 			wb_staff.close(0)
@@ -300,14 +290,6 @@ class MergeExcel
 
 				# 各々のスタッフ　excel　の値を設定
 				setWsParamEachStaffSheet( excel, wb_merge )
-
-				# 届け出チェックシートの列を削除
-				if( IS_CHECK_SHEET_MIX == true )
-					ws_start = wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
-					ws_start.unprotect
-					ws_start.range("A:Z").delete
-					ws_start.protect
-				end
 
 				# 「開始データ」「未定」「業務別月報」に値をコピー(年月/期間)
 				ws_staff	= wb_merge.worksheets("門井")
