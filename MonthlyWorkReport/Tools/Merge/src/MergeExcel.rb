@@ -41,12 +41,12 @@ class MergeExcel
 		Excel.runDuring(false, false) do |excel|
 
 			# マージ用 excel を開く
-			wb = Excel.openWb( excel, "#{TEMPLATE_FILE_NAME}" )
+			wb_tamplate = Excel.openWb( excel, "#{TEMPLATE_FILE_NAME}" )
 
 			# 新規ワークブックを作成・必要なシートをコピー
 			wb_merge = excel.workbooks.add()
-			setDefaultSheetMergeExcel( excel, wb_merge, wb )
-			wb.close(0)
+			setDefaultSheetMergeExcel( excel, wb_merge, wb_tamplate )
+			wb_tamplate.close(0)
 
 			# スタッフの数だけループ
 			param_hash.each{|data|
