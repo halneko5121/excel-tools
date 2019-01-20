@@ -102,9 +102,9 @@ class TemplateExcelCreate
 		Excel.setCellValue( ws_staff, 2, 7, "#{param_hash[:period]}" ) # 期間
 
 		# セルをロック（編集不可）にしてシートを保護
-		ws_staff.Cells.Item(2, 5).Locked = true
-		ws_staff.Cells.Item(2, 6).Locked = true
-		ws_staff.Cells.Item(2, 7).Locked = true
+		(5..7).each { |index_column|
+			Excel.setLockCell(ws_staff, 2, index_column, true)
+		}
 		ws_staff.Protect
 
 		#　シート保護をしない or マクロ有りブックにする
