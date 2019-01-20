@@ -47,9 +47,6 @@ class TemplateExcelCreate
 				# シートを削除
 				wb.worksheets( "業務別月報" ).delete()
 				wb.worksheets( "未定" ).delete()
-				if( IS_CHECK_SHEET_MIX == true )
-					wb.worksheets( "届書チェックシート" ).delete()
-				end
 
 				# パラメータの設定
 				setWsParamStaffSheet( wb, data )
@@ -116,9 +113,6 @@ class TemplateExcelCreate
 		ws_staff.Cells.Item(2, 5).Locked = true
 		ws_staff.Cells.Item(2, 6).Locked = true
 		ws_staff.Cells.Item(2, 7).Locked = true
-		if( IS_CHECK_SHEET_MIX == true )
-			ws_staff.range("A:Z").Locked = false
-		end
 		ws_staff.Protect
 
 		#　シート保護をしない or マクロ有りブックにする
