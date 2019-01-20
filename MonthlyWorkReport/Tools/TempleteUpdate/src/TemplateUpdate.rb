@@ -37,19 +37,19 @@ class TemplateUpdate
 		Excel.runDuring(false, false) do |excel|
 
 			# コピーしたブックを開く
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
-			wb_templete = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( TEMPLATE_FILE_NAME ), 'updatelinks'=> 0})
+			wb_templete = Excel.openWb( excel, TEMPLATE_FILE_NAME )
 			ws_templete = wb_templete.worksheets( SHEET_NAME_TEMPLATE_DATA )
 
 			# ファイルの数だけ
 			@file_list.each { |file_path|
-				wb_staff = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( file_path ), 'updatelinks'=> 0})
+				wb_staff = Excel.openWb( excel, file_path )
 				ws_staff = wb_staff.worksheets( "#{getStaffName(file_path)}" )
 
 				# フォーマットを更新
 				excelFormatUpdate( ws_templete, ws_staff )
 
 				# 更新したものをoutフォルダにセーブして閉じる
+				fso = WIN32OLE.new('Scripting.FileSystemObject')
 				out_path = file_path.gsub( "in", "out" )
 				wb_staff.saveAs( fso.GetAbsolutePathName("#{out_path}") )
 				wb_staff.close()
