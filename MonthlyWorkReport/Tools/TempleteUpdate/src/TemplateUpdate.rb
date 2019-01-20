@@ -16,6 +16,50 @@ class TemplateUpdate
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
 
+	public
+	def initialize()
+		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
+
+		@file_list = Array.new()
+		# [in] にある excel のファイルリストを作成
+		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.#{EXT_NAME}" ) do |file_path|
+			@file_list.push( file_path )
+		end
+
+		if( @file_list.size() == 0 )
+			assertLogPrintFalse( "in フォルダにファイルがありません" )
+		end
+	end
+
+	def update()
+
+		Excel.runDuring(false, false) do |excel|
+
+			# コピーしたブックを開く
+			fso = WIN32OLE.new('Scripting.FileSystemObject')
+			wb_templete = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( TEMPLATE_FILE_NAME ), 'updatelinks'=> 0})
+			ws_templete = wb_templete.worksheets( SHEET_NAME_TEMPLATE_DATA )
+
+			# ファイルの数だけ
+			@file_list.each { |file_path|
+				wb_staff = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( file_path ), 'updatelinks'=> 0})
+				ws_staff = wb_staff.worksheets( "#{getStaffName(file_path)}" )
+
+				# フォーマットを更新
+				excelFormatUpdate( ws_templete, ws_staff )
+
+				# 更新したものをoutフォルダにセーブして閉じる
+				out_path = file_path.gsub( "in", "out" )
+				wb_staff.saveAs( fso.GetAbsolutePathName("#{out_path}") )
+				wb_staff.close()
+
+				# ログ用
+				puts "update excel => #{File.basename( out_path )}"
+			}
+			wb_templete.close()
+		end
+	end
+
 	#----------------------------------------------
 	# @biref	src excel のセルを dst にコピー
 	#----------------------------------------------
@@ -59,6 +103,7 @@ class TemplateUpdate
 		dst_ws.Protect
 	end
 
+	private
 	#----------------------------------------------
 	# @biref	カレンダー情報　「年/月/期間」
 	#----------------------------------------------
@@ -79,49 +124,5 @@ class TemplateUpdate
 		file_name_info	= file_name.split( "_" )
 		staff_name		= file_name_info[1]
 		return staff_name
-	end
-
-	public
-	def initialize()
-		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
-
-		@file_list = Array.new()
-		# [in] にある excel のファイルリストを作成
-		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.#{EXT_NAME}" ) do |file_path|
-			@file_list.push( file_path )
-		end
-
-		if( @file_list.size() == 0 )
-			assertLogPrintFalse( "in フォルダにファイルがありません" )
-		end
-	end
-
-	def update()
-
-		Excel.runDuring(false, false) do |excel|
-
-			# コピーしたブックを開く
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
-			wb_templete = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( TEMPLATE_FILE_NAME ), 'updatelinks'=> 0})
-			ws_templete = wb_templete.worksheets( SHEET_NAME_TEMPLATE_DATA )
-
-			# ファイルの数だけ
-			@file_list.each { |file_path|
-				wb_staff = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( file_path ), 'updatelinks'=> 0})
-				ws_staff = wb_staff.worksheets( "#{getStaffName(file_path)}" )
-
-				# フォーマットを更新
-				excelFormatUpdate( ws_templete, ws_staff )
-
-				# 更新したものをoutフォルダにセーブして閉じる
-				out_path = file_path.gsub( "in", "out" )
-				wb_staff.saveAs( fso.GetAbsolutePathName("#{out_path}") )
-				wb_staff.close()
-
-				# ログ用
-				puts "update excel => #{File.basename( out_path )}"
-			}
-			wb_templete.close()
-		end
 	end
 end

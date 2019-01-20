@@ -77,7 +77,7 @@ class TemplateExcelCreate
 		# 数値を3桁に変換
 		staff_id	= "%03d" % id.to_i
 		abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
-		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar}.xlsx".encode(Encoding::Windows_31J)
+		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar.to_i.to_s}.xlsx".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
 		out_path	=  File.expand_path( out_path )
 
