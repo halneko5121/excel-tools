@@ -91,7 +91,7 @@ class TemplateUpdate
 			dst_ws = dst_wb_staff.worksheets( num )
 
 			# 新しいテンプレートに従って、シートを更新
-			Excel.rangeCopyFast( ws_templete, COPY_RANGE, dst_ws, COPY_RANGE )
+			Excel.rangeCopy( ws_templete, COPY_RANGE, dst_ws, COPY_RANGE )
 
 			# 指定範囲のセルをコピペ
 			param_list.each { |param|
@@ -99,7 +99,7 @@ class TemplateUpdate
 				# 元の書き込みデータを設定
 				src_range = "#{param[:src_range]}"
 				dst_range = "#{param[:dst_range]}"
-				Excel.rangeCopyFast( src_ws, src_range, dst_ws, dst_range )
+				Excel.rangeCopy( src_ws, src_range, dst_ws, dst_range )
 			}
 		}
 	end

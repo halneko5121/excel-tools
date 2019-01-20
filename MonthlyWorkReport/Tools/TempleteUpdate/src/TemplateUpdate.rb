@@ -64,45 +64,44 @@ class TemplateUpdate
 	#----------------------------------------------
 	def excelFormatUpdate( src_ws, dst_ws )
 
-		dst_ws.UnProtect
+		Excel.setProtectSheet( dst_ws, false )
+			# 「年/月/期間/氏名」のセル範囲を一時保存
+			temp_year		= Excel.getCellValue( dst_ws, 2, 5 )
+			temp_month		= Excel.getCellValue( dst_ws, 2, 6 )
+			temp_period		= Excel.getCellValue( dst_ws, 2, 7 )
+			temp_staff_name	= Excel.getCellValue( dst_ws, 2, 10 )
 
-		# 「年/月/期間/氏名」のセル範囲を一時保存
-		temp_year		= Excel.getCellValue( dst_ws, 2, 5 )
-		temp_month		= Excel.getCellValue( dst_ws, 2, 6 )
-		temp_period		= Excel.getCellValue( dst_ws, 2, 7 )
-		temp_staff_name	= Excel.getCellValue( dst_ws, 2, 10 )
+			# 各種フォーマット更新
+			Excel.rangeCopy( src_ws, FORMAT_STAFF_SHEET_ALL, dst_ws, FORMAT_STAFF_SHEET_ALL )
 
-		# 各種フォーマット更新
-		Excel.rangeCopyFast( src_ws, FORMAT_STAFF_SHEET_ALL, dst_ws, FORMAT_STAFF_SHEET_ALL )
+			# 「年/月/期間/氏名」のセル範囲を設定
+			Excel.setCellValue( dst_ws, 2, 5, temp_year)
+			Excel.setCellValue( dst_ws, 2, 6, temp_month)
+			Excel.setCellValue( dst_ws, 2, 7, temp_period)
+			Excel.setCellValue( dst_ws, 2, 10, temp_staff_name)
 
-		# 「年/月/期間/氏名」のセル範囲を設定
-		Excel.setCellValue( dst_ws, 2, 5, temp_year)
-		Excel.setCellValue( dst_ws, 2, 6, temp_month)
-		Excel.setCellValue( dst_ws, 2, 7, temp_period)
-		Excel.setCellValue( dst_ws, 2, 10, temp_staff_name)
+			# 行数を算出
+			work_rows = Excel.getRow( src_ws, "計", 1)
 
-		# 行数を算出
-		work_rows = Excel.getRow( src_ws, "計", 1)
+			# 各種「日付」
+			date_range = Excel.calcRangeStr( "A", STAFF_SHEET_START_ROW, work_rows )
+			Excel.rangeCopy( src_ws, date_range, dst_ws, date_range )
 
-		# 各種「日付」
-		date_range = Excel.calcRangeStr( "A", STAFF_SHEET_START_ROW, work_rows )
-		Excel.rangeCopyFast( src_ws, date_range, dst_ws, date_range )
+			# 各種「曜日」
+			say_week_range = Excel.calcRangeStr( "B", STAFF_SHEET_START_ROW, work_rows )
+			Excel.rangeCopy( src_ws, say_week_range, dst_ws, say_week_range )
 
-		# 各種「曜日」
-		say_week_range = Excel.calcRangeStr( "B", STAFF_SHEET_START_ROW, work_rows )
-		Excel.rangeCopyFast( src_ws, say_week_range, dst_ws, say_week_range )
+			# 各種「総勤務時間」
+			work_time_range = Excel.calcRangeStr( "C", STAFF_SHEET_START_ROW, work_rows )
+			Excel.rangeCopy( src_ws, work_time_range, dst_ws, work_time_range )
 
-		# 各種「総勤務時間」
-		work_time_range = Excel.calcRangeStr( "C", STAFF_SHEET_START_ROW, work_rows )
-		Excel.rangeCopyFast( src_ws, work_time_range, dst_ws, work_time_range )
+			# 各種「合計」行
+			total_time_range = "A#{work_rows}:L#{work_rows}"
+			Excel.rangeCopy( src_ws, total_time_range, dst_ws, total_time_range )
 
-		# 各種「合計」行
-		total_time_range = "A#{work_rows}:L#{work_rows}"
-		Excel.rangeCopyFast( src_ws, total_time_range, dst_ws, total_time_range )
-
-		# セルをロック（編集不可）にしてシートを保護
-		dst_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Locked = true
-		dst_ws.Protect
+			# セルをロック（編集不可）にしてシートを保護
+			dst_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Locked = true
+		Excel.setProtectSheet( dst_ws, true )
 	end
 
 	private
