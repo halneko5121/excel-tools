@@ -30,8 +30,6 @@ class TemplateExcelCreate
 
 		Excel.runDuring(false, false) do |excel|
 
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
-
 			# 社員数だけ
 			staff_list.each{|data|
 
@@ -39,10 +37,10 @@ class TemplateExcelCreate
 				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
 
 				# テンプレートのブックをコピー
-				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
+				fsoCopyFile( "#{TEMPLATE_FILE_NAME}", out_path )
 
 				# コピーしたブックを開く
-				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
+				wb = Excel.openWb(excel, out_path)
 				excel.displayAlerts = false
 				excel.visible		= false
 
