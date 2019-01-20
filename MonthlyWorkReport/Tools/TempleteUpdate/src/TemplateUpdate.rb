@@ -14,7 +14,7 @@ class TemplateUpdate
 	private
 	IN_ROOT				= File.dirname(__FILE__) + "/../in"
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
 
 	public
 	def initialize()
@@ -22,7 +22,7 @@ class TemplateUpdate
 
 		@file_list = Array.new()
 		# [in] にある excel のファイルリストを作成
-		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.#{EXT_NAME}" ) do |file_path|
+		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.xlsx" ) do |file_path|
 			@file_list.push( file_path )
 		end
 

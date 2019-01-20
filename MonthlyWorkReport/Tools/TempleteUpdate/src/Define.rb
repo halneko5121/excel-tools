@@ -16,6 +16,3 @@ StaffSheet = Struct.new(
 				:DayWeekColumn,
 				:WorkTimeColumn)
 STAFF_SHEET_DATA = StaffSheet.new( "A", "B", "C" )
-
-ADD_CULMNS_CHECK_SHEET	= 0
-EXT_NAME				= "xlsx"
