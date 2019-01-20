@@ -12,7 +12,7 @@ require File.expand_path( File.dirname(__FILE__) + '/../../lib/util.rb' )
 class TemplateExcelCreate
 	private
 	OUT_ROOT 					= File.dirname(__FILE__) + "/../../../Users"
-	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
+	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
 	SHEET_NAME_STAFF_DATA		= "開始データ"
 	SHEET_NAME_PRORATED_TABLE	= "区分別按分表"
 	NEEDLESS_SHEET_NAMES 		= [ "業務別月報", "未定" ]
