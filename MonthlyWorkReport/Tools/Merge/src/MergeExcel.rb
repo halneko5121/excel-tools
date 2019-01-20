@@ -16,7 +16,7 @@ class MergeExcel
 	private
 	# Const
 	OUT_ROOT 						= "."
-	TEMPLATE_FILE_NAME		= File.expand_path(File.dirname(__FILE__)) + "/../../Template/1-UP作業月報_template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME		= File.expand_path(File.dirname(__FILE__)) + "/../../Template/Template.#{EXT_NAME}"
 	CHECK_DIR						= File.expand_path(File.dirname(__FILE__)) + "/../../../Users"
 	SEARCH_FILE 					= "*1-UP*.#{EXT_NAME}"
 	START_ROW_PRORATED		= 5
