@@ -26,7 +26,7 @@ class MergeExcel
 		@file_path_list = Array.new
 	end
 
-	def main( param_hash )
+	def execute( param_hash )
 
 		# ファイルパスをリストに設定
 		setFileList()

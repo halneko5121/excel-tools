@@ -27,7 +27,7 @@ if ( __FILE__ == $0 )
 
 		# マージを行う
 		merge_script = MergeExcel.new
-		merge_script.main( merge_param.getParamList() )
+		merge_script.execute( merge_param.getParamList() )
 	}
 
 end
