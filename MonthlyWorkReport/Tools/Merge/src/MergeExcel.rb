@@ -44,7 +44,7 @@ class MergeExcel
 			wb_tamplate = Excel.openWb( excel, "#{TEMPLATE_FILE_NAME}" )
 
 			# 新規ワークブックを作成・必要なシートをコピー
-			wb_merge = excel.workbooks.add()
+			wb_merge = Excel.createWb( excel )
 			setDefaultSheetMergeExcel( excel, wb_merge, wb_tamplate )
 			wb_tamplate.close(0)
 
