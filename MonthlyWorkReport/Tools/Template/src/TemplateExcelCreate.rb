@@ -133,8 +133,9 @@ class TemplateExcelCreate
 		Excel.setCellValue( ws_propateed, 5, 23, 0 )
 		Excel.setCellValue( ws_propateed, 6, 1, Excel.getCellValue( ws_propateed, 5, 1 ) )
 		Excel.setCellValue( ws_propateed, 6, 22, "#{param_hash[:abbrev_name]}" )
-		ws_propateed.Cells.Columns(22).Hidden	= true
-		ws_propateed.Cells.Columns(23).Hidden	= true
+		(22..23).each { |index_column|
+			Excel.setHideColumns(ws_propateed, index_column, true)
+		}
 
 		# 入社時期
 		if( param_hash[:joining_time] != nil )
