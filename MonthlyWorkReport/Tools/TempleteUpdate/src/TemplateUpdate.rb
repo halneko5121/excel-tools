@@ -5,16 +5,20 @@
 # ==========================="
 require File.dirname(__FILE__) + "/../../lib/excel.rb"
 require File.dirname(__FILE__) + "/../../lib/util.rb"
-require File.dirname(__FILE__) + "/Define.rb"
 
 # ==========================="
 # src
 # ==========================="
 class TemplateUpdate
 	private
-	IN_ROOT				= File.dirname(__FILE__) + "/../in"
-	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
+	IN_ROOT						= File.dirname(__FILE__) + "/../in"
+	OUT_ROOT 					= File.dirname(__FILE__) + "/../out"
+	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/Template.xlsx"
+	SHEET_NAME_TEMPLATE_DATA	= "開始データ"
+	# excel のテンプレートフォーマット(スタッフシート)
+	FORMAT_STAFF_SHEET_CALENDAR	= "E2:G2"	# 「年/月/期間」のセル範囲
+	FORMAT_STAFF_SHEET_ALL		= "A1:O4"	# フォーマットいろいろの各種範囲
+	STAFF_SHEET_START_ROW 		= 5			# 入力データの開始行
 
 	public
 	def initialize()
@@ -83,15 +87,15 @@ class TemplateUpdate
 		work_rows = Excel.getRow( src_ws, "計", 1)
 
 		# 各種「日付」
-		date_range = Excel.calcRangeStr( STAFF_SHEET_DATA.DateStartColumn, STAFF_SHEET_START_ROW, work_rows )
+		date_range = Excel.calcRangeStr( "A", STAFF_SHEET_START_ROW, work_rows )
 		Excel.rangeCopyFast( src_ws, date_range, dst_ws, date_range )
 
 		# 各種「曜日」
-		say_week_range = Excel.calcRangeStr( STAFF_SHEET_DATA.DayWeekColumn, STAFF_SHEET_START_ROW, work_rows )
+		say_week_range = Excel.calcRangeStr( "B", STAFF_SHEET_START_ROW, work_rows )
 		Excel.rangeCopyFast( src_ws, say_week_range, dst_ws, say_week_range )
 
 		# 各種「総勤務時間」
-		work_time_range = Excel.calcRangeStr( STAFF_SHEET_DATA.WorkTimeColumn, STAFF_SHEET_START_ROW, work_rows )
+		work_time_range = Excel.calcRangeStr( "C", STAFF_SHEET_START_ROW, work_rows )
 		Excel.rangeCopyFast( src_ws, work_time_range, dst_ws, work_time_range )
 
 		# 各種「合計」行
