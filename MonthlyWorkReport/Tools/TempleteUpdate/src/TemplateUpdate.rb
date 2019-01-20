@@ -24,12 +24,9 @@ class TemplateUpdate
 	def initialize()
 		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
 
-		@file_list = Array.new()
 		# [in] にある excel のファイルリストを作成
-		Dir.glob( "#{IN_ROOT}" + "/**/" + "*.xlsx" ) do |file_path|
-			@file_list.push( file_path )
-		end
-
+		pattern_array =[ "*.xlsx" ]
+		@file_list = getSearchFileList("#{IN_ROOT}", pattern_array)
 		if( @file_list.size() == 0 )
 			assertLogPrintFalse( "in フォルダにファイルがありません" )
 		end
