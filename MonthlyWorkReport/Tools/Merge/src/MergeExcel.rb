@@ -41,7 +41,7 @@ class MergeExcel
 		Excel.runDuring(false, false) do |excel|
 
 			# マージ用 excel を開く
-			wb = excel.workbooks.open({'filename'=> "#{TEMPLATE_FILE_NAME}", 'updatelinks'=> 0})
+			wb = Excel.openWb( excel, "#{TEMPLATE_FILE_NAME}" )
 
 			# 新規ワークブックを作成・必要なシートをコピー
 			wb_merge = excel.workbooks.add()
