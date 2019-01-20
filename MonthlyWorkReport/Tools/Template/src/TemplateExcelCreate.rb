@@ -134,7 +134,7 @@ class TemplateExcelCreate
 		Excel.setCellValue( ws_propateed, 6, 1, Excel.getCellValue( ws_propateed, 5, 1 ) )
 		Excel.setCellValue( ws_propateed, 6, 22, "#{param_hash[:abbrev_name]}" )
 		(22..23).each { |index_column|
-			Excel.setHideColumns(ws_propateed, index_column, true)
+			Excel.setVisibleColumns(ws_propateed, index_column, false)
 		}
 
 		# 入社時期
