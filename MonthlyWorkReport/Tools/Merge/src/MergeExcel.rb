@@ -68,16 +68,14 @@ class MergeExcel
 	#----------------------------------------------
 	def setWsParamSystemSheet( system_ws, src_ws )
 		Excel.setProtectSheet( system_ws, false )
-
-		#　年/月/期間
-		system_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Value	= src_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Value
-		#　日付
-		system_ws.range( "#{FORMAT_STAFF_SHEET_DATE}" ).Value		= src_ws.range( "#{FORMAT_STAFF_SHEET_DATE}" ).Value
-		#　曜日
-		system_ws.range( "#{FORMAT_STAFF_SHEET_DAY_WEEK}" ).Value	= src_ws.range( "#{FORMAT_STAFF_SHEET_DAY_WEEK}" ).Value
-		#　各種列名設定
-		system_ws.range( "#{FORMAT_STAFF_SHEET_PROJECT}" ).Value	= src_ws.range( "#{FORMAT_STAFF_SHEET_PROJECT}" ).Value
-
+			# 年/月/期間
+			Excel.rangeCopy( src_ws, "#{FORMAT_STAFF_SHEET_CALENDAR}", system_ws, "#{FORMAT_STAFF_SHEET_CALENDAR}" )
+			# 日付
+			Excel.rangeCopy( src_ws, "#{FORMAT_STAFF_SHEET_DATE}", system_ws, "#{FORMAT_STAFF_SHEET_DATE}" )
+			# 曜日
+			Excel.rangeCopy( src_ws, "#{FORMAT_STAFF_SHEET_DAY_WEEK}", system_ws, "#{FORMAT_STAFF_SHEET_DAY_WEEK}" )
+			# 各種列名設定
+			Excel.rangeCopy( src_ws, "#{FORMAT_STAFF_SHEET_PROJECT}", system_ws, "#{FORMAT_STAFF_SHEET_PROJECT}" )
 		Excel.setProtectSheet( system_ws, true )
 	end
 
