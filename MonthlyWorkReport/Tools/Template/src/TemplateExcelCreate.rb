@@ -41,7 +41,7 @@ class TemplateExcelCreate
 				fsoCopyFile( "#{TEMPLATE_FILE_NAME}", out_path )
 
 				# コピーしたブックを開く
-				wb = Excel.openWb(excel, out_path)
+				wb = Excel.openWb( excel, out_path )
 
 				# 不要なシートを削除
 				NEEDLESS_SHEET_NAMES.each { |ws_name|
@@ -53,7 +53,7 @@ class TemplateExcelCreate
 				setWsParamProratedTable( wb, data )
 
 				# シートは非表示にしておく  / [区分別按分表][届書チェック]
-				wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}").visible = false
+				Excel.setVisibleSheet( wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}"), false )
 
 				# セーブして閉じる
 				Excel.saveAndClose( wb )
