@@ -207,7 +207,7 @@ class MergeExcel
 			puts "merge => #{File.basename( "#{file_path}" )}"
 
 			# excel Open
-			wb_staff = excel.workbooks.open({'filename'=> "#{file_path}"})
+			wb_staff = Excel.openWb( excel, "#{file_path}" )
 
 			# 「各々の作業月報」シートをコピー
 			user_name = searchUserName( file_path )
