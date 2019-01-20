@@ -47,6 +47,12 @@ class SplitWork
 			hash_ws_param[:post_dir_name]		= Excel.getCellValue(ws_param_works, recode.row, "#{@clumn_post_dir_name}".to_i)
 			@check_ws_list.push( hash_ws_param )
 		end
+		
+		if ( @check_ws_list.size() == 0 )
+			error_str = "[ SplitParam.xls ] のパラメータは設定されていますか?\n"
+			error_str += "パラメータに該当するシートが存在しませんでした"
+			assertLogPrintFalse( error_str )
+		end
 	end
 	
 	def split( excel, src_wb, out_dir, ext_name, ws_param_works, is_ws_protect, protect_pass )
@@ -65,8 +71,10 @@ class SplitWork
 	
 			# 指定された名前のワークシートがありません
 			spilt_ws_name = "#{data[:check_ws_name]}"
-			if( ws_name_array.include?( spilt_ws_name ) == false )
-				log_str = "シート名に[ #{spilt_ws_name} ]が見当たりません!!"
+			if( ws_name_array.include?( spilt_ws_name ) == false )			
+				spilt_ws_name = spilt_ws_name.encode( Encoding::UTF_8 )
+				log_str = "シート名に[ #{spilt_ws_name} ]が見当たりません!!\n"
+				log_str += "[ SplitParam.xls ] に指定した名前のシートがあるかを確認下さい"
 				assertLogPrintFalse( log_str )
 			end		
 		}

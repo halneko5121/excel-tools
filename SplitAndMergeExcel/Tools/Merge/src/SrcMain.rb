@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + "/MergeExcel.rb"
 # Const
 # ==========================="
 TITLE	= "ExcelMerge"
-VER		= "1.0.1"
+VER		= "1.0.2"
 
 # ==========================="
 # src

@@ -14,8 +14,7 @@ require File.dirname(__FILE__) + "/SplitWorks.rb"
 # ==========================="
 PARAMETER_FILE_NAME	= File.dirname(__FILE__) + "/../../Split/SplitParam.xls"
 CONNECT_DRIVE = "Z:"
-#CONNECT_PATH  = "\\\\mfileserver\\post"
-CONNECT_PATH  = "E:\\post"
+CONNECT_PATH  = "\\\\mfileserver\\post"
 
 # ==========================="
 # class
@@ -45,6 +44,7 @@ class MoveToPost
 
 	def printMoveFileList()
 
+		puts ""
 		puts "以下、移動先一覧"
 		puts "-----------------------------------------------------------------"	
 		success_count = 0		
@@ -89,17 +89,18 @@ class MoveToPost
 	end
 
 	def moveFile()
+	
+		if( @moveFilePathHash.length == 0 )
+			str = "移動可能なファイルが1つもありません\n処理を中断します"
+			assertLogPrintFalse( str )
+		else
 
-		# 移動する前に確認を取る
-		puts "上記の場所にファイルを移動してもよろしいですか？ [yes -> y][no -> n]"
-		result = STDIN.gets.chomp
+			# 移動する前に確認を取る
+			puts "上記の場所にファイルを移動してもよろしいですか？ [yes -> y][no -> n]"
+			result = STDIN.gets.chomp
 
-		if( "#{result}" == "y" )
-		
-			if( @moveFilePathHash.length == 0 )
-				puts "移動可能なファイルが1つもありません"
-				puts "処理を中断します"
-			else
+			if( "#{result}" == "y" )
+
 				# 各スタッフごとにファイルを移動
 				@moveFilePathHash.each_value {|value|
 				
@@ -109,9 +110,9 @@ class MoveToPost
 					FileUtils.move( "#{src_path}", "#{dst_path}" )
 					puts "move: #{File.basename(src_path)} => #{dst_path}"
 				}
+			else
+				puts "処理を中断します"
 			end
-		else
-			puts "処理を中断します"
 		end
 	end
 
@@ -121,12 +122,13 @@ class MoveToPost
 		if( @staff_list.size() == success_count )
 			return
 		end
-
+		
 		setConsoleColor( "olive", "white" )
 		puts "-----------------------------------------------------------------"	
 		puts "移動できないファイルがいくつかありました"
+		puts "SplitParam.xls の「postフォルダ名」が合っているか"
+		puts "同じ名前のファイルがないか。確認下さい"
 		puts "#{CONNECT_PATH} のフォルダ一覧は以下"
-		puts "SplitParam.xls の「postフォルダ名」が合っているか。確認下さい"			
 		puts "-----------------------------------------------------------------"	
 		dst_dir_path = "#{CONNECT_PATH}".gsub( "\\", "/"  )
 		Dir.foreach( "#{dst_dir_path}" ) { |f|
