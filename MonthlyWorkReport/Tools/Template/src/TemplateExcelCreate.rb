@@ -93,13 +93,13 @@ class TemplateExcelCreate
 		# 社員名（フルネーム）
 		ws_staff	  = wb.worksheets("開始データ")
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
-		ws_staff.Cells.Item(2, 10).Value = "#{param_hash[:name]}"	# 氏名
+		Excel.setCellValue( ws_staff, 2, 10, "#{param_hash[:name]}" ) # 氏名
 
 		# 2013xx => [2013][xx]に分割
-		str_year_month	= splitYearMonth("#{param_hash[:create_calendar]}")
-		ws_staff.Cells.Item(2, 5).Value = str_year_month[0].to_i
-		ws_staff.Cells.Item(2, 6).Value = str_year_month[1].to_i
-		ws_staff.Cells.Item(2, 7).Value = "#{param_hash[:period]}"	# 期間
+		str_year_month	= splitYearMonth( "#{param_hash[:create_calendar]}" )
+		Excel.setCellValue( ws_staff, 2, 5, str_year_month[0].to_i )
+		Excel.setCellValue( ws_staff, 2, 6, str_year_month[1].to_i )
+		Excel.setCellValue( ws_staff, 2, 7, "#{param_hash[:period]}" ) # 期間
 
 		# セルをロック（編集不可）にしてシートを保護
 		ws_staff.Cells.Item(2, 5).Locked = true
