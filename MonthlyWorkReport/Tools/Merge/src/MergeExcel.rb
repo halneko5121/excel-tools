@@ -150,8 +150,7 @@ class MergeExcel
 	def setWsParamEachStaffSheet( excel, wb_merge )
 
 		# 「区分別按分表」シートを取得
-		ws_dst_department = wb_merge.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
-
+		ws_dst_department	= wb_merge.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 		ws_start			= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
 		start_sheet_number	= ws_start.index
 
