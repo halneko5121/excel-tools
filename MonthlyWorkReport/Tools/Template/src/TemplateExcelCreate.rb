@@ -91,16 +91,6 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	西暦を平成に変換する
-	#----------------------------------------------
-	def getYearNumber( year )
-
-		# year を 1文字 / 3文字に分割 => 下三桁に12を加算
-		year_number_array = year.unpack("a1a3")
-		return ( year_number_array[1].to_i + 12 )
-	end
-
-	#----------------------------------------------
 	# @biref	パラメータの設定(各社員シート)
 	# @parm		wb			設定を行うワークブック
 	# @parm		param_hash	パラメータを格納したハッシュ
