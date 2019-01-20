@@ -14,9 +14,9 @@ class MergeExcel
 	private
 	# Const
 	OUT_ROOT 				= "."
-	TEMPLATE_FILE_NAME		= File.expand_path(File.dirname(__FILE__)) + "/../../Template/Template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME		= File.expand_path(File.dirname(__FILE__)) + "/../../Template/Template.xlsx"
 	CHECK_DIR				= File.expand_path(File.dirname(__FILE__)) + "/../../../Users"
-	SEARCH_FILE 			= "*1-UP*.#{EXT_NAME}"
+	SEARCH_FILE 			= "*1-UP*.xlsx"
 	START_ROW_PRORATED		= 5
 	CHECK_DATA_RANGE		= 31
 	START_ROW_CHECK_DATA	= 3
