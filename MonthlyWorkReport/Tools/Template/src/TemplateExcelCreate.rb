@@ -23,9 +23,8 @@ class TemplateExcelCreate
 	def createExcel( staff_list )
 
 		# ファイルが存在していた場合はファイルを削除
-		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
-			File.delete "#{file_path}"
-		end
+		pattern = [ "*.xlsx" ]
+		allClearFile("#{OUT_ROOT}", pattern)
 
 		puts "excel count = #{staff_list.size()}"
 
