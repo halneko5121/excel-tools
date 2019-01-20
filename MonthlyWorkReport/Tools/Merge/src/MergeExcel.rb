@@ -21,6 +21,72 @@ class MergeExcel
 	CHECK_DATA_RANGE		= 31
 	START_ROW_CHECK_DATA	= 3
 
+	public
+	def initialize()
+		@file_path_list = Array.new
+	end
+
+	def main( param_hash )
+
+		# ファイルパスをリストに設定
+		setFileList()
+
+		# excelの処理
+		Excel.runDuring(false, false) do |excel|
+
+			# マージ用 excel を開く
+			wb = excel.workbooks.open({'filename'=> "#{TEMPLATE_FILE_NAME}", 'updatelinks'=> 0})
+
+			# 新規ワークブックを作成・必要なシートをコピー
+			wb_merge = excel.workbooks.add()
+			setDefaultSheetMergeExcel( excel, wb_merge, wb )
+			wb.close(0)
+
+			# スタッフの数だけループ
+			param_hash.each{|data|
+
+				# 各々のスタッフ　excel　の値を設定
+				setWsParamEachStaffSheet( excel, wb_merge )
+
+				# 「開始データ」「未定」「業務別月報」に値をコピー(年月/期間)
+				ws_staff	= wb_merge.worksheets("門井")
+				ws_start	= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
+				ws_no_fixed = wb_merge.worksheets("#{SHEET_NAME_ANOTHER}")
+				ws_monthly	= wb_merge.worksheets("#{SHEET_NAME_WORKS}")
+
+				setWsParamSystemSheet(ws_no_fixed, ws_staff)
+				setWsParamSystemSheet(ws_monthly, ws_staff)
+				setWsParamSystemSheet(ws_start, ws_staff)
+
+				# 「業務別月報」の設定
+				setWsParamWorksSheet(ws_monthly)
+
+				# [開始データ] シートは非表示にしておく
+				ws_start.visible = false
+
+				# 「区分別按分表シート」の設定
+				setWsParamProratedTable( wb_merge )
+
+				# パラメータの適応
+				applyParamMergeWb( wb_merge, data )
+
+				# ファイル名から一部を拝借して設定
+				out_path = getOutputPath( @file_path_list[0] )
+
+				# 最初のシートをアクティブにして終了
+				wb_merge.worksheets(1).Activate
+
+				# 保存して閉じる
+				fso	= WIN32OLE.new('Scripting.FileSystemObject')
+				wb_merge.saveAs( fso.GetAbsolutePathName("#{out_path}") )
+				wb_merge.close(0)
+
+				puts "output merge excel = #{out_path}"
+			}
+		end
+	end
+
+	private
 	def setFileList()
 
 		# パターンにマッチするファイルパスを追加
@@ -248,71 +314,6 @@ class MergeExcel
 		excel.displayAlerts = false
 		for index in 1..merge_wb_ws_count do
 			merge_wb.worksheets("Sheet#{index}").delete()
-		end
-	end
-
-	public
-	def initialize()
-		@file_path_list = Array.new
-	end
-
-	def main( param_hash )
-
-		# ファイルパスをリストに設定
-		setFileList()
-
-		# excelの処理
-		Excel.runDuring(false, false) do |excel|
-
-			# マージ用 excel を開く
-			wb = excel.workbooks.open({'filename'=> "#{TEMPLATE_FILE_NAME}", 'updatelinks'=> 0})
-
-			# 新規ワークブックを作成・必要なシートをコピー
-			wb_merge = excel.workbooks.add()
-			setDefaultSheetMergeExcel( excel, wb_merge, wb )
-			wb.close(0)
-
-			# スタッフの数だけループ
-			param_hash.each{|data|
-
-				# 各々のスタッフ　excel　の値を設定
-				setWsParamEachStaffSheet( excel, wb_merge )
-
-				# 「開始データ」「未定」「業務別月報」に値をコピー(年月/期間)
-				ws_staff	= wb_merge.worksheets("門井")
-				ws_start	= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
-				ws_no_fixed = wb_merge.worksheets("#{SHEET_NAME_ANOTHER}")
-				ws_monthly	= wb_merge.worksheets("#{SHEET_NAME_WORKS}")
-
-				setWsParamSystemSheet(ws_no_fixed, ws_staff)
-				setWsParamSystemSheet(ws_monthly, ws_staff)
-				setWsParamSystemSheet(ws_start, ws_staff)
-
-				# 「業務別月報」の設定
-				setWsParamWorksSheet(ws_monthly)
-
-				# [開始データ] シートは非表示にしておく
-				ws_start.visible = false
-
-				# 「区分別按分表シート」の設定
-				setWsParamProratedTable( wb_merge )
-
-				# パラメータの適応
-				applyParamMergeWb( wb_merge, data )
-
-				# ファイル名から一部を拝借して設定
-				out_path = getOutputPath( @file_path_list[0] )
-
-				# 最初のシートをアクティブにして終了
-				wb_merge.worksheets(1).Activate
-
-				# 保存して閉じる
-				fso	= WIN32OLE.new('Scripting.FileSystemObject')
-				wb_merge.saveAs( fso.GetAbsolutePathName("#{out_path}") )
-				wb_merge.close(0)
-
-				puts "output merge excel = #{out_path}"
-			}
 		end
 	end
 end
