@@ -5,16 +5,16 @@
 # ==========================="
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/util.rb' )
-require File.expand_path( File.dirname(__FILE__) + '/Define.rb' )
 
 # ==========================="
 # src
 # ==========================="
 class TemplateExcelCreate
 	private
-	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
-	NEEDLESS_SHEET_NAMES = [ "業務別月報", "未定" ]
+	OUT_ROOT 					= File.dirname(__FILE__) + "/../../../Users"
+	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
+	SHEET_NAME_PRORATED_TABLE	= "区分別按分表"
+	NEEDLESS_SHEET_NAMES 		= [ "業務別月報", "未定" ]
 
 	public
 	def initialize()
