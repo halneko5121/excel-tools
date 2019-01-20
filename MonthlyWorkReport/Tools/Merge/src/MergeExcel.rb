@@ -26,7 +26,7 @@ class MergeExcel
 		# パターンにマッチするファイルパスを追加
 		pattern = [ SEARCH_FILE ]
 		@file_path_list = getSearchFileList( CHECK_DIR, pattern )
-		if( @file_path_list.size == 0 )
+		if( @file_path_list.size() == 0 )
 			error_str = "not found merging files!!"
 			error_str += "Users フォルダにファイルがあるかお確かめ下さい"
 			assertLogPrintFalse( error_str )
