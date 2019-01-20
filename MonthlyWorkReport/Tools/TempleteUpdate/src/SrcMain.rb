@@ -21,7 +21,7 @@ if ( __FILE__ == $0 )
 
 		# テンプレートの書式に設定し直し
 		template_update	= TemplateUpdate.new
-		template_update.update()
+		template_update.execute()
 	}
 
 end

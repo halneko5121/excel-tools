@@ -32,7 +32,7 @@ class TemplateUpdate
 		end
 	end
 
-	def update()
+	def execute()
 
 		Excel.runDuring(false, false) do |excel|
 
