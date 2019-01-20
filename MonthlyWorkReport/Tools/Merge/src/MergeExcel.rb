@@ -217,7 +217,6 @@ class MergeExcel
 		# パラメータの適応:チェックシートの削除
 		if( is_delete_ws_check == "true" )
 			wb_merge.worksheets("#{SHEET_NAME_CHECK}").delete
-#			wb_merge.worksheets("#{SHEET_NAME_CHECK_DESCRIPT}").delete
 		end
 	end
 
