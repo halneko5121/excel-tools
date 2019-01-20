@@ -13,7 +13,7 @@ require File.expand_path( File.dirname(__FILE__) + '/Define.rb' )
 class TemplateExcelCreate
 	private
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
 
 	public
 	def initialize()
@@ -83,7 +83,7 @@ class TemplateExcelCreate
 		# 数値を3桁に変換
 		staff_id	= "%03d" % id.to_i
 		abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
-		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar}.#{EXT_NAME}".encode(Encoding::Windows_31J)
+		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar}.xlsx".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
 		out_path	=  File.expand_path( out_path )
 

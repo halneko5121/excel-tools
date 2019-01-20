@@ -28,4 +28,3 @@ FORMAT_WORKS_SHEET_CHECK_SUM	= "C37:L37"	# 各種プロジェクトごとの作�
 RANGE_CHECK_VALUE				= "B3:X33"
 
 ADD_CULMNS_CHECK_SHEET	= 0
-EXT_NAME				= "xlsx"
