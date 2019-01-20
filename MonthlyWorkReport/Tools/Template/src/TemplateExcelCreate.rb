@@ -56,7 +56,7 @@ class TemplateExcelCreate
 				wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}").visible = false
 
 				# セーブして閉じる
-				Excel.saveAndClose()
+				Excel.saveAndClose( wb )
 
 				# ログ用
 				puts "create excel => #{File::basename( out_path )}"
