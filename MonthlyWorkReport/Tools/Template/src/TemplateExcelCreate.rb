@@ -97,11 +97,8 @@ class TemplateExcelCreate
 
 		# 2013xx => [2013][xx]に分割
 		str_year_month	= splitYearMonth("#{param_hash[:create_calendar]}")
-		year_number		= str_year_month[0].to_i
-		month			= str_year_month[1].to_i
-
-		ws_staff.Cells.Item(2, 5).Value = year_number
-		ws_staff.Cells.Item(2, 6).Value = month
+		ws_staff.Cells.Item(2, 5).Value = str_year_month[0].to_i
+		ws_staff.Cells.Item(2, 6).Value = str_year_month[1].to_i
 		ws_staff.Cells.Item(2, 7).Value = "#{param_hash[:period]}"	# 期間
 
 		# セルをロック（編集不可）にしてシートを保護
