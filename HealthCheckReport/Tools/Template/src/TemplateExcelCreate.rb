@@ -26,7 +26,7 @@ class TemplateExcelCreate
 
 		# ファイルが存在していた場合はファイルを削除
 		pattern = [ "*.xlsx" ]
-		allClearFile("#{OUT_ROOT}", pattern)
+		allRomoveFile("#{OUT_ROOT}", pattern)
 
 		# 出力OKのものだけ出力する
 		result_staff_list = Array.new

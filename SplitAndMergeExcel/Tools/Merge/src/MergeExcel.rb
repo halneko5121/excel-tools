@@ -16,7 +16,7 @@ class MergeExcel
 	OUT_ROOT                          = File.expand_path( File.dirname(__FILE__) + "/../out")
 	IN_ROOT                             = File.expand_path( File.dirname(__FILE__) + "/../in" )
 	REMAINING_DAYS_WB_NAME  = "残日数管理".encode( Encoding::Windows_31J )
-    
+
 	public
 	def initialize()
 		@dir_path_list = Array.new
@@ -24,20 +24,20 @@ class MergeExcel
 	end
 
 	def getDirPathList()
-		return @dir_path_list	
+		return @dir_path_list
 	end
 
 	def main()
-		
+
 		# ファイルが存在していた場合はファイルを削除
-		allClearFile( OUT_ROOT, SEARCH_PAT_ARRAY )
-		
+		allRomoveFile( OUT_ROOT, SEARCH_PAT_ARRAY )
+
 		# フォルダ / ファイルパスをリストに設定
 		setFileList( @dir_path_list, @file_list_array )
 
 		# excelの処理
 		Excel.runDuring(false, false) do |excel|
-		
+
 			# in フォルダにある dir の数だけ処理
 			@file_list_array.each{ |file_list|
 
@@ -52,7 +52,7 @@ class MergeExcel
 				(1..wb_merge_ws_count).each{|num|
 					wb_merge.worksheets("Sheet#{num}").name = "#{num}#{num}#{num}#{num}#{num}"
 				}
-				
+
 				# dir にあるエクセルの数だけ処理
 				file_list.each_with_index{ |file_path, file_count|
 
@@ -76,7 +76,7 @@ class MergeExcel
 
 				# ファイル名の拡張子を取得
 				ext_name = File.extname( file_list[0] )
-				
+
 				# 保存して閉じる
 				out_path = "#{OUT_ROOT}" + "/" + "#{file_name}" + "#{ext_name}"
 				puts "output => " + "#{File.basename(out_path)}"
@@ -106,7 +106,7 @@ class MergeExcel
                 wb_name     = REMAINING_DAYS_WB_NAME
 				name_array	= file_name.gsub( "#{wb_name}", "" ).split( "_" )
 				number		= name_array[0]
-				
+
 				if( count == number.to_i )
 					dst_array.push( path )
 					break
@@ -120,20 +120,20 @@ class MergeExcel
 		# パスの変換(\\ => /)
 		check_dir = IN_ROOT.gsub( "\\", "/" )
 
-		
+
 		# in フォルダ以下のフォルダをチェック
 		Dir.glob( "#{check_dir}/**" ) do |dir_path|
-		
+
 			if ( File::ftype( dir_path ) != "directory" )
 				warning_str = "[ #{File.basename(dir_path)} ]" + "\n"
 				warning_str += "in フォルダ に フォルダ以外のものが配置されてます!!" + "\n"
-				warning_str += "フォルダ 以下にマージしたいファイルを配置して下さい"					
+				warning_str += "フォルダ 以下にマージしたいファイルを配置して下さい"
 				warningLogPrint( "#{warning_str}" )
 				next
 			end
 
 			dir_list.push( dir_path )
-			
+
 			# パターンにマッチするファイルパスを追加
 			file_list_temp = getSearchFile( dir_path, SEARCH_PAT_ARRAY )
 
@@ -142,7 +142,7 @@ class MergeExcel
 			if( file_list_temp.size() != 0 )
 				sortWorksArray( file_list_temp, file_list )
 			end
-			
+
 			# 上記の対応がなされなかった場合は通常処理
 			if( file_list.size() <= 0 )
 				file_list_temp.each { |path|
@@ -153,10 +153,10 @@ class MergeExcel
 			# ファイルがなかった場合は削除
 			if( file_list.size() == 0 )
 				dir_list.delete( dir_path )
-				
+
 				if( file_list.size == 0 )
 					warning_str = "not found merging file !!" + "\n"
-					warning_str += "フォルダ [#{File.basename(dir_path)}] にファイルがあるかお確かめ下さい"					
+					warning_str += "フォルダ [#{File.basename(dir_path)}] にファイルがあるかお確かめ下さい"
 					warningLogPrint( "#{warning_str}" )
 				end
 			else
@@ -174,7 +174,7 @@ class MergeExcel
 	# @parm		calender	月報日時
 	#----------------------------------------------
 	def getOutputPath( file_name, calender )
-		output_path = "#{OUT_ROOT}/#{file_name}_#{calender}"	
+		output_path = "#{OUT_ROOT}/#{file_name}_#{calender}"
 		return ( output_path.gsub( ".xlsm", ".xlsx" ) )
 	end
 
@@ -184,7 +184,7 @@ class MergeExcel
 	# @parm		excel		Excel クラス
 	#----------------------------------------------
 	def applyParamMergeWb( wb_merge, data )
-		
+
 		#パラメータの取得
 		is_protected		= "#{data[:is_protected]}"			#"シートを保護するか"
 		is_delete_ws_check	= "#{data[:is_delete_ws_check]}"	#"[届け出チェックシート]を削除するか"
@@ -204,17 +204,17 @@ class MergeExcel
 		if( is_delete_ws_check == "true" )
 			wb_merge.worksheets("#{SHEET_NAME_CHECK}").delete
 #			wb_merge.worksheets("#{SHEET_NAME_CHECK_DESCRIPT}").delete
-		end	
+		end
 	end
 end
-			
+
 =begin
 		# パラメータの適応
 		applyParamMergeWb( wb_merge, data )
-		
+
 		# ファイル名から一部を拝借して設定
 		file_name_info = @file_path_list[0].split( "_" )
 		out_path = getOutputPath( file_name_info[2], file_name_info[3] )
 
-		puts "output merge excel = #{out_path}"	
+		puts "output merge excel = #{out_path}"
 =end
