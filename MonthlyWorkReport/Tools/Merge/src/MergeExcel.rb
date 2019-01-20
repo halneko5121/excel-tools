@@ -23,13 +23,19 @@ class MergeExcel
 
 	public
 	def initialize()
-		@file_path_list = Array.new
+		# パターンにマッチするファイルパスを追加
+		pattern = [ SEARCH_FILE ]
+		@file_path_list = getSearchFileList( CHECK_DIR, pattern )
+		if( @file_path_list.size == 0 )
+			error_str = "not found merging files!!"
+			error_str += "Users フォルダにファイルがあるかお確かめ下さい"
+			assertLogPrintFalse( error_str )
+		end
 	end
 
 	def execute( param_hash )
 
-		# ファイルパスをリストに設定
-		setFileList()
+		puts "excel count = #{@file_path_list.size()}"
 
 		# excelの処理
 		Excel.runDuring(false, false) do |excel|
@@ -87,21 +93,6 @@ class MergeExcel
 	end
 
 	private
-	def setFileList()
-
-		# パターンにマッチするファイルパスを追加
-		pattern = [ SEARCH_FILE ]
-		@file_path_list = getSearchFileList( CHECK_DIR, pattern )
-
-		puts "excel count = #{@file_path_list.size()}"
-
-		if( @file_path_list.size == 0 )
-			error_str = "not found merging files!!"
-			error_str += "Users フォルダにファイルがあるかお確かめ下さい"
-			assertLogPrintFalse( error_str )
-		end
-	end
-
 	#----------------------------------------------
 	# @biref	ファイルパスから、出力先のパスを取得
 	# @parm		file_name	作業月報名
