@@ -12,8 +12,8 @@ require File.dirname(__FILE__) + "/Define.rb"
 # ==========================="
 class TemplateUpdate
 	private
-	IN_ROOT						= File.dirname(__FILE__) + "/../in"
-	OUT_ROOT 					= File.dirname(__FILE__) + "/../out"
+	IN_ROOT				= File.dirname(__FILE__) + "/../in"
+	OUT_ROOT 			= File.dirname(__FILE__) + "/../out"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
 
 	#----------------------------------------------
