@@ -21,28 +21,18 @@ class MergeExcel
 	CHECK_DATA_RANGE		= 31
 	START_ROW_CHECK_DATA	= 3
 
-	def setFileList( list )
-
-		# パスの変換(\\ => /)
-		check_dir = CHECK_DIR.gsub( "\\", "/" )
-		dbgPuts "check_dir = #{check_dir}"
+	def setFileList()
 
 		# パターンにマッチするファイルパスを追加
-		Dir.glob( "#{check_dir}" + "/**/" + "#{SEARCH_FILE}" ) do |file_path|
-			list.push( file_path )
-		end
+		pattern = [ SEARCH_FILE ]
+		@file_path_list = getSearchFileList( CHECK_DIR, pattern )
 
-		# ascii順に並び替え
-		list.sort!
+		puts "excel count = #{@file_path_list.size()}"
 
-		puts "excel count = #{list.size()}"
-
-		if( list.size == 0 )
-			puts "=============== error ==============="
-			puts "not found merging files!!"
-			puts "Users フォルダにファイルがあるかお確かめ下さい"
-			puts "=============== error ==============="
-			exit()
+		if( @file_path_list.size == 0 )
+			error_str = "not found merging files!!"
+			error_str += "Users フォルダにファイルがあるかお確かめ下さい"
+			assertLogPrintFalse( error_str )
 		end
 	end
 
@@ -150,7 +140,8 @@ class MergeExcel
 	def setWsParamEachStaffSheet( excel, wb_merge )
 
 		# 「区分別按分表」シートを取得
-		ws_dst_department	= wb_merge.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
+		ws_dst_department = wb_merge.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
+
 		ws_start			= wb_merge.worksheets("#{SHEET_NAME_TEMPLATE_DATA}")
 		start_sheet_number	= ws_start.index
 
@@ -268,7 +259,7 @@ class MergeExcel
 	def main( param_hash )
 
 		# ファイルパスをリストに設定
-		setFileList( @file_path_list )
+		setFileList()
 
 		# excelの処理
 		Excel.runDuring(false, false) do |excel|
