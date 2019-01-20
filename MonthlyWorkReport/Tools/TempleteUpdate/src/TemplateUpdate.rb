@@ -14,7 +14,7 @@ class TemplateUpdate
 	private
 	IN_ROOT						= File.dirname(__FILE__) + "/../in"
 	OUT_ROOT 					= File.dirname(__FILE__) + "/../out"
-	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.#{EXT_NAME}"
+	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/Template.#{EXT_NAME}"
 
 	#----------------------------------------------
 	# @biref	src excel のセルを dst にコピー
@@ -53,7 +53,7 @@ class TemplateUpdate
 		# 各種「合計」行
 		total_time_range = "A#{work_rows}:L#{work_rows}"
 		Excel.rangeCopyFast( src_ws, total_time_range, dst_ws, total_time_range )
-		
+
 		# セルをロック（編集不可）にしてシートを保護
 		dst_ws.range( "#{FORMAT_STAFF_SHEET_CALENDAR}" ).Locked = true
 		dst_ws.Protect
