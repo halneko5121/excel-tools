@@ -13,6 +13,7 @@ class TemplateExcelCreate
 	private
 	OUT_ROOT 					= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME			= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
+	SHEET_NAME_STAFF_DATA		= "開始データ"
 	SHEET_NAME_PRORATED_TABLE	= "区分別按分表"
 	NEEDLESS_SHEET_NAMES 		= [ "業務別月報", "未定" ]
 
@@ -90,8 +91,8 @@ class TemplateExcelCreate
 	#----------------------------------------------
 	def setWsParamStaffSheet( wb, param_hash )
 
-		# 社員名（フルネーム）
-		ws_staff	  = wb.worksheets("開始データ")
+		# 名前を設定
+		ws_staff	  = wb.worksheets("#{SHEET_NAME_STAFF_DATA}")
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 		Excel.setCellValue( ws_staff, 2, 10, "#{param_hash[:name]}" ) # 氏名
 
@@ -106,18 +107,6 @@ class TemplateExcelCreate
 			Excel.setLockCell(ws_staff, 2, index_column, true)
 		}
 		Excel.setProtectSheet(ws_staff, true)
-	end
-
-	#----------------------------------------------
-	# @biref	パラメータの設定(届書シート)
-	# @parm		wb			設定を行うワークブック
-	# @parm		param_hash	パラメータを格納したハッシュ
-	#----------------------------------------------
-	def setWsParamCheckSheet( wb, param_hash )
-
-		# 届書チェックシートの設定
-		ws_check = wb.worksheets("#{SHEET_NAME_CHECK}")
-		ws_check.Range("B3:B33").Value = "#{param_hash[:abbrev_name]}"
 	end
 
 	#----------------------------------------------
