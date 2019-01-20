@@ -20,19 +20,19 @@ class TemplateExcelCreate
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
-	# @parm		number		データ番号
+	# @parm		id			社員番号
 	# @parm		abbrev_name	社員略称
 	# @parm		calendar	月報日時
 	#----------------------------------------------
-	def getOutputPath( number, abbrev_name, calendar )
-
+	def getOutputPath( id, abbrev_name, calendar )
+	
 		# 数値を3桁に変換
-		staff_num	= "%03d" % number
+		staff_id	= "%03d" % id.to_i
 
-        abbrev_name= abbrev_name.encode( Encoding::UTF_8 )
-		file_name	= "#{staff_num}_#{abbrev_name}_1-UP作業月報_#{calendar}.#{EXT_NAME}".encode(Encoding::Windows_31J)
+        abbrev_name= abbrev_name.encode( Encoding::UTF_8 ) 
+		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar}.#{EXT_NAME}".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
-
+		
 		return out_path;
 	end
 
@@ -57,18 +57,18 @@ class TemplateExcelCreate
 		ws_staff	  = wb.worksheets("開始データ")
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
 		ws_staff.Cells.Item(2, 10+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:name]}"	# 氏名
-
+		
 		# 2013xx => [2013][xx]に分割
-		str_calendar = splitYearMonth("#{param_hash[:create_calendar]}")
+		str_calendar = getSplitCalendar("#{param_hash[:create_calendar]}")
 
 		# 平成年 / 月 を算出
-#		year_number = convertYearNumberHeisei( str_calendar[0] )
+#		year_number = getYearNumber( str_calendar[0] )
 #		year_number = "#{str_calendar[0]}/#{str_calendar[1]}/1" => 平成歴の場合(セルの初期設定を"ggge"年にする）
 		year_number = str_calendar[0].to_i
-		month		= str_calendar[1].to_i
+		mouth		= str_calendar[1].to_i
 
 		ws_staff.Cells.Item(2, 5+ADD_CULMNS_CHECK_SHEET).Value = year_number
-		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Value = month
+		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Value = mouth
 		ws_staff.Cells.Item(2, 7+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:period]}"	# 期間
 
 		# セルをロック（編集不可）にしてシートを保護
@@ -79,7 +79,7 @@ class TemplateExcelCreate
 			ws_staff.range("A:Z").Locked = false
 		end
 		ws_staff.Protect
-
+		
 		#　シート保護をしない or マクロ有りブックにする
 #		ws_staff.EnableOutlining = true
 #		ws_staff.Protect( {'Contents' => true} )
@@ -93,7 +93,7 @@ class TemplateExcelCreate
 	# @parm		param_hash	パラメータを格納したハッシュ
 	#----------------------------------------------
 	def setWsParamCheckSheet( wb, param_hash )
-
+	
 		# 届書チェックシートの設定
 		ws_check = wb.worksheets("#{SHEET_NAME_CHECK}")
 		ws_check.Range("B3:B33").Value = "#{param_hash[:abbrev_name]}"
@@ -109,7 +109,7 @@ class TemplateExcelCreate
 		# 略称（ファイル名/シート名）
 		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 		ws_propateed.Cells.Item(5, 22).Value	= "#{param_hash[:abbrev_name]}"
-		ws_propateed.Cells.Item(5, 23).Value	= ADD_CULMNS_CHECK_SHEET
+		ws_propateed.Cells.Item(5, 23).Value	= ADD_CULMNS_CHECK_SHEET		
 		ws_propateed.Cells.Item(6, 1).Value		= ws_propateed.Cells.Item(5, 1).Value
 		ws_propateed.Cells.Item(6, 22).Value	= "#{param_hash[:abbrev_name]}"
 		ws_propateed.Cells.Columns(22).Hidden	= true
@@ -120,31 +120,30 @@ class TemplateExcelCreate
 			ws_propateed.Cells.Item(5, 1).AddComment("#{param_hash[:joining_time]}")
 		end
 	end
-
+	
 	public
 	def initialize()
 		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
 	end
 
 	def createExcel( staff_list )
-
+	
 		# ファイルが存在していた場合はファイルを削除
 		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
 			File.delete "#{file_path}"
 		end
 
-		puts "excel count = #{staff_list.size()}"
+		puts "excel count = #{staff_list.size()}"	
 
 		Excel.runDuring(false, false) do |excel|
 
 			fso = WIN32OLE.new('Scripting.FileSystemObject')
 
 			# 社員数だけ
-			staff_number = 1
 			staff_list.each{|data|
 
 				# 出力先のパスを取得
-				out_path = getOutputPath( staff_number, "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
+				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
 
 				# テンプレートのブックをコピー
 				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
@@ -160,20 +159,18 @@ class TemplateExcelCreate
 				if( IS_CHECK_SHEET_MIX == true )
 					wb.worksheets( "届書チェックシート" ).delete()
 				end
-
+				
 				# パラメータの設定
 				setWsParamStaffSheet( wb, data )
 				setWsParamProratedTable( wb, data )
-
+				
 				# シートは非表示にしておく  / [区分別按分表][届書チェック]
 				wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}").visible = false
-
+				
 				# セーブして閉じる
 				wb.save()
 				wb.close(0)
-
-				staff_number += 1
-
+				
 				# ログ用
 				puts "create excel => #{File::basename( out_path )}"
 			}

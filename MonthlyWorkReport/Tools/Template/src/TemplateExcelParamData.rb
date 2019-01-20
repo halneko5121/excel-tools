@@ -16,10 +16,12 @@ class TemplateExcelParamData
 	PARAMETER_FILE_NAME	= "#{SRC_ROOT}/TemplateParam.xls"
 
 	def setClumn( ws )
+		@clumn_id				= Excel.getColumn(ws, "社員番号")
 		@clumn_name				= Excel.getColumn(ws, "社員名")
 		@clumn_abbrev_name		= Excel.getColumn(ws, "略名")
 		@clumn_create_calendar	= Excel.getColumn(ws, "作成年月")
 		@clumn_joining_time		= Excel.getColumn(ws, "入社時期")
+		@clumn_period			= Excel.getColumn(ws, "月報期間")
 		@clumn_period			= Excel.getColumn(ws, "月報期間")
 	end
 
@@ -27,7 +29,11 @@ class TemplateExcelParamData
 	
 		@staff_list.each { |staff|
 
-			if( staff[:abbrev_name] == "" or staff[:abbrev_name] == nil )
+			if( staff[:id] == "" or staff[:id] == nil )
+				error_str = "Parameter Error!!"
+				error_str = error_str + "「社員番号」が未入力です。"
+				assertLogPrintFalse( "#{error_str}" )
+			elsif( staff[:abbrev_name] == "" or staff[:abbrev_name] == nil )
 				error_str = "Parameter Error!!"
 				error_str = error_str + "「略名」が未入力です。"
 				assertLogPrintFalse( "#{error_str}" )
@@ -78,6 +84,7 @@ class TemplateExcelParamData
 				
 				# パラメータを取得してpush
 				staff = Hash.new
+				staff[:id]				= Excel.getCellValue(ws_param, recode.row, "#{@clumn_id}".to_i).to_i
 				staff[:name]			= "#{name}"
 				staff[:abbrev_name]		= Excel.getCellValue(ws_param, recode.row, "#{@clumn_abbrev_name}".to_i)
 				staff[:create_calendar] = Excel.getCellValue(ws_param, recode.row, "#{@clumn_create_calendar}".to_i).to_i				
@@ -86,6 +93,12 @@ class TemplateExcelParamData
 				@staff_list.push( staff )
 			end
 			wb_param.close(0)
+			
+			if ( @staff_list.size() == 0 )
+				error_str = "[ TemplateParam.xls ] のパラメータは設定されていますか?\n"
+				error_str += "社員ごとの設定が見当たりませんでした"
+				assertLogPrintFalse( error_str )
+			end
 		end
 		
 		errorCheck()

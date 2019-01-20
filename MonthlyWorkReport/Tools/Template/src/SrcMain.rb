@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 # ==========================="
 # require
@@ -11,7 +11,7 @@ require File.dirname(__FILE__) + "/TemplateExcelCreate.rb"
 # Const
 # ==========================="
 TITLE	= "MonthlyWorkTemplete"
-VER		= "1.0.6"
+VER		= "1.1.1"
 
 # ==========================="
 # src
