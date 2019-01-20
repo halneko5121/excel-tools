@@ -29,6 +29,7 @@ class TemplateExcelCreate
 		abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
 		file_name	= "#{staff_id}_#{abbrev_name}_1-UP作業月報_#{calendar}.#{EXT_NAME}".encode(Encoding::Windows_31J)
 		out_path	= "#{OUT_ROOT}/#{file_name}"
+		out_path	=  File.expand_path( out_path )
 
 		return out_path;
 	end
