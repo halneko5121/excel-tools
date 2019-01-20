@@ -76,7 +76,10 @@ class TemplateUpdate
 		Excel.rangeCopyFast( src_ws, FORMAT_STAFF_SHEET_ALL, dst_ws, FORMAT_STAFF_SHEET_ALL )
 
 		# 「年/月/期間/氏名」のセル範囲を設定
-		setCalendarData( dst_ws, temp_year, temp_month,temp_period, temp_staff_name )
+		Excel.setCellValue( dst_ws, 2, 5, temp_year)
+		Excel.setCellValue( dst_ws, 2, 6, temp_month)
+		Excel.setCellValue( dst_ws, 2, 7, temp_period)
+		Excel.setCellValue( dst_ws, 2, 10, temp_staff_name)
 
 		# 行数を算出
 		work_rows = Excel.getRow( src_ws, "計", 1)
@@ -103,17 +106,6 @@ class TemplateUpdate
 	end
 
 	private
-	#----------------------------------------------
-	# @biref	カレンダー情報　「年/月/期間」
-	#----------------------------------------------
-	def setCalendarData( dst_ws, year, month, period, staff_name )
-
-		dst_ws.Cells.Item( 2, 5 ).Value = year
-		dst_ws.Cells.Item( 2, 6 ).Value = month
-		dst_ws.Cells.Item( 2, 7 ).Value = period
-		dst_ws.Cells.Item( 2, 10 ).Value = staff_name
-	end
-
 	#----------------------------------------------
 	# @biref	ファイルのパスから、社員名を取得
 	#----------------------------------------------
