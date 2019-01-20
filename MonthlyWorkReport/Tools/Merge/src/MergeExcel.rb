@@ -229,10 +229,8 @@ class MergeExcel
 
 		# 「開始データ」さんの行は削除しておく
 		ws_dst_department.range("#{START_ROW_PRORATED}:#{START_ROW_PRORATED}").delete
-		excel.screenUpdating = true
 		ws_dst_department.Activate
 		excel.range("C2").Select
-		excel.screenUpdating = false
 	end
 
 	#----------------------------------------------
