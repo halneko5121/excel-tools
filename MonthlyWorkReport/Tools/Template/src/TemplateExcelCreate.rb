@@ -100,7 +100,7 @@ class TemplateExcelCreate
 		# 社員名（フルネーム）
 		ws_staff	  = wb.worksheets("開始データ")
 		ws_staff.name = "#{param_hash[:abbrev_name]}"
-		ws_staff.Cells.Item(2, 10+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:name]}"	# 氏名
+		ws_staff.Cells.Item(2, 10).Value = "#{param_hash[:name]}"	# 氏名
 
 		# 2013xx => [2013][xx]に分割
 		str_calendar = splitYearMonth("#{param_hash[:create_calendar]}")
@@ -111,14 +111,14 @@ class TemplateExcelCreate
 		year_number = str_calendar[0].to_i
 		mouth		= str_calendar[1].to_i
 
-		ws_staff.Cells.Item(2, 5+ADD_CULMNS_CHECK_SHEET).Value = year_number
-		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Value = mouth
-		ws_staff.Cells.Item(2, 7+ADD_CULMNS_CHECK_SHEET).Value = "#{param_hash[:period]}"	# 期間
+		ws_staff.Cells.Item(2, 5).Value = year_number
+		ws_staff.Cells.Item(2, 6).Value = mouth
+		ws_staff.Cells.Item(2, 7).Value = "#{param_hash[:period]}"	# 期間
 
 		# セルをロック（編集不可）にしてシートを保護
-		ws_staff.Cells.Item(2, 5+ADD_CULMNS_CHECK_SHEET).Locked = true
-		ws_staff.Cells.Item(2, 6+ADD_CULMNS_CHECK_SHEET).Locked = true
-		ws_staff.Cells.Item(2, 7+ADD_CULMNS_CHECK_SHEET).Locked = true
+		ws_staff.Cells.Item(2, 5).Locked = true
+		ws_staff.Cells.Item(2, 6).Locked = true
+		ws_staff.Cells.Item(2, 7).Locked = true
 		if( IS_CHECK_SHEET_MIX == true )
 			ws_staff.range("A:Z").Locked = false
 		end
@@ -153,7 +153,7 @@ class TemplateExcelCreate
 		# 略称（ファイル名/シート名）
 		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 		ws_propateed.Cells.Item(5, 22).Value	= "#{param_hash[:abbrev_name]}"
-		ws_propateed.Cells.Item(5, 23).Value	= ADD_CULMNS_CHECK_SHEET
+		ws_propateed.Cells.Item(5, 23).Value	= 0
 		ws_propateed.Cells.Item(6, 1).Value		= ws_propateed.Cells.Item(5, 1).Value
 		ws_propateed.Cells.Item(6, 22).Value	= "#{param_hash[:abbrev_name]}"
 		ws_propateed.Cells.Columns(22).Hidden	= true
