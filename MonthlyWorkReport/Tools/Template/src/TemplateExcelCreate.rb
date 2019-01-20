@@ -14,6 +14,7 @@ class TemplateExcelCreate
 	private
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.xlsx"
+	NEEDLESS_SHEET_NAMES = [ "業務別月報", "未定" ]
 
 	public
 	def initialize()
@@ -42,9 +43,10 @@ class TemplateExcelCreate
 				# コピーしたブックを開く
 				wb = Excel.openWb(excel, out_path)
 
-				# シートを削除
-				wb.worksheets( "業務別月報" ).delete()
-				wb.worksheets( "未定" ).delete()
+				# 不要なシートを削除
+				NEEDLESS_SHEET_NAMES.each { |ws_name|
+					wb.worksheets( ws_name ).delete()
+				}
 
 				# パラメータの設定
 				setWsParamStaffSheet( wb, data )
