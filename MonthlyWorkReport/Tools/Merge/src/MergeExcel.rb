@@ -96,7 +96,6 @@ class MergeExcel
 	#----------------------------------------------
 	# @biref	ファイルパスから、出力先のパスを取得
 	# @parm		file_name	作業月報名
-	# @parm		calender	月報日時
 	#----------------------------------------------
 	def getOutputPath( file_path )
 
