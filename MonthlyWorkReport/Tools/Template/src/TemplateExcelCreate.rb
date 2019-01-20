@@ -129,10 +129,10 @@ class TemplateExcelCreate
 
 		# 略称（ファイル名/シート名）
 		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
-		ws_propateed.Cells.Item(5, 22).Value	= "#{param_hash[:abbrev_name]}"
-		ws_propateed.Cells.Item(5, 23).Value	= 0
-		ws_propateed.Cells.Item(6, 1).Value		= ws_propateed.Cells.Item(5, 1).Value
-		ws_propateed.Cells.Item(6, 22).Value	= "#{param_hash[:abbrev_name]}"
+		Excel.setCellValue( ws_propateed, 5, 22, "#{param_hash[:abbrev_name]}" )
+		Excel.setCellValue( ws_propateed, 5, 23, 0 )
+		Excel.setCellValue( ws_propateed, 6, 1, Excel.getCellValue( ws_propateed, 5, 1 ) )
+		Excel.setCellValue( ws_propateed, 6, 22, "#{param_hash[:abbrev_name]}" )
 		ws_propateed.Cells.Columns(22).Hidden	= true
 		ws_propateed.Cells.Columns(23).Hidden	= true
 
