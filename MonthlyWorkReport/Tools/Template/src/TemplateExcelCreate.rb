@@ -41,8 +41,6 @@ class TemplateExcelCreate
 
 				# コピーしたブックを開く
 				wb = Excel.openWb(excel, out_path)
-				excel.displayAlerts = false
-				excel.visible		= false
 
 				# シートを削除
 				wb.worksheets( "業務別月報" ).delete()
