@@ -15,6 +15,62 @@ class TemplateExcelCreate
 	OUT_ROOT 			= File.dirname(__FILE__) + "/../../../Users"
 	TEMPLATE_FILE_NAME	= File.dirname(__FILE__) + "/../../Template/1-UP作業月報_template.#{EXT_NAME}"
 
+	public
+	def initialize()
+		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
+	end
+
+	def createExcel( staff_list )
+
+		# ファイルが存在していた場合はファイルを削除
+		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
+			File.delete "#{file_path}"
+		end
+
+		puts "excel count = #{staff_list.size()}"
+
+		Excel.runDuring(false, false) do |excel|
+
+			fso = WIN32OLE.new('Scripting.FileSystemObject')
+
+			# 社員数だけ
+			staff_list.each{|data|
+
+				# 出力先のパスを取得
+				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
+
+				# テンプレートのブックをコピー
+				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
+
+				# コピーしたブックを開く
+				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
+				excel.displayAlerts = false
+				excel.visible		= false
+
+				# シートを削除
+				wb.worksheets( "業務別月報" ).delete()
+				wb.worksheets( "未定" ).delete()
+				if( IS_CHECK_SHEET_MIX == true )
+					wb.worksheets( "届書チェックシート" ).delete()
+				end
+
+				# パラメータの設定
+				setWsParamStaffSheet( wb, data )
+				setWsParamProratedTable( wb, data )
+
+				# シートは非表示にしておく  / [区分別按分表][届書チェック]
+				wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}").visible = false
+
+				# セーブして閉じる
+				wb.save()
+				wb.close(0)
+
+				# ログ用
+				puts "create excel => #{File::basename( out_path )}"
+			}
+		end
+	end
+
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
@@ -116,62 +172,6 @@ class TemplateExcelCreate
 		# 入社時期
 		if( param_hash[:joining_time] != nil )
 			ws_propateed.Cells.Item(5, 1).AddComment("#{param_hash[:joining_time]}")
-		end
-	end
-
-	public
-	def initialize()
-		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
-	end
-
-	def createExcel( staff_list )
-
-		# ファイルが存在していた場合はファイルを削除
-		Dir.glob( "#{OUT_ROOT}" + "/**/" + "*.*" ) do |file_path|
-			File.delete "#{file_path}"
-		end
-
-		puts "excel count = #{staff_list.size()}"
-
-		Excel.runDuring(false, false) do |excel|
-
-			fso = WIN32OLE.new('Scripting.FileSystemObject')
-
-			# 社員数だけ
-			staff_list.each{|data|
-
-				# 出力先のパスを取得
-				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}", "#{data[:create_calendar]}" )
-
-				# テンプレートのブックをコピー
-				fso.CopyFile( "#{TEMPLATE_FILE_NAME}", fso.GetAbsolutePathName( out_path ) )
-
-				# コピーしたブックを開く
-				wb = excel.workbooks.open({'filename'=> fso.GetAbsolutePathName( out_path ), 'updatelinks'=> 0})
-				excel.displayAlerts = false
-				excel.visible		= false
-
-				# シートを削除
-				wb.worksheets( "業務別月報" ).delete()
-				wb.worksheets( "未定" ).delete()
-				if( IS_CHECK_SHEET_MIX == true )
-					wb.worksheets( "届書チェックシート" ).delete()
-				end
-
-				# パラメータの設定
-				setWsParamStaffSheet( wb, data )
-				setWsParamProratedTable( wb, data )
-
-				# シートは非表示にしておく  / [区分別按分表][届書チェック]
-				wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}").visible = false
-
-				# セーブして閉じる
-				wb.save()
-				wb.close(0)
-
-				# ログ用
-				puts "create excel => #{File::basename( out_path )}"
-			}
 		end
 	end
 end
