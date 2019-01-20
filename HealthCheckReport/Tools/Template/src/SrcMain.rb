@@ -11,7 +11,7 @@ require File.expand_path( File.dirname(__FILE__) + "/TemplateExcelCreate.rb" )
 # Const
 # ==========================="
 TITLE	= "HealthCheckReport"
-VER		= "1.2.5"
+VER		= "1.2.6"
 PARAMETER_FILE_NAME	= File.dirname(__FILE__) + "/../TemplateParam.xls"
 
 # ==========================="
