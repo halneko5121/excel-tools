@@ -105,13 +105,7 @@ class TemplateExcelCreate
 		(5..7).each { |index_column|
 			Excel.setLockCell(ws_staff, 2, index_column, true)
 		}
-		ws_staff.Protect
-
-		#　シート保護をしない or マクロ有りブックにする
-#		ws_staff.EnableOutlining = true
-#		ws_staff.Protect( {'Contents' => true} )
-#		ws_staff.Protect( {'UserInterfaceOnly' => true} )
-#		ws_staff.Protect( {'allowformattingcells' => true} )
+		Excel.setProtectSheet(ws_staff, true)
 	end
 
 	#----------------------------------------------
