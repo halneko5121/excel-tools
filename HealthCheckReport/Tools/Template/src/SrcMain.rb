@@ -32,7 +32,7 @@ if ( __FILE__ == $0 )
 			age: "年齢",
 			last_month_over_time: "先月度時間外労働",
 			last_month_over_time2: "先々月度時間外労働",
-			create_calendar: "作成年月",
+			create_calendar: "勤怠締め年月",
 			report_dead_line: "報告締切日",
 			is_output: "出力するか"
 		}
