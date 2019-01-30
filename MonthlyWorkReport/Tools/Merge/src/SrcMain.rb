@@ -22,8 +22,8 @@ if ( __FILE__ == $0 )
 	AppModule.main( TITLE,  VER ) {
 
 		# パラメータを取得する
-		param_hash = { is_protected: "シートを保護するか", is_delete_ws_check: "[届け出チェックシート]を削除するか" }
-		merge_param = ExcelParamData.new(PARAMETER_FILE_NAME, "Sheet1", param_hash)
+		param_hash = { is_protected: "シートを保護するか" }
+		merge_param = ExcelParamData.new(PARAMETER_FILE_NAME, "パラメータ", param_hash)
 
 		# マージを行う
 		merge_script = MergeExcel.new
