@@ -202,7 +202,7 @@ class MergeExcel
 			ws_src_department	= wb_staff.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
 			paste_row			= (START_ROW_PRORATED+1) + count # 開始データの分を残しておく
 			Excel.rowCopyAndInsert( ws_src_department, START_ROW_PRORATED, ws_dst_department, paste_row )
-			ws_dst_department.Cells.Item(paste_row, 23).Value = 0# チェックシーシート分の列指定を0に
+			ws_dst_department.Cells.Item(paste_row, 23).Value = 0# チェックシート分の列指定を0に
 
 			wb_staff.Application.CutCopyMode = false
 			wb_staff.close(0)
