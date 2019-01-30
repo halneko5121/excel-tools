@@ -31,8 +31,7 @@ class TemplateExcelCreate
 		# 出力OKのものだけ出力する
 		result_staff_list = Array.new
 		staff_list.each{|data|
-			utf_8_is_output = data[:is_output].encode( Encoding::UTF_8 )
-			if ( utf_8_is_output.index( "◯" ) != nil)
+			if ( data[:is_output] == true )
 				result_staff_list.push(data)
 			end
 		}
