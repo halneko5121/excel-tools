@@ -174,22 +174,6 @@ class MergeExcel
 	end
 
 	#----------------------------------------------
-	# @biref	届書チェックシートのマージ
-	# @parm		wb_src		コピー元ワークブック
-	# @parm		wb_dst		コピー先ワークブック
-	# @parm		count
-	#----------------------------------------------
-	def mergeCheckSheet( wb_src, wb_dst, count )
-
-		range_start		= START_ROW_CHECK_DATA		+ CHECK_DATA_RANGE * count
-		range_end		= (START_ROW_CHECK_DATA-1)	+ CHECK_DATA_RANGE * (count + 1)
-		ws_src_check	= wb_src.worksheets("#{SHEET_NAME_CHECK}")
-		ws_dst_check	= wb_dst.worksheets("#{SHEET_NAME_CHECK}")
-		ws_src_check.range( "#{RANGE_CHECK_VALUE}" ).copy
-		ws_dst_check.range( "B#{range_start}:X#{range_end}" ).pastespecial
-	end
-
-	#----------------------------------------------
 	# @biref	各スタッフエクセルからシートの設定
 	# @parm		excel		Excel クラス
 	# @parm		wb_merge	マージするワークブック
@@ -220,9 +204,6 @@ class MergeExcel
 			Excel.rowCopyAndInsert( ws_src_department, START_ROW_PRORATED, ws_dst_department, paste_row )
 			ws_dst_department.Cells.Item(paste_row, 23).Value = 0# チェックシーシート分の列指定を0に
 
-			# 「届書チェック」シートの値をマージ
-			mergeCheckSheet( wb_staff, wb_merge, count )
-
 			wb_staff.Application.CutCopyMode = false
 			wb_staff.close(0)
 			count += 1
@@ -242,8 +223,7 @@ class MergeExcel
 	def applyParamMergeWb( wb_merge, data )
 
 		#パラメータの取得
-		is_protected		= "#{data[:is_protected]}"			#"シートを保護するか"
-		is_delete_ws_check	= "#{data[:is_delete_ws_check]}"	#"[届け出チェックシート]を削除するか"
+		is_protected = "#{data[:is_protected]}"	#"シートを保護するか"
 
 		# パラメータの適応:シートの保護
 		if( is_protected == "true" )
@@ -254,11 +234,6 @@ class MergeExcel
 			for index in 1..ws_count do
 				wb_merge.worksheets( index ).Unprotect
 			end
-		end
-
-		# パラメータの適応:チェックシートの削除
-		if( is_delete_ws_check == "true" )
-			wb_merge.worksheets("#{SHEET_NAME_CHECK}").delete
 		end
 	end
 
@@ -284,10 +259,6 @@ class MergeExcel
 
 		# 「未定」シートをコピー
 		Excel.sheetCopy( tamplete_wb, "#{SHEET_NAME_ANOTHER}", merge_wb, sheet_number)
-		sheet_number += 1
-
-		# 「届書チェックシート」シートをコピー
-		Excel.sheetCopy( tamplete_wb, "#{SHEET_NAME_CHECK}",merge_wb, sheet_number)
 		sheet_number += 1
 
 		# 「業務別月報」シートをコピー
