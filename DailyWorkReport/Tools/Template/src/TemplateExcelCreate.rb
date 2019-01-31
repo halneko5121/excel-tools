@@ -27,7 +27,7 @@ class TemplateExcelCreate
 
 		# ファイルが存在していた場合はファイルを削除
 		pattern = [ "*.xlsx" ]
-		allRomoveFile("#{OUT_ROOT}", pattern)
+		allRemoveFile("#{OUT_ROOT}", pattern)
 
 		fso = WIN32OLE.new('Scripting.FileSystemObject')
 		Excel.runDuring(false, false) do |excel|
