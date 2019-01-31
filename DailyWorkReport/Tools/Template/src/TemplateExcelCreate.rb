@@ -48,7 +48,7 @@ class TemplateExcelCreate
 
 				# パスワードが設定されていたら設定する
 				pass = "#{data[:pass]}"
-				if( ( pass == nil or pass == "" ) == false )
+				if( pass != nil and pass != "" )
 					wb.password = pass
 				end
 				Excel.saveAndClose( wb )
