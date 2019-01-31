@@ -4,7 +4,7 @@
 # require
 # ===========================
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/AppModule.rb' )
-require File.expand_path( File.dirname(__FILE__) + '/../../lib/excel.rb' )
+require File.expand_path( File.dirname(__FILE__) + '/../../lib/Excel.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/../../lib/ExcelParamData.rb' )
 require File.expand_path( File.dirname(__FILE__) + '/TemplateExcelCreate.rb' )
 
