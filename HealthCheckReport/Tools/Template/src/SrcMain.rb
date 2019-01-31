@@ -40,7 +40,7 @@ if ( __FILE__ == $0 )
 
 		# テンプレートのデータを元に excel の生成
 		create_excel = TemplateExcelCreate.new
-		create_excel.createExcel( template_param.getParamList() )
+		create_excel.execute( template_param.getParamList() )
 	}
 
 end

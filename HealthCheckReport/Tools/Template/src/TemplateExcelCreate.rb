@@ -22,7 +22,7 @@ class TemplateExcelCreate
 		assertLogPrintNotFoundFile( TEMPLATE_FILE_NAME )
 	end
 
-	def createExcel( staff_list )
+	def execute( staff_list )
 
 		# ファイルが存在していた場合はファイルを削除
 		pattern = [ "*.xlsx" ]
