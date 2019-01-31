@@ -21,7 +21,7 @@ class TemplateExcelCreate
 		@is_leap_year = false
 	end
 
-	def createExcel( staff_list, holiday_list )
+	def execute( staff_list, holiday_list )
 
 		puts "excel count = #{staff_list.size()}"
 

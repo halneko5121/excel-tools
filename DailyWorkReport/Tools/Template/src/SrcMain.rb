@@ -33,6 +33,6 @@ if ( __FILE__ == $0 )
 
 		# テンプレートのデータを元に excel の生成
 		create_excel = TemplateExcelCreate.new
-		create_excel.createExcel( staff_data_list, holiday_data_list )
+		create_excel.execute( staff_data_list, holiday_data_list )
 	}
 end
