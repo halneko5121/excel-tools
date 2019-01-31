@@ -121,14 +121,5 @@ class TemplateExcelCreate
 			Excel.setCellValue( ws_staff, 73, 1, dead_line_string )
 			Excel.setStringColor( ws_staff, 73, 1, dead_line_string, "#{param_hash[:report_dead_line]}" )
 		Excel.setProtectSheet(ws_staff, true)
-
-		# 最初のセルをアクティブ
-		ws_staff.Range("A1").Activate
-
-		# シート保護をしない or マクロ有りブックにする
-#		ws_staff.EnableOutlining = true
-#		ws_staff.Protect( {'Contents' => true} )
-#		ws_staff.Protect( {'UserInterfaceOnly' => true} )
-#		ws_staff.Protect( {'allowformattingcells' => true} )
 	end
 end
