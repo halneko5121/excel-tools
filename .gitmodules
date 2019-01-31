@@ -4,6 +4,3 @@
 [submodule "HealthCheckReport/Tools/lib"]
 	path = HealthCheckReport/Tools/lib
 	url = http://www.halneko.work/Office/ExcelToolsLib.git
-[submodule "SplitAndMergeExcel/Tools/lib"]
-	path = SplitAndMergeExcel/Tools/lib
-	url = http://www.halneko.work/Office/ExcelToolsLib.git
