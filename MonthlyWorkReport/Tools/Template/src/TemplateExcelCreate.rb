@@ -118,11 +118,11 @@ class TemplateExcelCreate
 
 		# 略称（ファイル名/シート名）
 		ws_propateed = wb.worksheets("#{SHEET_NAME_PRORATED_TABLE}")
-		Excel.setCellValue( ws_propateed, 5, 22, "#{param_hash[:abbrev_name]}" )
-		Excel.setCellValue( ws_propateed, 5, 23, 0 )
+		Excel.setCellValue( ws_propateed, 5, 34, "#{param_hash[:abbrev_name]}" )
+		Excel.setCellValue( ws_propateed, 5, 35, 0 )
 		Excel.setCellValue( ws_propateed, 6, 1, Excel.getCellValue( ws_propateed, 5, 1 ) )
-		Excel.setCellValue( ws_propateed, 6, 22, "#{param_hash[:abbrev_name]}" )
-		(22..23).each { |index_column|
+		Excel.setCellValue( ws_propateed, 6, 34, "#{param_hash[:abbrev_name]}" )
+		(34..35).each { |index_column|
 			Excel.setVisibleColumns(ws_propateed, index_column, false)
 		}
 
