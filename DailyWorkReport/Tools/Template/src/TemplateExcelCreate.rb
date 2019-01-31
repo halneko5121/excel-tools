@@ -44,7 +44,7 @@ class TemplateExcelCreate
 				wb = Excel.openWb( excel, out_path )
 
 				# パラメータの設定
-				setWsParamStaffSheet( wb, data, holiday_list )
+				setWsParam( wb, data, holiday_list )
 
 				# パスワードが設定されていたら設定する
 				pass = "#{data[:pass]}"
@@ -84,12 +84,12 @@ class TemplateExcelCreate
 	end
 
 	#----------------------------------------------
-	# @biref	パラメータの設定(各社員シート)
+	# @biref	パラメータの設定
 	# @parm		wb				設定を行うワークブック
 	# @parm		param_hash      パラメータを格納したハッシュ
 	# @parm		holiday_list    祝日リスト
 	#----------------------------------------------
-	def setWsParamStaffSheet( wb, param_hash, holiday_list )
+	def setWsParam( wb, param_hash, holiday_list )
 
 		return if( Excel.existSheet( wb, "日報" ) == false )
 
