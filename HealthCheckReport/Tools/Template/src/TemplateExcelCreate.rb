@@ -51,7 +51,7 @@ class TemplateExcelCreate
 
 				# コピーしたブックを開いて、パラメータの設定
 				wb = Excel.openWb(excel, out_path)
-				setWsParamSheet( wb, data )
+				setWsParam( wb, data )
 
 				# 左上をアクティブにしてスクロールしておく
 				excel.ActiveWindow.ScrollRow = 1
@@ -100,7 +100,7 @@ class TemplateExcelCreate
 	# @parm		wb			設定を行うワークブック
 	# @parm		param_hash	パラメータを格納したハッシュ
 	#----------------------------------------------
-	def setWsParamSheet( wb, param_hash )
+	def setWsParam( wb, param_hash )
 
 		return if( Excel.existSheet( wb, SHEET_NAME_TEMPLATE_DATA) == false )
 
