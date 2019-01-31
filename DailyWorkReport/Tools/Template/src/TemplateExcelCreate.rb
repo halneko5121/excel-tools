@@ -29,7 +29,6 @@ class TemplateExcelCreate
 		pattern = [ "*.xlsx" ]
 		allRemoveFile("#{OUT_ROOT}", pattern)
 
-		fso = WIN32OLE.new('Scripting.FileSystemObject')
 		Excel.runDuring(false, false) do |excel|
 
 			# 社員数だけ
@@ -39,7 +38,7 @@ class TemplateExcelCreate
 				out_path = getOutputPath( "#{data[:id]}", "#{data[:abbrev_name]}" )
 
 				# テンプレートのブックをコピー
-				fso.CopyFile( TEMPLATE_FILE_NAME, out_path )
+				fsoCopyFile( TEMPLATE_FILE_NAME, out_path )
 
 				# コピーしたブックを開く
 				wb = Excel.openWb( excel, out_path )
@@ -52,8 +51,7 @@ class TemplateExcelCreate
 				if( ( pass == nil or pass == "" ) == false )
 					wb.password = pass
 				end
-				wb.save()
-				wb.close()
+				Excel.saveAndClose( wb )
 
 				# ログ用
 				puts "create excel => #{File::basename( out_path )}"
