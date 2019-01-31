@@ -131,7 +131,7 @@ class TemplateExcelCreate
 			if isWeekday( year, month, day )
 				holiday_list.each { |holiday|
                     if( "#{year}/#{month}/#{day}" == "#{holiday[:holiday]}" )
-                        wb.worksheets( new_sheet_index ).Tab.ColorIndex = 3
+						Excel.setSheetRedColor( wb.worksheets( new_sheet_index ) )
                         break
                     end
                 }
