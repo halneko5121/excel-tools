@@ -45,6 +45,9 @@ class TemplateExcelCreate
 				# パラメータの設定
 				setWsParam( wb, data, holiday_list )
 
+				# 最初のシートをアクティブに
+				wb.worksheets( 1 ).Activate
+
 				# パスワードが設定されていたら設定する
 				pass = "#{data[:pass]}"
 				if( pass != nil and pass != "" )
@@ -134,8 +137,5 @@ class TemplateExcelCreate
                 }
             end
 		}
-
-		# 最初のシートをアクティブに
-		wb.worksheets( 1 ).Activate
 	end
 end
