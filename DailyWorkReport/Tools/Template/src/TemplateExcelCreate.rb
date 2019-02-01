@@ -129,8 +129,8 @@ class TemplateExcelCreate
 
 			# 平日なら祝日チェック
 			if isWeekday( year, month, day )
-				holiday_list.each { |holiday|
-                    if( "#{year}/#{month}/#{day}" == "#{holiday[:holiday]}" )
+				holiday_list.each { |data|
+                    if( "#{year}/#{month}/#{day}" == "#{data[:holiday]}" )
 						Excel.setSheetRedColor( wb.worksheets( new_sheet_index ) )
                         break
                     end
