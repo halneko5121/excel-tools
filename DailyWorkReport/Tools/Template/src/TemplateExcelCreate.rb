@@ -66,13 +66,13 @@ class TemplateExcelCreate
 	private
 	#----------------------------------------------
 	# @biref	出力先のパスを取得
-	# @parm		id			社員番号
+	# @parm		employee_id	社員番号
 	# @parm		abbrev_name	社員略称
 	#----------------------------------------------
-	def getOutputPath( id, abbrev_name )
+	def getOutputPath( employee_id, abbrev_name )
 
 		# 数値を3桁に変換
-		staff_id	= "%03d" % id.to_i
+		staff_id	= "%03d" % employee_id.to_i
         abbrev_name	= abbrev_name.encode( Encoding::UTF_8 )
 		file_name   = "#{staff_id}_#{abbrev_name}_1-UP作業日報.xlsx".encode(Encoding::Windows_31J)
 		out_path	= File.expand_path( "#{OUT_ROOT}/#{file_name}" )
