@@ -53,9 +53,8 @@ class TemplateExcelCreate
 				wb = Excel.openWb(excel, out_path)
 				setWsParam( wb, data )
 
-				# 左上をアクティブにしてスクロールしておく
-				excel.ActiveWindow.ScrollRow = 1
-				excel.ActiveWindow.ScrollColumn = 1
+				# 左上にスクロールしておく
+				Excel.setScrollWithActiveWindow( excel, 1, 1 )
 
 				# セーブして閉じる
 				Excel.saveAndClose( wb )
