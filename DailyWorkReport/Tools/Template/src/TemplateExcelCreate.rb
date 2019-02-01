@@ -101,7 +101,7 @@ class TemplateExcelCreate
 		end
 
 		# 「日報」 シート以外のシートの数
-		daily_sheet_index = wb.worksheets.count()
+		daily_sheet_index = Excel.getSheetCount( wb )
 		manual_sheet_count = daily_sheet_index - 1
 
 		# 指定月の日付分シートを作成
